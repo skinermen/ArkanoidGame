@@ -490,5 +490,10 @@ namespace SnakeGame
 		}
 		return -1;
 	}
+
+	void ShutdownGame(SGame& game)
+	{
+		
+	}
 }
 

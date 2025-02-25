@@ -80,5 +80,6 @@ namespace SnakeGame
 	GameState GetCurrentGameState(const SGame& game);
 	GameState GetPreviousGameState(const SGame& game);
 	int GetRandomEmptyCell(const SGame& game);
+	void ShutdownGame(SGame& game);
 }
 
