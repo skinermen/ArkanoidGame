@@ -9,6 +9,7 @@ namespace SnakeGame
 		SetSpriteSize(apple.sprite, FOOD_SIZE, FOOD_SIZE);
 		apple.sprite.setOrigin(CELL_SIZE / 2.f, CELL_SIZE / 2.f);
 	}
+
 	
 	void AddApple(SGame& game)
 	{
