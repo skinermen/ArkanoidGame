@@ -1,0 +1,10 @@
+XYZ 500
+Skinermen 290
+Skinermen 270
+XYZ 250
+XYZ 200
+XYZ 170
+Tour_The_France 70
+XYZ 60
+XYZ 40
+XYZ 40
