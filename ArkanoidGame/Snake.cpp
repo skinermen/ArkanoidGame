@@ -2,49 +2,51 @@
 #include "Game.h"
 #include <vector>
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
-	void InitSnake(SSnake& snake, const SGame& game)
+	Snake::Snake(Game& game)
 	{
-		// Init snake sprite
-		snake.spriteHead.setTexture(game.uiState.snakeTextureHead);
-		snake.spriteBody.setTexture(game.uiState.snakeTextureBody);
-		SetSpriteSize(snake.spriteHead, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE);
-		SetSpriteSize(snake.spriteBody, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE);
-		snake.spriteHead.setScale(GetSpriteScale(snake.spriteHead, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE));
-		snake.spriteHead.setOrigin(SNAKE_SEGMENT_SIZE / 2.f, SNAKE_SEGMENT_SIZE / 2.f);
-		snake.spriteBody.setScale(GetSpriteScale(snake.spriteBody, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE));
-		snake.spriteBody.setOrigin(SNAKE_SEGMENT_SIZE / 2.f, SNAKE_SEGMENT_SIZE / 2.f);
+		// Initialize snake sprite
+		spriteHead.setTexture(game.GetMenu().GetSnakeTextureHead());
+		spriteBody.setTexture(game.GetMenu().GetSnakeTextureBody());
+		SetSpriteSize(spriteHead, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE);
+		SetSpriteSize(spriteBody, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE);
+		spriteHead.setScale(GetSpriteScale(spriteHead, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE));
+		spriteHead.setOrigin(SNAKE_SEGMENT_SIZE / 2.f, SNAKE_SEGMENT_SIZE / 2.f);
+		spriteBody.setScale(GetSpriteScale(spriteBody, SNAKE_SEGMENT_SIZE, SNAKE_SEGMENT_SIZE));
+		spriteBody.setOrigin(SNAKE_SEGMENT_SIZE / 2.f, SNAKE_SEGMENT_SIZE / 2.f);
 
-		// Initialization of a snake
-		snake.snakeLength = 4; // We set the length of the snake
-		snake.direction = SnakeDirection::Right; // Initial direction
-		snake.position = { FIELD_SIZE_X / 2, FIELD_SIZE_Y / 2 }; // The center of the field
-		snake.lastUpdateTime = 0.f;
+		// Initialize snake state
+		snakeLength = 4; // Initial length
+		direction = SnakeDirection::Right; // Initial direction
+		position = { FIELD_SIZE_X / 2, FIELD_SIZE_Y / 2 }; // The center of the field
+		lastUpdateTime = 0.f;
+		movementInterval = INITIAL_SPEED_EASY;
 	}
 
-	void AddSnake(SGame& game)
+	// ReSharper disable once CppMemberFunctionMayBeConst
+	void Snake::AddOnField(Game& game)
 	{
 		// Install the snake on the field
-		for (int i = 0; i < game.snake.snakeLength; i++)
+		for (int i = 0; i < snakeLength; i++)
 		{
-			game.field[game.snake.position.x - i][game.snake.position.y] = game.snake.snakeLength - i;
+			game.GetField()[position.x - i][position.y] = snakeLength - i;
 		}
 	}
 
-	void DrawSnake(SSnake& snake, const SGame& game, sf::RenderWindow& window)
+	void Snake::Draw(Game& game, sf::RenderWindow& window)
 	{
 		// First, draw the head
 		for (int i = 0; i < FIELD_SIZE_X; i++)
 		{
 			for (int j = 0; j < FIELD_SIZE_Y; j++)
 			{
-				if (game.field[i][j] == snake.snakeLength) // Condition for the head
+				if (game.GetField()[i][j] == snakeLength) // Condition for the head
 				{
-					snake.spriteHead.setPosition
+					spriteHead.setPosition
 					(i * CELL_SIZE + BORDER_SIZE + CELL_SIZE / 2.f,
 					 j * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE + CELL_SIZE / 2.f);
-					window.draw(snake.spriteHead);
+					window.draw(spriteHead);
 				}
 			}
 		}
@@ -54,20 +56,20 @@ namespace SnakeGame
 		{
 			for (int j = 0; j < FIELD_SIZE_Y; j++)
 			{
-				if (game.field[i][j] > FIELD_CELL_TYPE_NONE && game.field[i][j] < snake.snakeLength)
+				if (game.GetField()[i][j] > FIELD_CELL_TYPE_NONE && game.GetField()[i][j] < snakeLength)
 				{
-					snake.spriteBody.setPosition
+					spriteBody.setPosition
 					(i * CELL_SIZE + BORDER_SIZE + CELL_SIZE / 2.f,
 					 j * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE + CELL_SIZE / 2.f);
-					window.draw(snake.spriteBody);
+					window.draw(spriteBody);
 				}
 			}
 		}
 	}
 
-	void GrowSnake(SGame& game)
+	void Snake::Grow(Game& game)
 	{
-		for (auto& i : game.field)
+		for (auto& i : game.GetField())
 		{
 			for (int& j : i)
 			{
@@ -79,150 +81,148 @@ namespace SnakeGame
 		}
 	}
 
-	void HandleInput(SSnake& player)
+	void Snake::HandleInput()
 	{
 		// We get the last direction that was added to the queue
-		SnakeDirection currentDirection = player.direction;
-		if (!player.directionQueue.empty())
+		SnakeDirection currentDirection = direction;
+		if (!directionQueue.empty())
 		{
-			currentDirection = player.directionQueue.back();
+			currentDirection = directionQueue.back();
 		}
 
 		// Recording keystrokes
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && currentDirection != SnakeDirection::Left)
 		{
-			if (player.directionQueue.empty() || player.directionQueue.back() != SnakeDirection::Right)
+			if (directionQueue.empty() || directionQueue.back() != SnakeDirection::Right)
 			{
-				player.directionQueue.push(SnakeDirection::Right);
+				directionQueue.push(SnakeDirection::Right);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && currentDirection != SnakeDirection::Down)
 		{
-			if (player.directionQueue.empty() || player.directionQueue.back() != SnakeDirection::Up)
+			if (directionQueue.empty() || directionQueue.back() != SnakeDirection::Up)
 			{
-				player.directionQueue.push(SnakeDirection::Up);
+				directionQueue.push(SnakeDirection::Up);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && currentDirection != SnakeDirection::Right)
 		{
-			if (player.directionQueue.empty() || player.directionQueue.back() != SnakeDirection::Left)
+			if (directionQueue.empty() || directionQueue.back() != SnakeDirection::Left)
 			{
-				player.directionQueue.push(SnakeDirection::Left);
+				directionQueue.push(SnakeDirection::Left);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && currentDirection != SnakeDirection::Up)
 		{
-			if (player.directionQueue.empty() || player.directionQueue.back() != SnakeDirection::Down)
+			if (directionQueue.empty() || directionQueue.back() != SnakeDirection::Down)
 			{
-				player.directionQueue.push(SnakeDirection::Down);
+				directionQueue.push(SnakeDirection::Down);
 			}
 		}
 
 		// Limit the size of the queue if necessary
-		while (player.directionQueue.size() > 3)
+		while (directionQueue.size() > 3)
 		{
-			player.directionQueue.pop();
+			directionQueue.pop();
 		}
 	}
 	
-	void MoveSnake(SGame& game, float currentTime)
+	void Snake::Move(Game& game, float currentTime)
 	{
-		SSnake& player = game.snake;
-
-		if (GetCurrentGameState(game) != GameState::Playing)
+		if (game.GetCurrentGameState() != GameState::Playing)
 		{
 			return;
 		}
 
-		if (game.isGameStarting)
+		if (game.GetIsGameStarting())
 		{
-			if (game.gameStartTime == 0.f)
+			if (game.GetGameStartTime() == 0.f)
 			{
-				game.gameStartTime = currentTime;
+				game.SetGameStartTime(currentTime);
 			}
-			if (currentTime - game.gameStartTime < PAUSE_LENGTH)
+			if (currentTime - game.GetGameStartTime() < PAUSE_LENGTH)
 			{
 				return;
 			}
-			game.isGameStarting = false;
+			game.SetIsGameStarting(false);
 		}
 
-	    if (currentTime - player.lastUpdateTime >= player.movementInterval)
+	    if (currentTime - lastUpdateTime >= movementInterval)
 	    {
 	        // Use the following direction from the queue, if there is
-	        if (!player.directionQueue.empty())
+	        if (!directionQueue.empty())
 	        {
-	            SnakeDirection nextDirection = player.directionQueue.front();
-	            player.directionQueue.pop();
+	            SnakeDirection nextDirection = directionQueue.front();
+	            directionQueue.pop();
 
 	            // We check that the direction is not opposite to the current
-	            if ((player.direction == SnakeDirection::Up && nextDirection != SnakeDirection::Down) ||
-	                (player.direction == SnakeDirection::Down && nextDirection != SnakeDirection::Up) ||
-	                (player.direction == SnakeDirection::Left && nextDirection != SnakeDirection::Right) ||
-	                (player.direction == SnakeDirection::Right && nextDirection != SnakeDirection::Left))
+	            if ((direction == SnakeDirection::Up && nextDirection != SnakeDirection::Down) ||
+	                (direction == SnakeDirection::Down && nextDirection != SnakeDirection::Up) ||
+	                (direction == SnakeDirection::Left && nextDirection != SnakeDirection::Right) ||
+	                (direction == SnakeDirection::Right && nextDirection != SnakeDirection::Left))
 	            {
-	                player.direction = nextDirection;
+	                direction = nextDirection;
 	            }
 	        }
 
 	        // We move the snakes
-	        switch (player.direction)
+	        switch (direction)
 	    	{
 	            case SnakeDirection::Right:
-	                player.position.x++;
-	                if (player.position.x >= FIELD_SIZE_X) player.position.x = 0;
-	        		player.spriteHead.setRotation(0);
+	                position.x++;
+	                if (position.x >= FIELD_SIZE_X) position.x = 0;
+	        		spriteHead.setRotation(0);
 	                break;
 	            case SnakeDirection::Up:
-	                player.position.y--;
-	                if (player.position.y < 0) player.position.y = FIELD_SIZE_Y - 1;
-	        		player.spriteHead.setRotation(270);
+	                position.y--;
+	                if (position.y < 0) position.y = FIELD_SIZE_Y - 1;
+	        		spriteHead.setRotation(270);
 	                break;
 	            case SnakeDirection::Left:
-	                player.position.x--;
-	                if (player.position.x < 0) player.position.x = FIELD_SIZE_X - 1;
-	        		player.spriteHead.setRotation(180);
+	                position.x--;
+	                if (position.x < 0) position.x = FIELD_SIZE_X - 1;
+	        		spriteHead.setRotation(180);
 	                break;
 	            case SnakeDirection::Down:
-	                player.position.y++;
-	                if (player.position.y >= FIELD_SIZE_Y) player.position.y = 0;
-	        		player.spriteHead.setRotation(90);
+	                position.y++;
+	                if (position.y >= FIELD_SIZE_Y) position.y = 0;
+	        		spriteHead.setRotation(90);
 	                break;
 		    }
 
 	    	// Check the collision with a wall || We check the collision with ourselves
-	    	if (game.field[player.position.x][player.position.y] == FIELD_CELL_TYPE_WALL ||
-	    		game.field[player.position.x][player.position.y] > FIELD_CELL_TYPE_NONE)
+	    	if (game.GetField()[position.x][position.y] == FIELD_CELL_TYPE_WALL ||
+	    		game.GetField()[position.x][position.y] > FIELD_CELL_TYPE_NONE)
 	    	{
-	    		game.timeSinceGameOver = 0.f;
-	    		if (IsNewRecord(game.uiState.menuState.VLeaderboardItems, game.uiState.menuState.numScores))
+	    		game.SetTimeSinceGameOver(0.f);
+	    		if (game.GetMenu().IsNewRecord(game.GetMenu().GetVLeaderboardItems(), game.GetMenu().GetNumScores()))
 	    		{
-	    			SwitchGameState(game, GameState::ConfirmationMenu);
+	    			game.SwitchGameState(GameState::ConfirmationMenu);
 	    		}
 			    else
 			    {
-				    SwitchGameState(game, GameState::GameOver);
+				    game.SwitchGameState(GameState::GameOver);
 			    }
-	    		PlaySound(game.uiState, game.uiState.deathBuffer);
+	    		game.GetMenu().PlaySound(game.GetMenu().GetDeathBuffer());
 	    		return;
 	    	}
 
 	        // Check if the snake has eaten an apple
-	        if (game.field[player.position.x][player.position.y] == FIELD_CELL_TYPE_APPLE)
+	        if (game.GetField()[position.x][position.y] == FIELD_CELL_TYPE_APPLE)
 	        {
-	            player.snakeLength++;
-	        	game.numEatenApples += 1;
-	        	game.uiState.menuState.numScores += game.scoresPerApple;
-	            GrowSnake(game);
-	            AddApple(game);
-	            PlaySound(game.uiState, game.uiState.eatAppleBuffer);
+	            snakeLength++;
+	        	game.SetNumEatenApples(game.GetNumEatenApples() + 1);
+	        	game.GetMenu().GetNumScores() += game.GetScoresPerApple();
+	            Grow(game);
+	            AddOnField(game);
+	            game.GetMenu().PlaySound(game.GetMenu().GetEatAppleBuffer());
 	        }
 
 	        // We update the game field
-	        game.field[player.position.x][player.position.y] = player.snakeLength + 1;
+	        game.GetField()[position.x][position.y] = snakeLength + 1;
 
 	        // Reduce the life of the body parts
-	        for (auto& i : game.field)
+	        for (auto& i : game.GetField())
 	        {
 	            for (int& j : i)
 	            {
@@ -234,7 +234,7 @@ namespace SnakeGame
 	        }
 
 	        // We update the time of the last update
-	        player.lastUpdateTime = currentTime;
+	        lastUpdateTime = currentTime;
 	    }
 	}
 }

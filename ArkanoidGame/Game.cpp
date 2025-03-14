@@ -1,113 +1,123 @@
 // ReSharper disable CppClangTidyClangDiagnosticCoveredSwitchDefault
 #include "Game.h"
+#include "Application.h"
 #include <cassert>
 #include <random>
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
-	void InitGame(SGame& game, sf::RenderWindow& window)
+	Game::Game(sf::RenderWindow& window)
+		: isScreenLeaderboard(false),
+		  isGameStarting(true),
+		  gameStartTime(0.f),
+		  onKeyHold(false),
+		  difficultySelected(false),
+		  numEatenApples(0),
+		  scoresPerApple(10),
+		  timeSinceGameOver(0.f),
+		  snake(*this),
+		  wall(*this),
+		  apple(*this),
+		  gameMode(0)
 	{
-		InitUI(game.uiState);
-		PushGameState(game, GameState::MainMenu);
-		InitGameState(game);
-		InitField(game);
-		window.setIcon(32, 32, game.uiState.icon.getPixelsPtr());
+		Init(window);
 	}
 
-	void InitGameState(SGame& game)
+	Game::~Game()
 	{
-		// Set default values
-		game.numEatenApples = 0;
-		game.uiState.menuState.numScores = 0;
-		game.timeSinceGameOver = 0.f;
-		game.isGameStarting = true;
-		game.gameStartTime = 0.f;
+	}
+
+	void Game::Init(sf::RenderWindow& window)
+	{
+		menu.Init();
+		PushGameState(GameState::MainMenu);
+		InitGameState();
+		InitField();
+		window.setIcon(32, 32, icon.getPixelsPtr());
+	}
+
+	void Game::InitGameState()
+	{
+		// Set default value
+		menu.SetNumScores(0);
 
 		// Init Player
-		InitSnake(game.snake, game);
+		snake = Snake(*this);
 		
 		// Init Walls
-		if (!game.wallsVec.empty())
-		{
-			game.wallsVec.clear();
-		}
-		
-		SWall wall;
-		InitWall(wall, game);
-		game.wallsVec.emplace_back(wall);
+		wallsVec.clear();
+		wall = Wall(*this);
+		wallsVec.emplace_back(wall);
 		
 		// Init Apples
-		if (!game.applesVec.empty())
+		applesVec.clear();
+		apple = Apple(*this);
+		applesVec.emplace_back(apple);
+
+		// Start music if in Playing state
+		if (GetCurrentGameState() == GameState::Playing)
 		{
-			game.applesVec.clear();
-		}
-		
-		SApple apple;
-		InitApple(apple, game);
-		game.applesVec.emplace_back(apple);
-		
-		if (GetCurrentGameState(game) == GameState::Playing)
-		{
-			InitPlayMusic(game.uiState);
-			OnPlayMusic(game.uiState, true);
+			menu.InitPlayMusic();
+			menu.OnPlayMusic(true);
 		}
 	}
 
-	void InitField (SGame& game)
+	void Game::InitField()
 	{
-		// Очистка игрового поля
-		for (auto& i : game.field)
+		// Clear the game field
+		for (auto& row : field)
 		{
-			for (int& j : i)
+			for (int& cell : row)
 			{
-				j = FIELD_CELL_TYPE_NONE;
+				cell = FIELD_CELL_TYPE_NONE;
 			}
 		}
 
-		AddSnake(game);
-		AddWall(game);
-		AddApple(game);
+		// Add game objects to the field
+		snake.AddOnField(*this);
+		wall.AddOnField(*this);
+		apple.AddOnField(*this);
 	}
 
-	void InitStartNewGame(SGame& game)
+	void Game::InitStartNewGame()
 	{
-		PushGameState(game, GameState::Playing);
-		InitGameState(game);
-		InitField(game);
+		PushGameState(GameState::Playing);
+		InitGameState();
+		InitField();
 	}
 	
-	void UpdateGame(SGame& game, float currentTime, sf::RenderWindow& window, const sf::Event& event)
+	void Game::Update(float currentTime, sf::RenderWindow& window, const sf::Event& event)
 	{
-		switch (GetCurrentGameState(game))
+		switch (GetCurrentGameState())
 		{
 		case GameState::Playing:
-			UpdatePlayingState(event, game, currentTime);
+			UpdatePlayingState(event, currentTime);
 			break;
 		case GameState::NameInputMenu:
-			UpdateNameInputMenuState(game, event);
+			UpdateNameInputMenuState(event);
 			break;
 		case GameState::ConfirmationMenu:
-			UpdateMenuState(game, event, window, game.uiState.menuState.vTextConfirmationMenuItems);
+			UpdateMenuState(event, window, menu.GetVTextMainMenuItems());
 			break;
 		case GameState::GameOver:
-			UpdateMenuState(game, event, window, game.uiState.menuState.vTextGameOverMenuItems);
+			UpdateMenuState(event, window, menu.GetVTextGameOverMenuItems());
 			break;
 		case GameState::MainMenu:
-			UpdateMenuState(game, event, window, game.uiState.menuState.vTextMainMenuItems);
+			UpdateMenuState(event, window, menu.GetVTextMainMenuItems());
 			break;
 		case GameState::PauseMenu:
-			game.isGameStarting = true;
-			game.gameStartTime = 0.f;
-			UpdateMenuState(game, event, window, game.uiState.menuState.vTextPauseMenuItems);
+			isGameStarting = true;
+			gameStartTime = 0.f;
+			UpdateMenuState(event, window, menu.GetVTextPauseMenuItems());
 			break;
 		case GameState::Leaderboard:
-			UpdateLeaderboardState(game, event);
+			UpdateLeaderboardState(event);
 			break;
 		case GameState::Difficulty:
-			UpdateMenuState(game, event, window, game.uiState.menuState.vTextDifficultyMenuItems);
+			UpdateMenuState(event, window, menu.GetVTextDifficultyMenuItems());
 			break;
 		case GameState::Options:
-			UpdateMenuState(game, event, window, game.uiState.menuState.vTextOptionsMenuItems);
+			UpdateMenuState(event, window, menu.GetVTextOptionsMenuItems());
 			break;
 		case GameState::None:  // NOLINT(bugprone-branch-clone)
 				break;
@@ -115,174 +125,174 @@ namespace SnakeGame
 			break;
 		}
 
-		UpdateUI(game.uiState, game);
+		menu.Update(*this);
 	}
 
-	void UpdatePlayingState(const sf::Event& event, SGame& game, float currentTime)
+	void Game::UpdatePlayingState(const sf::Event& event, float currentTime)
 	{
-		HandleInput(game.snake);
-		MoveSnake(game, currentTime);
+		snake.HandleInput();
+		snake.Move(*this, currentTime);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				PushGameState(game, GameState::PauseMenu);
-				game.onKeyHold = true;
+				PushGameState(GameState::PauseMenu);
+				onKeyHold = true;
 			}
-			game.onKeyHold = true;
+			onKeyHold = true;
 		}
 		else if (event.type == sf::Event::KeyReleased)
 		{
-			game.onKeyHold = false;
+			onKeyHold = false;
 		}
 	}
 
-	void UpdateNameInputMenuState(SGame& game, const sf::Event& event)
+	void Game::UpdateNameInputMenuState(const sf::Event& event)
 	{
 		if (event.type == sf::Event::TextEntered && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				if (event.text.unicode == '' && !game.uiState.menuState.nameInputPlayerName.empty()) 
+				if (event.text.unicode == '' && !menu.GetNameInputPlayerName().empty()) 
 				{
-					game.uiState.menuState.nameInputPlayerName.pop_back();
-					game.onKeyHold = true;
+					menu.GetNameInputPlayerName().pop_back();
+					onKeyHold = true;
 				}
 				else if (event.text.unicode < 128 && event.text.unicode != 32 && event.text.unicode != '') // Only ASCII-symbols without Space and Backspace
 				{
-					game.uiState.menuState.nameInputPlayerName += static_cast<char>(event.text.unicode);
-					game.onKeyHold = true;
+					menu.GetNameInputPlayerName() += static_cast<char>(event.text.unicode);
+					onKeyHold = true;
 				}
 			}				
-			game.uiState.menuState.nameInputMenuText.setString("Enter your name: " + game.uiState.menuState.nameInputPlayerName);
+			menu.GetNameInputMenuText().setString("Enter your name: " + menu.GetNameInputPlayerName());
 		}
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				if (game.uiState.menuState.nameInputPlayerName.empty())
+				if (menu.GetNameInputPlayerName().empty())
 				{
-					game.uiState.menuState.nameInputPlayerName = "XYZ";
+					menu.GetNameInputPlayerName() = "XYZ";
 				}
-				AddRecord(game.uiState.menuState, game.uiState.menuState.nameInputPlayerName, game.uiState.menuState.numScores);
-				PushGameState(game, GameState::GameOver);
-				game.onKeyHold = true;
+				menu.AddRecord(menu.GetNameInputPlayerName(), menu.GetNumScores());
+				PushGameState(GameState::GameOver);
+				onKeyHold = true;
 			}
 		}
 		
 		if (event.type == sf::Event::KeyReleased)
 		{
-			game.onKeyHold = false;
+			onKeyHold = false;
 		}
 	}
 	
-	void UpdateMenuState(SGame& game, const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems)
+	void Game::UpdateMenuState(const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				MoveUp(game.uiState.menuState, menuItems);
-				PlaySound(game.uiState, game.uiState.selectMenuBuffer);
+				menu.MoveUp(menuItems);
+				menu.PlaySound(menu.GetSelectMenuBuffer());
 			}
-			game.onKeyHold = true;
+			onKeyHold = true;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				MoveDown(game.uiState.menuState, menuItems);
-				PlaySound(game.uiState, game.uiState.selectMenuBuffer);
+				menu.MoveDown(menuItems);
+				menu.PlaySound(menu.GetSelectMenuBuffer());
 			}
-			game.onKeyHold = true;
+			onKeyHold = true;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				switch (GetCurrentGameState(game))  // NOLINT(clang-diagnostic-switch-enum)
+				switch (GetCurrentGameState())  // NOLINT(clang-diagnostic-switch-enum)
 				{
 				case GameState::MainMenu:
-					HandleMainMenuSelection(game.uiState.menuState.selectedItemIndex, game, window);
+					HandleMainMenuSelection(menu.GetSelectedItemIndex(), window);
 					break;
 				case GameState::PauseMenu:
-					HandlePauseMenuSelection(game.uiState.menuState.selectedItemIndex, game);
+					HandlePauseMenuSelection(menu.GetSelectedItemIndex());
 					break;
 				case GameState::ConfirmationMenu:
-					HandleConfirmationSelection(game.uiState.menuState.selectedItemIndex, game);
+					HandleConfirmationSelection(menu.GetSelectedItemIndex());
 					break;
 				case GameState::GameOver:
-					HandleGameOverMenuSelection(game.uiState.menuState.selectedItemIndex, game);
+					HandleGameOverMenuSelection(menu.GetSelectedItemIndex());
 					break;
 				case GameState::Difficulty:
-					HandleDifficultyMenuSelection(game.uiState.menuState.selectedItemIndex, game);
+					HandleDifficultyMenuSelection(menu.GetSelectedItemIndex());
 					break;
 				case GameState::Options:
-					HandleOptionsMenuSelection(game.uiState.menuState.selectedItemIndex, game);
+					HandleOptionsMenuSelection(menu.GetSelectedItemIndex());
 						break;
 				default:
 					break;
 				}
-				PlaySound(game.uiState, game.uiState.pressEnterBuffer);
-				game.onKeyHold = true;
+				menu.PlaySound(menu.GetPressEnterBuffer());
+				onKeyHold = true;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GetCurrentGameState(game) != GameState::MainMenu)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GetCurrentGameState() != GameState::MainMenu)
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				SwitchGameState(game, GetPreviousGameState(game));
+				SwitchGameState(GetPreviousGameState());
 			}
-			game.onKeyHold = true;
+			onKeyHold = true;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GetCurrentGameState(game) == GameState::MainMenu)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GetCurrentGameState() == GameState::MainMenu)
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
 				window.close();
 			}
-			game.onKeyHold = true;
+			onKeyHold = true;
 		}
 		else if (event.type == sf::Event::KeyReleased)
 		{
-			game.onKeyHold = false;
+			onKeyHold = false;
 		}
 	}
 
-	void UpdateLeaderboardState(SGame& game, const sf::Event& event)
+	void Game::UpdateLeaderboardState(const sf::Event& event)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		{
-			if (!game.onKeyHold)
+			if (!onKeyHold)
 			{
-				SwitchGameState(game,GetPreviousGameState(game));
+				SwitchGameState(GetPreviousGameState());
 			}
-			game.onKeyHold = true;
+			onKeyHold = true;
 		}
 		else if (event.type == sf::Event::KeyReleased)
 		{
-			game.onKeyHold = false;
+			onKeyHold = false;
 		}
 	}
 	
-	void HandleMainMenuSelection(unsigned int selectedIndex, SGame& game, sf::RenderWindow& window)
+	void Game::HandleMainMenuSelection(unsigned int selectedIndex, sf::RenderWindow& window)
 	{
 		switch (selectedIndex)
 		{
 		case 0:  // Start Game
-			InitStartNewGame(game);
+			InitStartNewGame();
 			break;
 		case 1:  // Difficulty
-			ResetAllMenuSelection(game.uiState.menuState);
-			PushGameState(game, GameState::Difficulty);
+			menu.ResetAllMenuSelection();
+			PushGameState(GameState::Difficulty);
 			break;
 		case 2:  // Leaderboard
-			PushGameState(game, GameState::Leaderboard);
+			PushGameState(GameState::Leaderboard);
 			break;
 		case 3:  // Options
-			PushGameState(game, GameState::Options);
+			PushGameState(GameState::Options);
 				break;
 		default: // Exit
 			window.close();
@@ -290,90 +300,90 @@ namespace SnakeGame
 		}
 	}
 
-	void HandlePauseMenuSelection(unsigned int selectedIndex, SGame& game)
+	void Game::HandlePauseMenuSelection(unsigned int selectedIndex)
 	{
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // Continue Game
-			SwitchGameState(game, GameState::Playing);
-			OnPlayMusic(game.uiState, true);
+			SwitchGameState(GameState::Playing);
+			menu.OnPlayMusic(true);
 			break;
 		default:  // Back to main menu
-			ResetAllMenuSelection(game.uiState.menuState);
-			PushGameState(game, GameState::MainMenu);
+			menu.ResetAllMenuSelection();
+			PushGameState(GameState::MainMenu);
 			break;
 		}
 	}
 
-	void HandleConfirmationSelection(unsigned int selectedIndex, SGame& game)
+	void Game::HandleConfirmationSelection(unsigned int selectedIndex)
 	{
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // No
-			PushGameState(game, GameState::GameOver);
+			PushGameState(GameState::GameOver);
 			break;
 		default: // Yes
-			PushGameState(game, GameState::NameInputMenu);
+			PushGameState(GameState::NameInputMenu);
 			break;
 		}
 	}
 
-	void HandleGameOverMenuSelection(unsigned int selectedIndex, SGame& game)
+	void Game::HandleGameOverMenuSelection(unsigned int selectedIndex)
 	{
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // New Game
-			InitStartNewGame(game);
+			InitStartNewGame();
 			break;
 		default:  // Back to main menu
-			ResetAllMenuSelection(game.uiState.menuState);
-			PushGameState(game, GameState::MainMenu);
+			menu.ResetAllMenuSelection();
+			PushGameState(GameState::MainMenu);
 			break;
 		}
 	}
 
-	void HandleDifficultyMenuSelection(unsigned int selectedIndex, SGame& game)
+	void Game::HandleDifficultyMenuSelection(unsigned int selectedIndex)
 	{
 		// ReSharper disable once CppUnsignedZeroComparison
-		if (selectedIndex >= 0 && selectedIndex < game.uiState.menuState.VStringDifficultyMenuItems.size())
+		if (selectedIndex >= 0 && selectedIndex < menu.GetVStringDifficultyMenuItems().size())
 		{
-			game.snake.movementInterval = game.uiState.menuState.VStringDifficultyMenuItems[selectedIndex].snakeSpeed;
-			game.scoresPerApple = game.uiState.menuState.VStringDifficultyMenuItems[selectedIndex].scoresPerApple;
-			game.difficultySelected = true;
+			snake.SetMovementInterval(menu.GetVStringDifficultyMenuItems()[selectedIndex].snakeSpeed);
+			scoresPerApple = menu.GetVStringDifficultyMenuItems()[selectedIndex].scoresPerApple;
+			difficultySelected = true;
 
-			SwitchGameState(game, GameState::MainMenu);
+			SwitchGameState(GameState::MainMenu);
 		}
 	}
 
-	void HandleOptionsMenuSelection(unsigned int selectedIndex, SGame& game)
+	void Game::HandleOptionsMenuSelection(unsigned int selectedIndex)
 	{
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // Sound
-			game.uiState.menuState.isSoundOn = !game.uiState.menuState.isSoundOn;
-			SetFillColorRectangle(game.uiState.menuState, selectedIndex, game.uiState.menuState.isSoundOn);
+			menu.SwitchIsSoundOn();
+			menu.SetFillColorRectangle(selectedIndex, menu.GetIsSoundOn());
 			break;
 		default:  // Music
-			game.uiState.menuState.isMusicOn = !game.uiState.menuState.isMusicOn;
-			SetFillColorRectangle(game.uiState.menuState, selectedIndex, game.uiState.menuState.isMusicOn);
+			menu.SwitchIsMusicOn();
+			menu.SetFillColorRectangle(selectedIndex, menu.GetIsMusicOn());
 			break;
 		}
 	}
 
-	void DrawGame(SGame& game, sf::RenderWindow& window)
+	void Game::Draw(sf::RenderWindow& window)
 	{		
 		// Draw Background
 		for (int i = 0; i < FIELD_SIZE_X; i++)
 		{
 			for (int j = 0; j < FIELD_SIZE_Y; j++)
 			{
-				switch (game.field[i][j])
+				switch (field[i][j])
 				{
 				case FIELD_CELL_TYPE_NONE:
-					game.uiState.noneSprite.setPosition
+					menu.GetNoneSprite().setPosition
 					( i * CELL_SIZE + BORDER_SIZE + CELL_SIZE / 2.f,
 					  j * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE + CELL_SIZE / 2.f);
-					window.draw(game.uiState.noneSprite);
+					window.draw(menu.GetNoneSprite());
 					break;
 				default:
 					break;
@@ -382,64 +392,63 @@ namespace SnakeGame
 		}
 		
 		// Draw Player
-		DrawSnake(game.snake, game, window);
+		snake.Draw(*this, window);
 
 		// Draw Food
-		for (SApple& apple : game.applesVec)
+		for (Apple& apple : applesVec)
 		{
-			DrawApple(apple, game, window);
+			apple.Draw(*this, window);
 		}
 		
 		// Draw Barrier
-		for (SWall& wall : game.wallsVec)
+		for (Wall& wall : wallsVec)
 		{
-			DrawWall(wall, game, window);
+			wall.Draw(*this, window);
 		}
 
 		// Draw UI
-		DrawUI(game.uiState, window);
+		menu.Draw(window);
 	}
 
-
-	void PushGameState(SGame& game, GameState state)
+	void Game::PushGameState(GameState state)
 	{
-		ResetAllMenuSelection(game.uiState.menuState);
-		game.gameStateStack.push_back(state);
+		menu.ResetAllMenuSelection();
+		gameStateStack.push_back(state);
 	}
 
-	void PopGameState(SGame& game)
+	void Game::PopGameState()
 	{
-		if (!game.gameStateStack.empty())
+		if (!gameStateStack.empty())
 		{
-			ResetAllMenuSelection(game.uiState.menuState);
-			game.gameStateStack.pop_back();
+			menu.ResetAllMenuSelection();
+			gameStateStack.pop_back();
 		}
 		else
 		{
-			ResetAllMenuSelection(game.uiState.menuState);
-			game.gameStateStack.push_back(GameState::MainMenu);
+			menu.ResetAllMenuSelection();
+			gameStateStack.push_back(GameState::MainMenu);
 		}
 	}
 
-	void SwitchGameState(SGame& game, GameState newState)
+	void Game::SwitchGameState(GameState newState)
 	{
-		if (!game.gameStateStack.empty())
+		if (!gameStateStack.empty())
 		{
-			ResetAllMenuSelection(game.uiState.menuState);
-			game.gameStateStack.pop_back();
-			game.gameStateStack.push_back(newState);
+			menu.ResetAllMenuSelection();
+			gameStateStack.pop_back();
+			gameStateStack.push_back(newState);
 		}
 		else
 		{
-			PushGameState(game, newState);
+			PushGameState(newState);
 		}
 	}
 
-	GameState GetCurrentGameState(const SGame& game)
+	GameState Game::GetCurrentGameState()
 	{
-		if (!game.gameStateStack.empty())
+		if (!gameStateStack.empty())
 		{
-			return game.gameStateStack.back();
+			return gameStateStack.back();
 		}
 		else
 		{
@@ -447,11 +456,11 @@ namespace SnakeGame
 		}
 	}
 
-	GameState GetPreviousGameState(const SGame& game)
+	GameState Game::GetPreviousGameState()
 	{
-		if (game.gameStateStack.size() > 1)
+		if (gameStateStack.size() > 1)
 		{
-			return game.gameStateStack.end()[-2];
+			return gameStateStack.end()[-2];
 		}
 		else
 		{
@@ -459,10 +468,10 @@ namespace SnakeGame
 		}
 	}
 	
-	int GetRandomEmptyCell(const SGame& game)
+	int Game::GetRandomEmptyCell()
 	{
 		int emptyCellCount = 0;
-		for (const auto& i : game.field)
+		for (const auto& i : field)
 		{
 			for (int j : i)
 			{
@@ -478,7 +487,7 @@ namespace SnakeGame
 		{
 			for (int j = 0; j < FIELD_SIZE_Y; j++)
 			{
-				if (game.field[i][j] == FIELD_CELL_TYPE_NONE)
+				if (field[i][j] == FIELD_CELL_TYPE_NONE)
 				{
 					if (emptyCellIndex == targetEmptyCellIndex)
 					{
@@ -491,7 +500,7 @@ namespace SnakeGame
 		return -1;
 	}
 
-	void ShutdownGame(SGame& game)
+	void Shutdown()
 	{
 		
 	}

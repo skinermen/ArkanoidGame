@@ -1,20 +1,24 @@
 ﻿#include "Application.h"
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
-    Application::Application(const std::string& gameName) :
-        window(sf::VideoMode(SnakeGame::SCREEN_WIDTH, SnakeGame::SCREEN_HEIGHT), "SnakeGame")
+    Application& Application::Instance()
+    {
+        static Application instance;
+        return instance;
+    }
+    
+    Application::Application() :
+        window(sf::VideoMode(ArkanoidGame::SCREEN_WIDTH, ArkanoidGame::SCREEN_HEIGHT), GAME_NAME), game(window)
     {
         // Init random number generator
         int seed = static_cast<int>(time(nullptr));
         srand(seed);
-
-        InitGame(game,window);
     }
 
     Application::~Application()
     {
-        ShutdownGame(game);
+        
     }
 
     void Application::Run()
@@ -44,11 +48,11 @@ namespace SnakeGame
             float currentTime = gameClock.getElapsedTime().asSeconds();
 
             //Update game state
-            UpdateGame(game, currentTime, window, event);
+            game.Update(currentTime, window, event);
 
             // Draw game
             window.clear();
-            DrawGame(game, window);
+            game.Draw(window);
 
             window.display();
         }

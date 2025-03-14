@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
 #define FIELD_CELL_TYPE_NONE 0
 #define FIELD_CELL_TYPE_APPLE (-1)
@@ -9,7 +9,8 @@ namespace SnakeGame
 	constexpr int FIELD_SIZE_X = 25;
 	constexpr int FIELD_SIZE_Y = 20;
 	constexpr int CELL_SIZE = 32;
-	
+
+	const std::string GAME_NAME = "ArkanoidGame";
 	const std::string RESOURCES_PATH = "Resources/";
 	const std::string LEADERBOARD_FILENAME = "leaderboard.txt";
 	const std::string DEFAULT_NAME = "XYZ";

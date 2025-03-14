@@ -2,17 +2,20 @@
 #include <SFML/Graphics.hpp>
 #include "Math.h"
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
-	struct SWall
+	class Game; // Forward declaration
+	
+	class Wall
 	{
+	public:
+		Wall(Game& game);
+		void AddOnField(Game& game);
+		void Draw(Game& game, sf::RenderWindow& window);
+
+	private:
 		Position2D position;
 		sf::Sprite sprite;
 	};
-
-	struct SGame;
-
-	void InitWall(SWall& wall, const SGame& game);
-	void AddWall(SGame& game);
-	void DrawWall(SWall& wall, const SGame& game, sf::RenderWindow& window);
+	
 }

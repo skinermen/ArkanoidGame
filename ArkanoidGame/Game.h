@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Snake.h"
 #include "Apple.h"
 #include "Wall.h"
-#include "UI.h"
-#include <pplwin.h>
+#include "Menu.h"
+#include <vector>
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
 	enum class GameState
 	{
@@ -21,65 +22,100 @@ namespace SnakeGame
 		Difficulty,
 		Options,
 	};
-	
-	struct SGame
-	{
-		// Game state
-		bool isScreenLeaderboard = false;
-		bool isGameStarting  = true;
-		float gameStartTime = 0.f;
 
-		// Key state
-		bool onKeyHold = false;
-		bool difficultySelected = false;
+	class Game
+	{
+	public:
+		Game(sf::RenderWindow& window);
+		~Game();
+
+		void Init(sf::RenderWindow& window);
+		void Update(float currentTime, sf::RenderWindow& window, const sf::Event& event);
+		void Draw(sf::RenderWindow& window);
+		void Shutdown();
+
+		void PushGameState(GameState state);
+		void PopGameState();
+		void SwitchGameState(GameState newState);
+
+		// Get & Set
+		GameState GetCurrentGameState();
+		GameState GetPreviousGameState();
+		int GetRandomEmptyCell();
 		
-		// Global game data
-		int numEatenApples = 0;
-		int scoresPerApple = SCORES_PER_APPLE_EASY;
-		float timeSinceGameOver = 0.f;
-		UIState uiState;
+		// UI& GetUI() { return ui; }
+		Menu& GetMenu() { return menu; }
+		int (&GetField())[FIELD_SIZE_X][FIELD_SIZE_Y] { return field; }
+		int GetIsGameStarting() const { return isGameStarting; }
+		void SetIsGameStarting(bool newValue) { isGameStarting = newValue; }
+		float GetGameStartTime() const { return gameStartTime; }
+		void SetGameStartTime(float newValue) { gameStartTime = newValue; }
+		void SetTimeSinceGameOver(float newValue) { timeSinceGameOver = newValue; }
+		int GetNumEatenApples() const { return numEatenApples; }
+		void SetNumEatenApples(int newValue) { numEatenApples = newValue; }
+		int GetScoresPerApple() const { return scoresPerApple; }
+
+	private:
+		void InitGameState();
+		void InitField();
+		void InitStartNewGame();
+		void UpdatePlayingState(const sf::Event& event, float currentTime);
+		void UpdateNameInputMenuState(const sf::Event& event);
+		void UpdateMenuState(const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems);
+		void UpdateLeaderboardState(const sf::Event& event);
+
+		void HandleMainMenuSelection(unsigned int selectedIndex, sf::RenderWindow& window);
+		void HandlePauseMenuSelection(unsigned int selectedIndex);
+		void HandleConfirmationSelection(unsigned int selectedIndex);
+		void HandleGameOverMenuSelection(unsigned int selectedIndex);
+		void HandleDifficultyMenuSelection(unsigned int selectedIndex);
+		void HandleOptionsMenuSelection(unsigned int selectedIndex);
+		
+		// Game state variables
+		bool isScreenLeaderboard;
+		bool isGameStarting;
+		float gameStartTime;
+
+		bool onKeyHold;
+		bool difficultySelected;
+
+		int numEatenApples;
+		int scoresPerApple;
+		float timeSinceGameOver;
 		std::vector<GameState> gameStateStack;
 		int field[FIELD_SIZE_X][FIELD_SIZE_Y];
 
-
-		// Init object state
-		SSnake snake;
-		std::vector<SApple> applesVec;
-		std::vector<SWall> wallsVec;
+		// Game objects
+		// UI ui;
+		Menu menu;
+		Snake snake;
+		Wall wall;
+		Apple apple;
+		std::vector<Apple> applesVec;
+		std::vector<Wall> wallsVec;
 
 		// Game mode data
-		int gameMode = 0;
-		
+		int gameMode;
+
+		// SFML Resources
+		sf::Texture snakeTextureHead; 
+		sf::Texture snakeTextureBody;
+		sf::Texture foodTexture;
+		sf::Texture wallTexture;
+		sf::Texture noneTexture;
+		sf::Texture grassTexture;
+		sf::Texture menuTexture;
+		sf::Texture scoreboardTexture;
+		sf::RenderTexture pauseBlurTexture;
+		sf::Sprite pauseBlurSprite;
+		sf::Sprite noneSprite;
+		sf::Font font;
+		sf::SoundBuffer eatFoodBuffer;
+		sf::SoundBuffer deathBuffer;
+		sf::SoundBuffer winnerBuffer;
+		sf::Music musicMainTheme;
+		sf::Image icon;
+
 		sf::Event event;
 	};
-
-	void InitGame(SGame& game, sf::RenderWindow& window);
-	void InitGameState(SGame& game);
-	void InitField (SGame& game);
-	void InitStartNewGame(SGame& game);
-	
-	void UpdateGame(SGame& game, float currentTime, sf::RenderWindow& window, const sf::Event& event);
-	void UpdatePlayingState(const sf::Event& event, SGame& game, float currentTime);
-	void UpdateNameInputMenuState(SGame& game, const sf::Event& event);
-	void UpdateMenuState(SGame& game, const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems);
-	void UpdateLeaderboardState(SGame& game, const sf::Event& event);
-	
-	void HandleMainMenuSelection(unsigned int selectedIndex, SGame& game, sf::RenderWindow& window);
-	void HandlePauseMenuSelection(unsigned int selectedIndex, SGame& game);
-	void HandleConfirmationSelection(unsigned int selectedIndex, SGame& game);
-	void HandleGameOverMenuSelection(unsigned int selectedIndex, SGame& game);
-	void HandleDifficultyMenuSelection(unsigned int selectedIndex, SGame& game);
-	void HandleOptionsMenuSelection(unsigned int selectedIndex, SGame& game);
-
-	void DrawGame(SGame& game, sf::RenderWindow& window);
-	
-	void PushGameState(SGame& game, GameState state);
-	void PopGameState(SGame& game);
-	void SwitchGameState(SGame& game, GameState newState);
-	
-	GameState GetCurrentGameState(const SGame& game);
-	GameState GetPreviousGameState(const SGame& game);
-	int GetRandomEmptyCell(const SGame& game);
-	void ShutdownGame(SGame& game);
 }
-

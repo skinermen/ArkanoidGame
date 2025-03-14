@@ -2,18 +2,24 @@
 #include <SFML/Graphics.hpp>
 #include "Game.h"
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
     class Application
     {
     public:
-        Application(const std::string& gameName);
-        ~Application();
+        Application(const Application& app) = delete;
+        Application& operator = (const Application&) = delete;
 
+        static Application& Instance();
+        
         void Run();
 
+        Game& GetGame() { return game; }
+    
     private:
-        SGame game;
+        Application();
+        ~Application();
         sf::RenderWindow window;
+        Game game;
     };
 }

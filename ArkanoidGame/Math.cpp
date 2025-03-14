@@ -1,7 +1,7 @@
 #include "Math.h"
 #include <random>
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidth, float desiredHeight)
 	{

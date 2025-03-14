@@ -6,7 +6,7 @@ namespace sf
 	class Sprite;
 }
 
-namespace SnakeGame
+namespace ArkanoidGame
 {
 	struct Vector2D
 	{
