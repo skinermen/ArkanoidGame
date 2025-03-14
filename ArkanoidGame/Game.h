@@ -1,11 +1,12 @@
 #pragma once
+#include <optional>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Snake.h"
 #include "Apple.h"
 #include "Wall.h"
 #include "Menu.h"
-#include <vector>
 
 namespace ArkanoidGame
 {
@@ -86,11 +87,10 @@ namespace ArkanoidGame
 		int field[FIELD_SIZE_X][FIELD_SIZE_Y];
 
 		// Game objects
-		// UI ui;
 		Menu menu;
-		Snake snake;
-		Wall wall;
-		Apple apple;
+		std::optional<Snake> snake;
+		std::optional<Wall> wall;
+		std::optional<Apple> apple;
 		std::vector<Apple> applesVec;
 		std::vector<Wall> wallsVec;
 

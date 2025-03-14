@@ -15,9 +15,6 @@ namespace ArkanoidGame
 		  numEatenApples(0),
 		  scoresPerApple(10),
 		  timeSinceGameOver(0.f),
-		  snake(*this),
-		  wall(*this),
-		  apple(*this),
 		  gameMode(0)
 	{
 		Init(window);
@@ -33,7 +30,7 @@ namespace ArkanoidGame
 		PushGameState(GameState::MainMenu);
 		InitGameState();
 		InitField();
-		window.setIcon(32, 32, icon.getPixelsPtr());
+		// window.setIcon(32, 32, icon.getPixelsPtr());
 	}
 
 	void Game::InitGameState()
@@ -47,12 +44,12 @@ namespace ArkanoidGame
 		// Init Walls
 		wallsVec.clear();
 		wall = Wall(*this);
-		wallsVec.emplace_back(wall);
+		wallsVec.emplace_back(wall.value());
 		
 		// Init Apples
 		applesVec.clear();
 		apple = Apple(*this);
-		applesVec.emplace_back(apple);
+		applesVec.emplace_back(apple.value());
 
 		// Start music if in Playing state
 		if (GetCurrentGameState() == GameState::Playing)
@@ -74,9 +71,9 @@ namespace ArkanoidGame
 		}
 
 		// Add game objects to the field
-		snake.AddOnField(*this);
-		wall.AddOnField(*this);
-		apple.AddOnField(*this);
+		snake->AddOnField(*this);
+		wall->AddOnField(*this);
+		apple->AddOnField(*this);
 	}
 
 	void Game::InitStartNewGame()
@@ -130,8 +127,8 @@ namespace ArkanoidGame
 
 	void Game::UpdatePlayingState(const sf::Event& event, float currentTime)
 	{
-		snake.HandleInput();
-		snake.Move(*this, currentTime);
+		snake->HandleInput();
+		snake->Move(*this, currentTime);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 		{
@@ -347,7 +344,7 @@ namespace ArkanoidGame
 		// ReSharper disable once CppUnsignedZeroComparison
 		if (selectedIndex >= 0 && selectedIndex < menu.GetVStringDifficultyMenuItems().size())
 		{
-			snake.SetMovementInterval(menu.GetVStringDifficultyMenuItems()[selectedIndex].snakeSpeed);
+			snake->SetMovementInterval(menu.GetVStringDifficultyMenuItems()[selectedIndex].snakeSpeed);
 			scoresPerApple = menu.GetVStringDifficultyMenuItems()[selectedIndex].scoresPerApple;
 			difficultySelected = true;
 
@@ -392,7 +389,7 @@ namespace ArkanoidGame
 		}
 		
 		// Draw Player
-		snake.Draw(*this, window);
+		snake->Draw(*this, window);
 
 		// Draw Food
 		for (Apple& apple : applesVec)

@@ -6,14 +6,11 @@
 
 namespace ArkanoidGame
 {
-	Menu::Menu()
+	Menu::Menu() : UI()
 	{
-		
 	}
 
-	Menu::~Menu()
-	{
-	}
+	Menu::~Menu() {}
 
 	void Menu::InitPauseTexture()
 	{
@@ -24,6 +21,8 @@ namespace ArkanoidGame
 	
 	void Menu::InitMainMenu()
 	{
+		vTextMainMenuItems.clear();
+		
 		InitRectangle(mainMenuRectangleBackground, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
 			sf::Color::Black, sf::Color::White, 10.f);
 		
@@ -41,6 +40,8 @@ namespace ArkanoidGame
 	
 	void Menu::InitPauseMenu()
 	{
+		vTextPauseMenuItems.clear();
+		
 		InitRectangle(pauseMenuRectangleBackground, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		InitText(pauseMenuTitle, font, 64, 1, sf::Color::White, "Pause menu");
@@ -64,6 +65,8 @@ namespace ArkanoidGame
 
 	void Menu::InitConfirmationMenu()
 	{
+		vTextConfirmationMenuItems.clear();
+		
 		InitRectangle(confirmationMenuRectangleBackground, SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 3.7f,
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		InitText(confirmationMenuText, font, 50, 1, sf::Color::White,
@@ -80,6 +83,8 @@ namespace ArkanoidGame
 
 	void Menu::InitGameOverMenu()
 	{
+		vTextGameOverMenuItems.clear();
+		
 		InitRectangle(gameOverRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
 			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		InitText(gameOverScoreTitle, font, 48, 1, sf::Color::White,
@@ -112,6 +117,8 @@ namespace ArkanoidGame
 
 	void Menu::InitDifficultyMenu()
 	{
+		vTextDifficultyMenuItems.clear();
+		
 		InitRectangle(difficultyMenuRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
 			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		InitText(difficultyMenuTitle, font, 48, 1, sf::Color::White,
@@ -128,6 +135,8 @@ namespace ArkanoidGame
 	
 	void Menu::InitLeaderboard()
 	{
+		vTextLeaderboardItems.clear();
+		
 		InitRectangle(leaderboardRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
 			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		
@@ -151,6 +160,8 @@ namespace ArkanoidGame
 
 	void Menu::InitOptionsMenu()
 	{
+		vTextOptionsMenuItems.clear();
+		
 		InitRectangle(optionsMenuRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
 			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		

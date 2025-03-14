@@ -33,22 +33,21 @@ namespace ArkanoidGame
 		void Init();
 		void InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name = "none");
 		void InitRectangle(sf::RectangleShape& rectangle, float sizeX, float sizeY, sf::Color fillColor, sf::Color outlineColor, float outlineThickness);
-		void InitResources();
 		void Update(Game& game);
 		void Draw(sf::RenderWindow& window);
 		void PlaySound(const sf::SoundBuffer& buffer);
 		void InitPlayMusic();
 		void OnPlayMusic(bool isPlay);
-
-		sf::SoundBuffer GetSelectMenuBuffer() { return selectMenuBuffer; }
-		sf::SoundBuffer GetPressEnterBuffer() { return pressEnterBuffer; }
+		
 		sf::Sprite GetNoneSprite() { return noneSprite; }
-		sf::Texture GetWallTexture() { return wallTexture; }
-		sf::Texture GetSnakeTextureHead() { return snakeTextureHead; }
-		sf::Texture GetSnakeTextureBody() { return snakeTextureBody; }
-		sf::Texture GetAppleTexture() { return appleTexture; }
-		sf::SoundBuffer GetDeathBuffer() { return deathBuffer; }
-		sf::SoundBuffer GetEatAppleBuffer() { return eatAppleBuffer; }
+		const sf::Texture& GetWallTexture() const { return wallTexture; }
+		const sf::Texture& GetSnakeTextureHead() const { return snakeTextureHead; }
+		const sf::Texture& GetSnakeTextureBody() const { return snakeTextureBody; }
+		const sf::Texture& GetAppleTexture() const { return appleTexture; }
+		const sf::SoundBuffer& GetDeathBuffer() const { return deathBuffer; }
+		const sf::SoundBuffer& GetEatAppleBuffer() const { return eatAppleBuffer; }
+		const sf::SoundBuffer& GetSelectMenuBuffer() const { return selectMenuBuffer; }
+		const sf::SoundBuffer& GetPressEnterBuffer() const { return pressEnterBuffer; }
 		int& GetNumScores() { return numScores; }
 		void SetNumScores(int newValue) { numScores = newValue; }
 		bool GetIsSoundOn() { return isSoundOn; }
@@ -91,6 +90,7 @@ namespace ArkanoidGame
 		sf::Image icon;
 
 	protected:
+		void InitResources();
 		sf::Font font;
 		sf::Text gameOverScores;
 	};

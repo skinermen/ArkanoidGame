@@ -17,7 +17,7 @@ namespace ArkanoidGame
 		isScoreboardMenuVisible(false),
 		isOptionsMenuTextVisible(false)
 	{
-		Init();
+		
 	}
 
 	UI::~UI()
@@ -45,18 +45,18 @@ namespace ArkanoidGame
 
 	void UI::InitResources()
 	{
-		assert(font.loadFromFile(RESOURCES_PATH + "\\Fonts/Roboto-Regular.ttf"));
-		assert(snakeTextureHead.loadFromFile(RESOURCES_PATH + "\\snake_head.png"));
-		assert(snakeTextureBody.loadFromFile(RESOURCES_PATH + "\\snake_body.png"));
-		assert(appleTexture.loadFromFile(RESOURCES_PATH + "\\apple.png"));
-		assert(wallTexture.loadFromFile(RESOURCES_PATH + "\\wall.png"));
-		assert(noneTexture.loadFromFile(RESOURCES_PATH + "\\none.png"));
-		assert(icon.loadFromFile(RESOURCES_PATH + "\\icon.png"));
-		assert(deathBuffer.loadFromFile(RESOURCES_PATH + "\\Death.wav"));
-		assert(eatAppleBuffer.loadFromFile(RESOURCES_PATH + "\\Collision.wav"));
-		assert(pressEnterBuffer.loadFromFile(RESOURCES_PATH + "\\Press_Enter.wav"));
-		assert(selectMenuBuffer.loadFromFile(RESOURCES_PATH + "\\Select_Menu.wav"));
-		assert(musicMainTheme.openFromFile(RESOURCES_PATH + "\\MainTheme.wav"));
+		assert(font.loadFromFile(RESOURCES_PATH + "Fonts/Roboto-Regular.ttf"));
+		assert(snakeTextureHead.loadFromFile(RESOURCES_PATH + "snake_head.png"));
+		assert(snakeTextureBody.loadFromFile(RESOURCES_PATH + "snake_body.png"));
+		assert(appleTexture.loadFromFile(RESOURCES_PATH + "apple.png"));
+		assert(wallTexture.loadFromFile(RESOURCES_PATH + "wall.png"));
+		assert(noneTexture.loadFromFile(RESOURCES_PATH + "none.png"));
+		assert(icon.loadFromFile(RESOURCES_PATH + "icon.png"));
+		assert(deathBuffer.loadFromFile(RESOURCES_PATH + "Death.wav"));
+		assert(eatAppleBuffer.loadFromFile(RESOURCES_PATH + "Collision.wav"));
+		assert(pressEnterBuffer.loadFromFile(RESOURCES_PATH + "Press_Enter.wav"));
+		assert(selectMenuBuffer.loadFromFile(RESOURCES_PATH + "Select_Menu.wav"));
+		assert(musicMainTheme.openFromFile(RESOURCES_PATH + "MainTheme.wav"));
 	}
 
 	void UI::Init()
