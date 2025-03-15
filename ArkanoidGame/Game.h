@@ -1,12 +1,9 @@
 #pragma once
-#include <optional>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include "Snake.h"
-#include "Apple.h"
-#include "Wall.h"
 #include "Menu.h"
+#include "Platform.h"
+#include "Ball.h"
 
 namespace ArkanoidGame
 {
@@ -33,15 +30,15 @@ namespace ArkanoidGame
 		void Init(sf::RenderWindow& window);
 		void Update(float currentTime, sf::RenderWindow& window, const sf::Event& event);
 		void Draw(sf::RenderWindow& window);
-		void Shutdown();
+		static void Shutdown();
 
 		void PushGameState(GameState state);
 		void PopGameState();
 		void SwitchGameState(GameState newState);
 
 		// Get & Set
-		GameState GetCurrentGameState();
-		GameState GetPreviousGameState();
+		GameState GetCurrentGameState() const;
+		GameState GetPreviousGameState() const;
 		int GetRandomEmptyCell();
 		
 		// UI& GetUI() { return ui; }
@@ -60,7 +57,7 @@ namespace ArkanoidGame
 		void InitGameState();
 		void InitField();
 		void InitStartNewGame();
-		void UpdatePlayingState(const sf::Event& event, float currentTime);
+		void UpdatePlayingState(const sf::Event& event, const sf::RenderWindow& window, float currentTime);
 		void UpdateNameInputMenuState(const sf::Event& event);
 		void UpdateMenuState(const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems);
 		void UpdateLeaderboardState(const sf::Event& event);
@@ -83,39 +80,16 @@ namespace ArkanoidGame
 		int numEatenApples;
 		int scoresPerApple;
 		float timeSinceGameOver;
+		float currentSnakeSpeed = INITIAL_SPEED_EASY;
 		std::vector<GameState> gameStateStack;
 		int field[FIELD_SIZE_X][FIELD_SIZE_Y];
 
 		// Game objects
 		Menu menu;
-		std::optional<Snake> snake;
-		std::optional<Wall> wall;
-		std::optional<Apple> apple;
-		std::vector<Apple> applesVec;
-		std::vector<Wall> wallsVec;
+		Platform platform;
+		Ball ball;
 
 		// Game mode data
 		int gameMode;
-
-		// SFML Resources
-		sf::Texture snakeTextureHead; 
-		sf::Texture snakeTextureBody;
-		sf::Texture foodTexture;
-		sf::Texture wallTexture;
-		sf::Texture noneTexture;
-		sf::Texture grassTexture;
-		sf::Texture menuTexture;
-		sf::Texture scoreboardTexture;
-		sf::RenderTexture pauseBlurTexture;
-		sf::Sprite pauseBlurSprite;
-		sf::Sprite noneSprite;
-		sf::Font font;
-		sf::SoundBuffer eatFoodBuffer;
-		sf::SoundBuffer deathBuffer;
-		sf::SoundBuffer winnerBuffer;
-		sf::Music musicMainTheme;
-		sf::Image icon;
-
-		sf::Event event;
 	};
 }

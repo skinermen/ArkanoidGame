@@ -4,8 +4,6 @@
 namespace ArkanoidGame
 {
 #define FIELD_CELL_TYPE_NONE 0
-#define FIELD_CELL_TYPE_APPLE (-1)
-#define FIELD_CELL_TYPE_WALL (-2)
 	constexpr int FIELD_SIZE_X = 25;
 	constexpr int FIELD_SIZE_Y = 20;
 	constexpr int CELL_SIZE = 32;
@@ -25,6 +23,9 @@ namespace ArkanoidGame
 	constexpr int SNAKE_SEGMENT_SIZE = CELL_SIZE;
 	constexpr int FOOD_SIZE = CELL_SIZE;
 	constexpr int WALL_SIZE = CELL_SIZE;
+	constexpr float SIZE_PLATFORM_X = 100.f;
+	constexpr float SIZE_PLATFORM_Y = 20.f;
+	constexpr float SIZE_BALL = 8.f; // radius ball
 
 	// Variable difficulty
 	constexpr int SCORES_PER_APPLE_EASY = 2;
@@ -41,4 +42,8 @@ namespace ArkanoidGame
 	
 	// Other
 	constexpr float PAUSE_LENGTH = 1.f;
+	constexpr float MOUSE_MOVE_THRESHOLD = 1.f; // Threshold for determining the mouse movement (in pixels)
+	constexpr float SPEED_PLATFORM = 400.f; // pixels per second
+	constexpr float SPEED_BALL = 300.f; // pixels per second
+	const sf::Vector2f INITIAL_DIRECTION_OF_THE_BALL = sf::Vector2f(SPEED_BALL, -SPEED_BALL);
 }

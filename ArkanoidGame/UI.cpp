@@ -3,6 +3,7 @@
 #include <cassert>
 #include "UI.h"
 #include "Game.h"
+#include "Math.h"
 
 namespace ArkanoidGame
 {
@@ -16,13 +17,7 @@ namespace ArkanoidGame
 		isDifficultyMenuTextVisible(false),
 		isScoreboardMenuVisible(false),
 		isOptionsMenuTextVisible(false)
-	{
-		
-	}
-
-	UI::~UI()
-	{
-	}
+	{}
 
 	void UI::InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name)
 	{
@@ -65,14 +60,13 @@ namespace ArkanoidGame
 		InitPauseTexture();
 		noneSprite.setTexture(noneTexture);
 		noneSprite.setOrigin(CELL_SIZE / 2.f, CELL_SIZE / 2.f);
+		SetSpriteSize(noneSprite, CELL_SIZE, CELL_SIZE);
 		
 		// Playing Resources
 		InitRectangle(playingRectangle, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		
 		InitText(playingScoreText, font, 24, 0, sf::Color::White);
-		
-		InitText(playingInputText, font, 24, 0, sf::Color::White, "Use WASD to move, Space to restart, ESC to exit");
 
 		// Main Menu Text
 		InitMainMenu();
@@ -99,7 +93,7 @@ namespace ArkanoidGame
 		InitOptionsMenu();
 	}
 
-	void UI::Update(Game& game)
+	void UI::Update(const Game& game)
 	{
 		playingScoreText.setString("Scores: " + std::to_string(numScores));
 		gameOverScores.setString(std::to_string(numScores));
@@ -234,10 +228,6 @@ namespace ArkanoidGame
 			playingScoreText.setPosition(10.f + BORDER_SIZE, 10.f + BORDER_SIZE);
 			playingScoreText.setOrigin(0.f, 0.f);
 			window.draw(playingScoreText);
-
-			playingInputText.setPosition(window.getSize().x - 10.f - BORDER_SIZE, 10.f + BORDER_SIZE);
-			playingInputText.setOrigin(playingInputText.getLocalBounds().width, 0.f);
-			window.draw(playingInputText);
 		}
 
 		if (isMainMenuTextVisible)

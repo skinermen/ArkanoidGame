@@ -10,8 +10,8 @@ namespace ArkanoidGame
 	{
 	public:
 		UI();
-		~UI();
-
+		virtual ~UI() = default;
+		
 		virtual  void InitPauseTexture() = 0;
 		virtual  void InitMainMenu() = 0;
 		virtual  void InitPauseMenu() = 0;
@@ -31,15 +31,16 @@ namespace ArkanoidGame
 		virtual  void DrawOptionsMenu(sf::RenderWindow& window) = 0;
 
 		void Init();
-		void InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name = "none");
-		void InitRectangle(sf::RectangleShape& rectangle, float sizeX, float sizeY, sf::Color fillColor, sf::Color outlineColor, float outlineThickness);
-		void Update(Game& game);
+		static void InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name = "none");
+		static void InitRectangle(sf::RectangleShape& rectangle, float sizeX, float sizeY, sf::Color fillColor, sf::Color outlineColor, float outlineThickness);
+		void Update(const Game& game);
 		void Draw(sf::RenderWindow& window);
 		void PlaySound(const sf::SoundBuffer& buffer);
 		void InitPlayMusic();
 		void OnPlayMusic(bool isPlay);
-		
-		sf::Sprite GetNoneSprite() { return noneSprite; }
+
+		// Get & Set
+		sf::Sprite& GetNoneSprite() { return noneSprite; }
 		const sf::Texture& GetWallTexture() const { return wallTexture; }
 		const sf::Texture& GetSnakeTextureHead() const { return snakeTextureHead; }
 		const sf::Texture& GetSnakeTextureBody() const { return snakeTextureBody; }
@@ -48,12 +49,13 @@ namespace ArkanoidGame
 		const sf::SoundBuffer& GetEatAppleBuffer() const { return eatAppleBuffer; }
 		const sf::SoundBuffer& GetSelectMenuBuffer() const { return selectMenuBuffer; }
 		const sf::SoundBuffer& GetPressEnterBuffer() const { return pressEnterBuffer; }
+		const sf::Image& GetIcon() const { return icon; }
 		int& GetNumScores() { return numScores; }
 		void SetNumScores(int newValue) { numScores = newValue; }
-		bool GetIsSoundOn() { return isSoundOn; }
-		bool SwitchIsSoundOn() { return !isSoundOn; }
-		bool GetIsMusicOn() { return isMusicOn; }
-		bool SwitchIsMusicOn() { return !isMusicOn; }
+		bool GetIsSoundOn() const { return isSoundOn; }
+		bool SwitchIsSoundOn() { isSoundOn = !isSoundOn; return isSoundOn; }
+		bool GetIsMusicOn() const { return isMusicOn; }
+		bool SwitchIsMusicOn() { isMusicOn = !isMusicOn; return isMusicOn; }
 
 	private:
 		bool isPlayingTextVisible;
@@ -72,7 +74,6 @@ namespace ArkanoidGame
 		
 		sf::RectangleShape playingRectangle;
 		sf::Text playingScoreText;
-		sf::Text playingInputText;
 
 		// Resources
 		sf::Sprite noneSprite;

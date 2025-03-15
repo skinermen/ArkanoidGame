@@ -16,10 +16,7 @@ namespace ArkanoidGame
         srand(seed);
     }
 
-    Application::~Application()
-    {
-        
-    }
+    Application::~Application() = default;
 
     void Application::Run()
     {

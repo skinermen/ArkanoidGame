@@ -24,8 +24,8 @@ namespace ArkanoidGame
 	class Menu : public UI
 	{
 	public:
-		Menu();
-		~Menu();
+		Menu() = default;
+		~Menu() override;
 
 		// Get & Set
 		std::vector<sf::Text>& GetVTextMainMenuItems() { return vTextMainMenuItems; }
@@ -33,11 +33,12 @@ namespace ArkanoidGame
 		std::vector<sf::Text>& GetVTextPauseMenuItems() { return vTextPauseMenuItems; }
 		std::vector<sf::Text>& GetVTextDifficultyMenuItems() { return vTextDifficultyMenuItems; }
 		std::vector<sf::Text>& GetVTextOptionsMenuItems() { return vTextOptionsMenuItems; }
+		std::vector<sf::Text>& GetVTextConfirmationMenuItems() { return vTextConfirmationMenuItems; }
 		std::vector<SDifficultySettings>& GetVStringDifficultyMenuItems() { return VStringDifficultyMenuItems; }
 		std::vector<SLeaderboard>& GetVLeaderboardItems() { return VLeaderboardItems; }
-		std::string GetNameInputPlayerName() { return nameInputPlayerName; }
-		sf::Text GetNameInputMenuText() { return nameInputMenuText; }
-		unsigned int GetSelectedItemIndex() { return selectedItemIndex; }
+		std::string& GetNameInputPlayerName() { return nameInputPlayerName; }
+		sf::Text& GetNameInputMenuText() { return nameInputMenuText; }
+		unsigned int GetSelectedItemIndex() const { return selectedItemIndex; }
 		
 		
 		// Init
@@ -61,18 +62,18 @@ namespace ArkanoidGame
 		void DrawLeaderboard(sf::RenderWindow& window) override;
 		void DrawDifficultyMenu(sf::RenderWindow& window) override;
 		void DrawOptionsMenu(sf::RenderWindow& window) override;
-		void DrawMenuItems(sf::RenderWindow& window, std::vector<sf::Text>& menuItems,
-			float posX, float posY, float indentation);
+		static void DrawMenuItems(sf::RenderWindow& window, std::vector<sf::Text>& menuItems,
+		                          float posX, float posY, float indentation);
 
 		// Service
 		void AddRecord(const std::string& playerName, int score);
 		void MoveUp(std::vector<sf::Text>& menuItems);
 		void MoveDown(std::vector<sf::Text>& menuItems);
-		void ResetMenuSelection(std::vector<sf::Text>& menuItems);
+		void ResetMenuSelection(std::vector<sf::Text>& menuItems) const;
 		void ResetAllMenuSelection();
-		void SaveRecordsToFile(const std::vector<SLeaderboard>& leaderboard, const std::string& filename);
-		void LoadRecordsFromFile(std::vector<SLeaderboard>& leaderboard, const std::string& filename);
-		bool IsNewRecord(const std::vector<SLeaderboard>& leaderboard, int currentScore);
+		static void SaveRecordsToFile(const std::vector<SLeaderboard>& leaderboard, const std::string& filename);
+		static void LoadRecordsFromFile(std::vector<SLeaderboard>& leaderboard, const std::string& filename);
+		static bool IsNewRecord(const std::vector<SLeaderboard>& leaderboard, int currentScore);
 		void SetFillColorRectangle(int selectedIndex, bool option);
 		
 	private:

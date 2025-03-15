@@ -6,11 +6,7 @@
 
 namespace ArkanoidGame
 {
-	Menu::Menu() : UI()
-	{
-	}
-
-	Menu::~Menu() {}
+	Menu::~Menu() = default;
 
 	void Menu::InitPauseTexture()
 	{
@@ -380,7 +376,7 @@ namespace ArkanoidGame
 		}
 	}
 
-	void Menu::ResetMenuSelection(std::vector<sf::Text>& menuItems)
+	void Menu::ResetMenuSelection(std::vector<sf::Text>& menuItems) const
 	{
 		for (auto& text : menuItems)
 		{

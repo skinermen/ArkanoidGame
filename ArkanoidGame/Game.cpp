@@ -13,16 +13,13 @@ namespace ArkanoidGame
 		  onKeyHold(false),
 		  difficultySelected(false),
 		  numEatenApples(0),
-		  scoresPerApple(10),
 		  timeSinceGameOver(0.f),
 		  gameMode(0)
 	{
 		Init(window);
 	}
 
-	Game::~Game()
-	{
-	}
+	Game::~Game() = default;
 
 	void Game::Init(sf::RenderWindow& window)
 	{
@@ -30,26 +27,13 @@ namespace ArkanoidGame
 		PushGameState(GameState::MainMenu);
 		InitGameState();
 		InitField();
-		// window.setIcon(32, 32, icon.getPixelsPtr());
+		window.setIcon(32, 32, menu.GetIcon().getPixelsPtr());
 	}
 
 	void Game::InitGameState()
 	{
 		// Set default value
 		menu.SetNumScores(0);
-
-		// Init Player
-		snake = Snake(*this);
-		
-		// Init Walls
-		wallsVec.clear();
-		wall = Wall(*this);
-		wallsVec.emplace_back(wall.value());
-		
-		// Init Apples
-		applesVec.clear();
-		apple = Apple(*this);
-		applesVec.emplace_back(apple.value());
 
 		// Start music if in Playing state
 		if (GetCurrentGameState() == GameState::Playing)
@@ -69,11 +53,6 @@ namespace ArkanoidGame
 				cell = FIELD_CELL_TYPE_NONE;
 			}
 		}
-
-		// Add game objects to the field
-		snake->AddOnField(*this);
-		wall->AddOnField(*this);
-		apple->AddOnField(*this);
 	}
 
 	void Game::InitStartNewGame()
@@ -88,13 +67,13 @@ namespace ArkanoidGame
 		switch (GetCurrentGameState())
 		{
 		case GameState::Playing:
-			UpdatePlayingState(event, currentTime);
+			UpdatePlayingState(event, window, currentTime);
 			break;
 		case GameState::NameInputMenu:
 			UpdateNameInputMenuState(event);
 			break;
 		case GameState::ConfirmationMenu:
-			UpdateMenuState(event, window, menu.GetVTextMainMenuItems());
+			UpdateMenuState(event, window, menu.GetVTextConfirmationMenuItems());
 			break;
 		case GameState::GameOver:
 			UpdateMenuState(event, window, menu.GetVTextGameOverMenuItems());
@@ -125,10 +104,45 @@ namespace ArkanoidGame
 		menu.Update(*this);
 	}
 
-	void Game::UpdatePlayingState(const sf::Event& event, float currentTime)
+	void Game::UpdatePlayingState(const sf::Event& event, const sf::RenderWindow& window, float currentTime)
 	{
-		snake->HandleInput();
-		snake->Move(*this, currentTime);
+		static float lastTime = currentTime;
+		float deltaTime = currentTime - lastTime;
+		lastTime = currentTime;
+
+		// Update the platform
+		platform.Update(window, deltaTime);
+		// Update the ball
+		ball.Update(deltaTime);
+
+		if (ball.CheckCollisionWithPlatform(platform))
+		{
+			// We get the boundaries of the platform and its center
+			sf::FloatRect platformBounds = platform.GetShape().getGlobalBounds();
+			float platformCenterX = platformBounds.left + platformBounds.width / 2.f;
+    
+			// We calculate the displacement of the blow from the center of the platform (in the range [-1, 1])
+			sf::Vector2f ballPos = ball.GetShape().getPosition();
+			float offset = (ballPos.x - platformCenterX) / (platformBounds.width / 2.f);
+    
+			// The new direction of direction: the horizontal component depends on Offset, the vertical is fixed (rebound up)
+			sf::Vector2f newDir(offset, -1.f);
+			float len = std::sqrt(newDir.x * newDir.x + newDir.y * newDir.y);
+			newDir.x /= len;
+			newDir.y /= len;
+    
+			// We retain the current ball speed
+			float currentSpeed = std::sqrt(
+				ball.GetVelocity().x * ball.GetVelocity().x +
+				ball.GetVelocity().y * ball.GetVelocity().y
+			);
+    
+			// We update the speed of the ball with a new direction
+			ball.SetVelocity(newDir * currentSpeed);
+    
+			// Additionally, you can move the ball just above the platform to avoid stuck
+			ball.SetPosition(ballPos.x, platformBounds.top - ball.GetShape().getRadius());
+		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 		{
@@ -342,12 +356,12 @@ namespace ArkanoidGame
 	void Game::HandleDifficultyMenuSelection(unsigned int selectedIndex)
 	{
 		// ReSharper disable once CppUnsignedZeroComparison
-		if (selectedIndex >= 0 && selectedIndex < menu.GetVStringDifficultyMenuItems().size())
+		if (selectedIndex < menu.GetVStringDifficultyMenuItems().size())
 		{
-			snake->SetMovementInterval(menu.GetVStringDifficultyMenuItems()[selectedIndex].snakeSpeed);
+			currentSnakeSpeed = menu.GetVStringDifficultyMenuItems()[selectedIndex].snakeSpeed;
 			scoresPerApple = menu.GetVStringDifficultyMenuItems()[selectedIndex].scoresPerApple;
 			difficultySelected = true;
-
+		
 			SwitchGameState(GameState::MainMenu);
 		}
 	}
@@ -374,37 +388,28 @@ namespace ArkanoidGame
 		{
 			for (int j = 0; j < FIELD_SIZE_Y; j++)
 			{
-				switch (field[i][j])
+				if (field[i][j] == FIELD_CELL_TYPE_NONE)
 				{
-				case FIELD_CELL_TYPE_NONE:
-					menu.GetNoneSprite().setPosition
-					( i * CELL_SIZE + BORDER_SIZE + CELL_SIZE / 2.f,
-					  j * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE + CELL_SIZE / 2.f);
-					window.draw(menu.GetNoneSprite());
-					break;
-				default:
-					break;
+					sf::Sprite& noneSprite = menu.GetNoneSprite();
+					noneSprite.setPosition(i * CELL_SIZE + BORDER_SIZE + CELL_SIZE / 2.f,
+											 j * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE + CELL_SIZE / 2.f);
+					window.draw(noneSprite);
 				}
 			}
 		}
 		
-		// Draw Player
-		snake->Draw(*this, window);
+		// Draw Platform
+		platform.Draw(window);
 
-		// Draw Food
-		for (Apple& apple : applesVec)
-		{
-			apple.Draw(*this, window);
-		}
+		// Draw Ball
+		ball.Draw(window);
 		
-		// Draw Barrier
-		for (Wall& wall : wallsVec)
-		{
-			wall.Draw(*this, window);
-		}
-
 		// Draw UI
 		menu.Draw(window);
+	}
+
+	void Game::Shutdown()
+	{
 	}
 
 	void Game::PushGameState(GameState state)
@@ -441,7 +446,7 @@ namespace ArkanoidGame
 		}
 	}
 
-	GameState Game::GetCurrentGameState()
+	GameState Game::GetCurrentGameState() const
 	{
 		if (!gameStateStack.empty())
 		{
@@ -453,7 +458,7 @@ namespace ArkanoidGame
 		}
 	}
 
-	GameState Game::GetPreviousGameState()
+	GameState Game::GetPreviousGameState() const
 	{
 		if (gameStateStack.size() > 1)
 		{
@@ -488,7 +493,7 @@ namespace ArkanoidGame
 				{
 					if (emptyCellIndex == targetEmptyCellIndex)
 					{
-						return  i * FIELD_SIZE_X + j;
+						return i * FIELD_SIZE_Y + j;
 					}
 					emptyCellIndex++;
 				}
