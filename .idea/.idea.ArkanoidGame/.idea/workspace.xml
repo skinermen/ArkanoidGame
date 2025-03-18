@@ -10,9 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="The full functionality of the snake has been restored.">
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/GameObject.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +37,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2tXYJAue598OyPIpsSxXg5TJsQq" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

@@ -57,7 +57,7 @@ namespace ArkanoidGame
 		void InitGameState();
 		void InitField();
 		void InitStartNewGame();
-		void UpdatePlayingState(const sf::Event& event, const sf::RenderWindow& window, float currentTime);
+		void UpdatePlayingState(const sf::Event& event, sf::RenderWindow& window, float currentTime);
 		void UpdateNameInputMenuState(const sf::Event& event);
 		void UpdateMenuState(const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems);
 		void UpdateLeaderboardState(const sf::Event& event);
@@ -88,8 +88,5 @@ namespace ArkanoidGame
 		Menu menu;
 		Platform platform;
 		Ball ball;
-
-		// Game mode data
-		int gameMode;
 	};
 }

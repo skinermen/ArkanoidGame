@@ -1,7 +1,7 @@
 ﻿#include "Ball.h"
 #include "Platform.h"
+
 #include <algorithm>
-#include <cmath>
 
 namespace ArkanoidGame
 {
@@ -11,13 +11,9 @@ namespace ArkanoidGame
         ballShape.setFillColor(sf::Color::White);
         ballShape.setOrigin(ballShape.getRadius(), ballShape.getRadius());
         ballShape.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
-        
-        // Initial speed and direction
-        speed = SPEED_BALL;
-        velocity = INITIAL_DIRECTION_OF_THE_BALL;
     }
 
-    void Ball::Update(float deltaTime)
+    void Ball::Update(sf::RenderWindow& window, float deltaTime)
     {
         ballShape.move(velocity * deltaTime);
 
@@ -58,9 +54,14 @@ namespace ArkanoidGame
         velocity = INITIAL_DIRECTION_OF_THE_BALL;
     }
 
-    void Ball::SetPosition(float x, float y)
+    void Ball::SetPosition(const sf::Vector2f& pos)
     {
-        ballShape.setPosition(x, y);
+        ballShape.setPosition(pos);
+    }
+
+    sf::Vector2f Ball::GetPosition() const
+    {
+        return ballShape.getPosition();
     }
 
     bool Ball::CheckCollisionWithPlatform(const Platform& platform) const

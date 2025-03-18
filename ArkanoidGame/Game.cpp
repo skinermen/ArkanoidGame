@@ -13,8 +13,7 @@ namespace ArkanoidGame
 		  onKeyHold(false),
 		  difficultySelected(false),
 		  numEatenApples(0),
-		  timeSinceGameOver(0.f),
-		  gameMode(0)
+		  timeSinceGameOver(0.f)
 	{
 		Init(window);
 	}
@@ -104,7 +103,7 @@ namespace ArkanoidGame
 		menu.Update(*this);
 	}
 
-	void Game::UpdatePlayingState(const sf::Event& event, const sf::RenderWindow& window, float currentTime)
+	void Game::UpdatePlayingState(const sf::Event& event, sf::RenderWindow& window, float currentTime)
 	{
 		static float lastTime = currentTime;
 		float deltaTime = currentTime - lastTime;
@@ -113,7 +112,7 @@ namespace ArkanoidGame
 		// Update the platform
 		platform.Update(window, deltaTime);
 		// Update the ball
-		ball.Update(deltaTime);
+		ball.Update(window, deltaTime);
 
 		if (ball.CheckCollisionWithPlatform(platform))
 		{
@@ -141,7 +140,7 @@ namespace ArkanoidGame
 			ball.SetVelocity(newDir * currentSpeed);
     
 			// Additionally, you can move the ball just above the platform to avoid stuck
-			ball.SetPosition(ballPos.x, platformBounds.top - ball.GetShape().getRadius());
+			ball.SetPosition(sf::Vector2f(ballPos.x, platformBounds.top - ball.GetShape().getRadius()));
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))

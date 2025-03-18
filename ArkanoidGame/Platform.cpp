@@ -15,7 +15,7 @@ namespace ArkanoidGame
         lastMousePosition = platformShape.getPosition();
     }
 
-    void Platform::Update(const sf::RenderWindow& window, float deltaTime)
+    void Platform::Update(sf::RenderWindow& window, float deltaTime)
     {
         // The current position of the mouse relative to the window
         sf::Vector2i mousePosInt = sf::Mouse::getPosition(window);
@@ -71,8 +71,13 @@ namespace ArkanoidGame
         window.draw(platformShape);
     }
 
-    void Platform::SetPosition(float x, float y)
+    void Platform::SetPosition(const sf::Vector2f& pos)
     {
-        platformShape.setPosition(x, y);
+        platformShape.setPosition(pos);
+    }
+
+    sf::Vector2f Platform::GetPosition() const
+    {
+        return platformShape.getPosition();
     }
 }
