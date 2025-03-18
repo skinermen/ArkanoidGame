@@ -9,16 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="The full functionality of the snake has been restored.">
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/GameObject.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.h" afterDir="false" />
+    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="1. The abstract GameObject class has been created&#10;2. Ball and Platform have been converted into child classes of GameObject">
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Constants.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +190,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742047836390</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="1. The abstract GameObject class has been created&#10;2. Ball and Platform have been converted into child classes of GameObject">
+      <option name="closed" value="true" />
+      <created>1742319154112</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1742319154112</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +225,7 @@
     <MESSAGE value="redesigned structures into classes" />
     <MESSAGE value="Fixed a bug when starting the game" />
     <MESSAGE value="The full functionality of the snake has been restored." />
-    <option name="LAST_COMMIT_MESSAGE" value="The full functionality of the snake has been restored." />
+    <MESSAGE value="1. The abstract GameObject class has been created&#10;2. Ball and Platform have been converted into child classes of GameObject" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. The abstract GameObject class has been created&#10;2. Ball and Platform have been converted into child classes of GameObject" />
   </component>
 </project>

@@ -3,11 +3,6 @@
 
 namespace ArkanoidGame
 {
-#define FIELD_CELL_TYPE_NONE 0
-	constexpr int FIELD_SIZE_X = 25;
-	constexpr int FIELD_SIZE_Y = 20;
-	constexpr int CELL_SIZE = 32;
-
 	const std::string GAME_NAME = "ArkanoidGame";
 	const std::string RESOURCES_PATH = "Resources/";
 	const std::string LEADERBOARD_FILENAME = "leaderboard.txt";
@@ -18,11 +13,9 @@ namespace ArkanoidGame
 	constexpr int SIZE_LEADERBOARD = 10;
 	constexpr int SIZE_MINI_LEADERBOARD = 5;
 	constexpr int BORDER_SIZE = 10;
-	constexpr int SCREEN_WIDTH = FIELD_SIZE_X * CELL_SIZE + BORDER_SIZE * 2;
-	constexpr int SCREEN_HEIGHT = FIELD_SIZE_Y * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE * 2;
-	constexpr int SNAKE_SEGMENT_SIZE = CELL_SIZE;
-	constexpr int FOOD_SIZE = CELL_SIZE;
-	constexpr int WALL_SIZE = CELL_SIZE;
+	constexpr float SCREEN_WIDTH = 800.f;
+	constexpr float SCREEN_HEIGHT = 600.f;
+
 	constexpr float SIZE_PLATFORM_X = 100.f;
 	constexpr float SIZE_PLATFORM_Y = 20.f;
 	constexpr float SIZE_BALL = 8.f; // radius ball

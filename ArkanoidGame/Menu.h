@@ -21,7 +21,7 @@ namespace ArkanoidGame
 	class Game;
 	enum class GameState;
 	
-	class Menu : public UI
+	class Menu final : public UI
 	{
 	public:
 		Menu() = default;

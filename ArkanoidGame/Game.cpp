@@ -1,7 +1,6 @@
 // ReSharper disable CppClangTidyClangDiagnosticCoveredSwitchDefault
 #include "Game.h"
 #include "Application.h"
-#include <cassert>
 #include <random>
 
 namespace ArkanoidGame
@@ -25,7 +24,6 @@ namespace ArkanoidGame
 		menu.Init();
 		PushGameState(GameState::MainMenu);
 		InitGameState();
-		InitField();
 		window.setIcon(32, 32, menu.GetIcon().getPixelsPtr());
 	}
 
@@ -42,23 +40,10 @@ namespace ArkanoidGame
 		}
 	}
 
-	void Game::InitField()
-	{
-		// Clear the game field
-		for (auto& row : field)
-		{
-			for (int& cell : row)
-			{
-				cell = FIELD_CELL_TYPE_NONE;
-			}
-		}
-	}
-
 	void Game::InitStartNewGame()
 	{
 		PushGameState(GameState::Playing);
 		InitGameState();
-		InitField();
 	}
 	
 	void Game::Update(float currentTime, sf::RenderWindow& window, const sf::Event& event)
@@ -382,21 +367,6 @@ namespace ArkanoidGame
 
 	void Game::Draw(sf::RenderWindow& window)
 	{		
-		// Draw Background
-		for (int i = 0; i < FIELD_SIZE_X; i++)
-		{
-			for (int j = 0; j < FIELD_SIZE_Y; j++)
-			{
-				if (field[i][j] == FIELD_CELL_TYPE_NONE)
-				{
-					sf::Sprite& noneSprite = menu.GetNoneSprite();
-					noneSprite.setPosition(i * CELL_SIZE + BORDER_SIZE + CELL_SIZE / 2.f,
-											 j * CELL_SIZE + LEADERBOARD_HEIGHT + BORDER_SIZE + CELL_SIZE / 2.f);
-					window.draw(noneSprite);
-				}
-			}
-		}
-		
 		// Draw Platform
 		platform.Draw(window);
 
@@ -467,38 +437,6 @@ namespace ArkanoidGame
 		{
 			return GameState::None;
 		}
-	}
-	
-	int Game::GetRandomEmptyCell()
-	{
-		int emptyCellCount = 0;
-		for (const auto& i : field)
-		{
-			for (int j : i)
-			{
-				if (j == FIELD_CELL_TYPE_NONE)
-				{
-					emptyCellCount++;
-				}
-			}
-		}
-		int targetEmptyCellIndex = rand() % emptyCellCount;
-		int emptyCellIndex = 0;
-		for (int i = 0; i < FIELD_SIZE_X; i++)
-		{
-			for (int j = 0; j < FIELD_SIZE_Y; j++)
-			{
-				if (field[i][j] == FIELD_CELL_TYPE_NONE)
-				{
-					if (emptyCellIndex == targetEmptyCellIndex)
-					{
-						return i * FIELD_SIZE_Y + j;
-					}
-					emptyCellIndex++;
-				}
-			}
-		}
-		return -1;
 	}
 
 	void Shutdown()

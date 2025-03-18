@@ -40,7 +40,6 @@ namespace ArkanoidGame
 		void OnPlayMusic(bool isPlay);
 
 		// Get & Set
-		sf::Sprite& GetNoneSprite() { return noneSprite; }
 		const sf::Texture& GetWallTexture() const { return wallTexture; }
 		const sf::Texture& GetSnakeTextureHead() const { return snakeTextureHead; }
 		const sf::Texture& GetSnakeTextureBody() const { return snakeTextureBody; }
@@ -76,12 +75,10 @@ namespace ArkanoidGame
 		sf::Text playingScoreText;
 
 		// Resources
-		sf::Sprite noneSprite;
 		sf::Texture snakeTextureHead;
 		sf::Texture snakeTextureBody;
 		sf::Texture appleTexture;
 		sf::Texture wallTexture;
-		sf::Texture noneTexture;
 		sf::Sound sound;
 		sf::SoundBuffer eatAppleBuffer;
 		sf::SoundBuffer deathBuffer;

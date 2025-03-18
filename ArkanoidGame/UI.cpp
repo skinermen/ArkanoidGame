@@ -45,7 +45,6 @@ namespace ArkanoidGame
 		assert(snakeTextureBody.loadFromFile(RESOURCES_PATH + "snake_body.png"));
 		assert(appleTexture.loadFromFile(RESOURCES_PATH + "apple.png"));
 		assert(wallTexture.loadFromFile(RESOURCES_PATH + "wall.png"));
-		assert(noneTexture.loadFromFile(RESOURCES_PATH + "none.png"));
 		assert(icon.loadFromFile(RESOURCES_PATH + "icon.png"));
 		assert(deathBuffer.loadFromFile(RESOURCES_PATH + "Death.wav"));
 		assert(eatAppleBuffer.loadFromFile(RESOURCES_PATH + "Collision.wav"));
@@ -58,9 +57,6 @@ namespace ArkanoidGame
 	{
 		InitResources();
 		InitPauseTexture();
-		noneSprite.setTexture(noneTexture);
-		noneSprite.setOrigin(CELL_SIZE / 2.f, CELL_SIZE / 2.f);
-		SetSpriteSize(noneSprite, CELL_SIZE, CELL_SIZE);
 		
 		// Playing Resources
 		InitRectangle(playingRectangle, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,

@@ -39,11 +39,9 @@ namespace ArkanoidGame
 		// Get & Set
 		GameState GetCurrentGameState() const;
 		GameState GetPreviousGameState() const;
-		int GetRandomEmptyCell();
 		
 		// UI& GetUI() { return ui; }
 		Menu& GetMenu() { return menu; }
-		int (&GetField())[FIELD_SIZE_X][FIELD_SIZE_Y] { return field; }
 		int GetIsGameStarting() const { return isGameStarting; }
 		void SetIsGameStarting(bool newValue) { isGameStarting = newValue; }
 		float GetGameStartTime() const { return gameStartTime; }
@@ -55,7 +53,6 @@ namespace ArkanoidGame
 
 	private:
 		void InitGameState();
-		void InitField();
 		void InitStartNewGame();
 		void UpdatePlayingState(const sf::Event& event, sf::RenderWindow& window, float currentTime);
 		void UpdateNameInputMenuState(const sf::Event& event);
@@ -82,7 +79,6 @@ namespace ArkanoidGame
 		float timeSinceGameOver;
 		float currentSnakeSpeed = INITIAL_SPEED_EASY;
 		std::vector<GameState> gameStateStack;
-		int field[FIELD_SIZE_X][FIELD_SIZE_Y];
 
 		// Game objects
 		Menu menu;
