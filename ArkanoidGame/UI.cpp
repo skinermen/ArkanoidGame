@@ -4,6 +4,7 @@
 #include "UI.h"
 #include "Game.h"
 #include "Math.h"
+#include "GameState.h"
 
 namespace ArkanoidGame
 {
@@ -93,9 +94,9 @@ namespace ArkanoidGame
 	{
 		playingScoreText.setString("Scores: " + std::to_string(numScores));
 		gameOverScores.setString(std::to_string(numScores));
-		isGameOverMenuTextVisible = game.GetCurrentGameState() == GameState::GameOver;
+		isGameOverMenuTextVisible = GameStateManager::Instance().GetCurrentState() == GameState::GameOver;
 
-		if (game.GetCurrentGameState() == GameState::Playing)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
 		{
 			isPlayingTextVisible = true;
 			isMainMenuTextVisible = false;
@@ -108,7 +109,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 		
-		if (game.GetCurrentGameState() == GameState::MainMenu)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::MainMenu)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = true;
@@ -121,7 +122,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 
-		if (game.GetCurrentGameState() == GameState::PauseMenu)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::PauseMenu)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;
@@ -134,7 +135,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 
-		if (game.GetCurrentGameState() == GameState::NameInputMenu)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::NameInputMenu)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;
@@ -147,7 +148,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 
-		if (game.GetCurrentGameState() == GameState::ConfirmationMenu)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::ConfirmationMenu)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;
@@ -160,7 +161,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 		
-		if (game.GetCurrentGameState() == GameState::GameOver)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::GameOver)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;
@@ -173,7 +174,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 
-		if (game.GetCurrentGameState() == GameState::Difficulty)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Difficulty)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;
@@ -186,7 +187,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 		
-		if (game.GetCurrentGameState() == GameState::Leaderboard)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Leaderboard)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;
@@ -199,7 +200,7 @@ namespace ArkanoidGame
 			isOptionsMenuTextVisible = false;
 		}
 
-		if (game.GetCurrentGameState() == GameState::Options)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Options)
 		{
 			isPlayingTextVisible = false;
 			isMainMenuTextVisible = false;

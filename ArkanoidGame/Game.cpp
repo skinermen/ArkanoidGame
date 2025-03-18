@@ -1,6 +1,7 @@
 // ReSharper disable CppClangTidyClangDiagnosticCoveredSwitchDefault
 #include "Game.h"
 #include "Application.h"
+#include "GameState.h"
 #include <random>
 
 namespace ArkanoidGame
@@ -22,7 +23,7 @@ namespace ArkanoidGame
 	void Game::Init(sf::RenderWindow& window)
 	{
 		menu.Init();
-		PushGameState(GameState::MainMenu);
+		GameStateManager::Instance().PushState(GameState::MainMenu);
 		InitGameState();
 		window.setIcon(32, 32, menu.GetIcon().getPixelsPtr());
 	}
@@ -33,7 +34,7 @@ namespace ArkanoidGame
 		menu.SetNumScores(0);
 
 		// Start music if in Playing state
-		if (GetCurrentGameState() == GameState::Playing)
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
 		{
 			menu.InitPlayMusic();
 			menu.OnPlayMusic(true);
@@ -42,13 +43,13 @@ namespace ArkanoidGame
 
 	void Game::InitStartNewGame()
 	{
-		PushGameState(GameState::Playing);
+		GameStateManager::Instance().PushState(GameState::Playing);
 		InitGameState();
 	}
 	
 	void Game::Update(float currentTime, sf::RenderWindow& window, const sf::Event& event)
 	{
-		switch (GetCurrentGameState())
+		switch (GameStateManager::Instance().GetCurrentState())
 		{
 		case GameState::Playing:
 			UpdatePlayingState(event, window, currentTime);
@@ -132,7 +133,7 @@ namespace ArkanoidGame
 		{
 			if (!onKeyHold)
 			{
-				PushGameState(GameState::PauseMenu);
+				GameStateManager::Instance().PushState(GameState::PauseMenu);
 				onKeyHold = true;
 			}
 			onKeyHold = true;
@@ -172,7 +173,7 @@ namespace ArkanoidGame
 					menu.GetNameInputPlayerName() = "XYZ";
 				}
 				menu.AddRecord(menu.GetNameInputPlayerName(), menu.GetNumScores());
-				PushGameState(GameState::GameOver);
+				GameStateManager::Instance().PushState(GameState::GameOver);
 				onKeyHold = true;
 			}
 		}
@@ -207,7 +208,7 @@ namespace ArkanoidGame
 		{
 			if (!onKeyHold)
 			{
-				switch (GetCurrentGameState())  // NOLINT(clang-diagnostic-switch-enum)
+				switch (GameStateManager::Instance().GetCurrentState())  // NOLINT(clang-diagnostic-switch-enum)
 				{
 				case GameState::MainMenu:
 					HandleMainMenuSelection(menu.GetSelectedItemIndex(), window);
@@ -234,15 +235,15 @@ namespace ArkanoidGame
 				onKeyHold = true;
 			}
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GetCurrentGameState() != GameState::MainMenu)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GameStateManager::Instance().GetCurrentState() != GameState::MainMenu)
 		{
 			if (!onKeyHold)
 			{
-				SwitchGameState(GetPreviousGameState());
+				GameStateManager::Instance().SwitchState(GameStateManager::Instance().GetPreviousState());
 			}
 			onKeyHold = true;
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GetCurrentGameState() == GameState::MainMenu)
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) && GameStateManager::Instance().GetCurrentState() == GameState::MainMenu)
 		{
 			if (!onKeyHold)
 			{
@@ -262,7 +263,7 @@ namespace ArkanoidGame
 		{
 			if (!onKeyHold)
 			{
-				SwitchGameState(GetPreviousGameState());
+				GameStateManager::Instance().SwitchState(GameStateManager::Instance().GetPreviousState());
 			}
 			onKeyHold = true;
 		}
@@ -281,13 +282,13 @@ namespace ArkanoidGame
 			break;
 		case 1:  // Difficulty
 			menu.ResetAllMenuSelection();
-			PushGameState(GameState::Difficulty);
+			GameStateManager::Instance().PushState(GameState::Difficulty);
 			break;
 		case 2:  // Leaderboard
-			PushGameState(GameState::Leaderboard);
+			GameStateManager::Instance().PushState(GameState::Leaderboard);
 			break;
 		case 3:  // Options
-			PushGameState(GameState::Options);
+			GameStateManager::Instance().PushState(GameState::Options);
 				break;
 		default: // Exit
 			window.close();
@@ -300,12 +301,12 @@ namespace ArkanoidGame
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // Continue Game
-			SwitchGameState(GameState::Playing);
+			GameStateManager::Instance().SwitchState(GameState::Playing);
 			menu.OnPlayMusic(true);
 			break;
 		default:  // Back to main menu
 			menu.ResetAllMenuSelection();
-			PushGameState(GameState::MainMenu);
+			GameStateManager::Instance().PushState(GameState::MainMenu);
 			break;
 		}
 	}
@@ -315,10 +316,10 @@ namespace ArkanoidGame
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // No
-			PushGameState(GameState::GameOver);
+			GameStateManager::Instance().PushState(GameState::GameOver);
 			break;
 		default: // Yes
-			PushGameState(GameState::NameInputMenu);
+			GameStateManager::Instance().PushState(GameState::NameInputMenu);
 			break;
 		}
 	}
@@ -332,7 +333,7 @@ namespace ArkanoidGame
 			break;
 		default:  // Back to main menu
 			menu.ResetAllMenuSelection();
-			PushGameState(GameState::MainMenu);
+			GameStateManager::Instance().PushState(GameState::MainMenu);
 			break;
 		}
 	}
@@ -346,7 +347,7 @@ namespace ArkanoidGame
 			scoresPerApple = menu.GetVStringDifficultyMenuItems()[selectedIndex].scoresPerApple;
 			difficultySelected = true;
 		
-			SwitchGameState(GameState::MainMenu);
+			GameStateManager::Instance().SwitchState(GameState::MainMenu);
 		}
 	}
 
@@ -379,64 +380,6 @@ namespace ArkanoidGame
 
 	void Game::Shutdown()
 	{
-	}
-
-	void Game::PushGameState(GameState state)
-	{
-		menu.ResetAllMenuSelection();
-		gameStateStack.push_back(state);
-	}
-
-	void Game::PopGameState()
-	{
-		if (!gameStateStack.empty())
-		{
-			menu.ResetAllMenuSelection();
-			gameStateStack.pop_back();
-		}
-		else
-		{
-			menu.ResetAllMenuSelection();
-			gameStateStack.push_back(GameState::MainMenu);
-		}
-	}
-
-	void Game::SwitchGameState(GameState newState)
-	{
-		if (!gameStateStack.empty())
-		{
-			menu.ResetAllMenuSelection();
-			gameStateStack.pop_back();
-			gameStateStack.push_back(newState);
-		}
-		else
-		{
-			PushGameState(newState);
-		}
-	}
-
-	GameState Game::GetCurrentGameState() const
-	{
-		if (!gameStateStack.empty())
-		{
-			return gameStateStack.back();
-		}
-		else
-		{
-			return GameState::None;
-		}
-	}
-
-	GameState Game::GetPreviousGameState() const
-	{
-		if (gameStateStack.size() > 1)
-		{
-			return gameStateStack.end()[-2];
-		}
-		else
-		{
-			return GameState::None;
-		}
 	}
 
 	void Shutdown()

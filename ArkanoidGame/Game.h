@@ -7,20 +7,6 @@
 
 namespace ArkanoidGame
 {
-	enum class GameState
-	{
-		None = 0,
-		MainMenu,
-		Playing,
-		NameInputMenu,
-		ConfirmationMenu,
-		GameOver,
-		PauseMenu,
-		Leaderboard,
-		Difficulty,
-		Options,
-	};
-
 	class Game
 	{
 	public:
@@ -32,15 +18,7 @@ namespace ArkanoidGame
 		void Draw(sf::RenderWindow& window);
 		static void Shutdown();
 
-		void PushGameState(GameState state);
-		void PopGameState();
-		void SwitchGameState(GameState newState);
-
 		// Get & Set
-		GameState GetCurrentGameState() const;
-		GameState GetPreviousGameState() const;
-		
-		// UI& GetUI() { return ui; }
 		Menu& GetMenu() { return menu; }
 		int GetIsGameStarting() const { return isGameStarting; }
 		void SetIsGameStarting(bool newValue) { isGameStarting = newValue; }
