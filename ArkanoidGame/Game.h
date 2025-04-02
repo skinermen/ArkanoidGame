@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "Platform.h"
 #include "Ball.h"
+#include "Brick.h"
 
 namespace ArkanoidGame
 {
@@ -32,6 +33,7 @@ namespace ArkanoidGame
 	private:
 		void InitGameState();
 		void InitStartNewGame();
+		void InitBricks();
 		void UpdatePlayingState(const sf::Event& event, sf::RenderWindow& window, float currentTime);
 		void UpdateNameInputMenuState(const sf::Event& event);
 		void UpdateMenuState(const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems);
@@ -57,6 +59,7 @@ namespace ArkanoidGame
 		float timeSinceGameOver;
 		float currentSnakeSpeed = INITIAL_SPEED_EASY;
 		std::vector<GameState> gameStateStack;
+		std::vector<std::unique_ptr<Brick>> bricks;
 
 		// Game objects
 		Menu menu;

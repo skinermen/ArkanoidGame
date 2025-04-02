@@ -43,10 +43,65 @@ namespace ArkanoidGame
 
 	void Game::InitStartNewGame()
 	{
+		// Например, сбросьте игру, переместите шарик, платформу и т.д.
+		ball.Reset();
+		platform.SetPosition(sf::Vector2f(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f));
+
+		// Генерируем кирпичи для уровня
+		InitBricks();
+		
 		GameStateManager::Instance().PushState(GameState::Playing);
 		InitGameState();
 	}
-	
+
+	void Game::InitBricks()
+	{
+		bricks.clear();
+    
+		const int rows = 5;
+		const int columns = 10;
+    
+		// Размер кирпича
+		const float brickWidth = 60.f;
+		const float brickHeight = 20.f;
+		// Отступ между кирпичами
+		const float spacing = 5.f; 
+    
+		// Вычисляем общую ширину сетки, учитывая отступы между колонками
+		float totalWidth = columns * brickWidth + (columns - 1) * spacing;
+		float startX = (SCREEN_WIDTH - totalWidth) / 2.f + brickWidth / 2.f;
+		float startY = 50.f;
+    
+		// Настраиваем генератор случайных чисел
+		static std::random_device rd;
+		static std::mt19937 gen(rd());
+		// Диапазон для каналов цвета: [0..255]
+		std::uniform_int_distribution<int> distColor(0, 255);
+    
+		for (int row = 0; row < rows; ++row)
+		{
+			for (int col = 0; col < columns; ++col)
+			{
+				float x = startX + col * (brickWidth + spacing);
+				float y = startY + row * (brickHeight + spacing);
+            
+				// Генерируем случайный цвет
+				sf::Color randomColor(
+					distColor(gen),  // R
+					distColor(gen),  // G
+					distColor(gen)   // B
+				);
+            
+				// Создаём кирпич
+				bricks.push_back(std::make_unique<Brick>(
+					sf::Vector2f(x, y),
+					sf::Vector2f(brickWidth, brickHeight),
+					randomColor
+				));
+			}
+		}
+	}
+
 	void Game::Update(float currentTime, sf::RenderWindow& window, const sf::Event& event)
 	{
 		switch (GameStateManager::Instance().GetCurrentState())
@@ -94,12 +149,62 @@ namespace ArkanoidGame
 		static float lastTime = currentTime;
 		float deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
-
-		// Update the platform
+		
 		platform.Update(window, deltaTime);
-		// Update the ball
 		ball.Update(window, deltaTime);
-
+		
+		for (auto& brick : bricks)
+		{
+			// Если кирпич не разрушен и происходит столкновение
+			if (!brick->IsDestroyed() && ball.CheckCollisionWithBrick(*brick))
+			{
+				// Вычисляем центр кирпича
+				sf::FloatRect brickBounds = brick->GetBounds();
+				sf::Vector2f brickCenter(brickBounds.left + brickBounds.width / 2.f,
+										  brickBounds.top + brickBounds.height / 2.f);
+    
+				sf::Vector2f ballPos = ball.GetPosition();
+				float radius = ball.GetShape().getRadius();
+    
+				// Вычисляем разницу между центрами
+				float dx = ballPos.x - brickCenter.x;
+				float dy = ballPos.y - brickCenter.y;
+    
+				// "Полуразмеры" для расчёта пересечения: половина размеров кирпича плюс радиус шарика
+				float combinedHalfWidth = (brickBounds.width / 2.f) + radius;
+				float combinedHalfHeight = (brickBounds.height / 2.f) + radius;
+    
+				// Вычисляем пересечения по каждой оси
+				float overlapX = combinedHalfWidth - std::abs(dx);
+				float overlapY = combinedHalfHeight - std::abs(dy);
+    
+				// Разрушаем кирпич
+				brick->Destroy();
+    
+				// Если пересечение по X меньше, значит контакт произошёл по боковой стороне
+				if (overlapX < overlapY)
+				{
+					// Инвертируем горизонтальную составляющую
+					ball.SetVelocity(sf::Vector2f(-ball.GetVelocity().x, ball.GetVelocity().y));
+					// Корректируем позицию шарика так, чтобы он не застревал
+					if (dx > 0)
+						ball.SetPosition(sf::Vector2f(brickBounds.left + brickBounds.width + radius, ballPos.y));
+					else
+						ball.SetPosition(sf::Vector2f(brickBounds.left - radius, ballPos.y));
+				}
+				else // Иначе, столкновение по вертикали
+				{
+					// Инвертируем вертикальную составляющую
+					ball.SetVelocity(sf::Vector2f(ball.GetVelocity().x, -ball.GetVelocity().y));
+					// Корректируем позицию шарика
+					if (dy > 0)
+						ball.SetPosition(sf::Vector2f(ballPos.x, brickBounds.top + brickBounds.height + radius));
+					else
+						ball.SetPosition(sf::Vector2f(ballPos.x, brickBounds.top - radius));
+				}
+			}
+		}
+		
 		if (ball.CheckCollisionWithPlatform(platform))
 		{
 			// We get the boundaries of the platform and its center
@@ -127,6 +232,12 @@ namespace ArkanoidGame
     
 			// Additionally, you can move the ball just above the platform to avoid stuck
 			ball.SetPosition(sf::Vector2f(ballPos.x, platformBounds.top - ball.GetShape().getRadius()));
+		}
+
+		if (ball.GetPosition().y - ball.GetShape().getRadius() > SCREEN_HEIGHT)
+		{
+			// Переключаем состояние игры на "Game Over"
+			GameStateManager::Instance().PushState(GameState::GameOver);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -368,13 +479,13 @@ namespace ArkanoidGame
 
 	void Game::Draw(sf::RenderWindow& window)
 	{		
-		// Draw Platform
 		platform.Draw(window);
-
-		// Draw Ball
 		ball.Draw(window);
+		for (const auto& brick : bricks)
+		{
+			brick->Draw(window);
+		}
 		
-		// Draw UI
 		menu.Draw(window);
 	}
 

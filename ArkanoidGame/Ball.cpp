@@ -1,4 +1,5 @@
 ﻿#include "Ball.h"
+#include "Brick.h"
 #include "Platform.h"
 
 #include <algorithm>
@@ -78,6 +79,24 @@ namespace ArkanoidGame
         float distanceY = ballPos.y - closestY;
         float distanceSquared = distanceX * distanceX + distanceY * distanceY;
 
+        return distanceSquared < (radius * radius);
+    }
+
+    bool Ball::CheckCollisionWithBrick(const Brick& brick) const
+    {
+        sf::Vector2f ballPos = ballShape.getPosition();
+        float radius = ballShape.getRadius();
+        // Получаем границы кирпича
+        sf::FloatRect brickBounds = brick.GetBounds();
+        
+        // Находим ближайшую точку на прямоугольнике кирпича к центру шарика
+        float closestX = std::max(brickBounds.left, std::min(ballPos.x, brickBounds.left + brickBounds.width));
+        float closestY = std::max(brickBounds.top, std::min(ballPos.y, brickBounds.top + brickBounds.height));
+        
+        float distanceX = ballPos.x - closestX;
+        float distanceY = ballPos.y - closestY;
+        float distanceSquared = distanceX * distanceX + distanceY * distanceY;
+        
         return distanceSquared < (radius * radius);
     }
 }

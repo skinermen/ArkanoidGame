@@ -19,6 +19,7 @@ namespace ArkanoidGame
         void SetVelocity(const sf::Vector2f& newVelocity) { velocity = newVelocity; }
         const sf::Vector2f& GetVelocity() const { return velocity; }
         bool CheckCollisionWithPlatform(const class Platform& platform) const;
+        bool CheckCollisionWithBrick(const class Brick& brick) const;
         
     private:
         sf::CircleShape ballShape;
