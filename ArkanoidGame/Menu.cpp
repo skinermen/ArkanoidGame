@@ -178,6 +178,13 @@ namespace ArkanoidGame
 		}
 	}
 
+	void Menu::InitWinnerMenu()
+	{
+		InitText(winnerText, font, 76, 1, sf::Color::Green, "WINNER");
+		winnerText.setOrigin(winnerText.getLocalBounds().width / 2.f,
+							 winnerText.getLocalBounds().height / 2.f);
+	}
+
 	void Menu::DrawMainMenu(sf::RenderWindow& window)
 	{		
 		mainMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
@@ -199,7 +206,7 @@ namespace ArkanoidGame
 			
 		pauseMenuTitle.setPosition(SCREEN_WIDTH / 2.f, pauseMenuTitle.getLocalBounds().height);
 		pauseMenuTitle.setOrigin(pauseMenuTitle.getLocalBounds().width / 2.f,
-			pauseMenuTitle.getLocalBounds().height);
+								 pauseMenuTitle.getLocalBounds().height);
 		window.draw(pauseMenuTitle);
 
 		DrawMenuItems(window, vTextPauseMenuItems,
@@ -212,7 +219,7 @@ namespace ArkanoidGame
 		window.draw(nameInputMenuRectangleBackground);
 
 		nameInputMenuText.setOrigin(nameInputMenuText.getLocalBounds().width / 2.f,
-			nameInputMenuText.getLocalBounds().height / 2.f);
+									nameInputMenuText.getLocalBounds().height / 2.f);
 		nameInputMenuText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.5f);
 		window.draw(nameInputMenuText);
 	}
@@ -321,9 +328,31 @@ namespace ArkanoidGame
 			window.draw(vRectanglesOptionsMenu[i]);
 		}
 	}
-	
+
+	void Menu::DrawWinnerMenu(sf::RenderWindow& window)
+	{
+		// Blur screen
+		window.draw(pauseBlurSprite);
+			
+		winnerText.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f - 100.f);
+		window.draw(winnerText);
+
+		gameOverScoreTitle.setPosition(SCREEN_WIDTH / 2.f,
+			gameOverScoreTitle.getLocalBounds().height);
+		window.draw(gameOverScoreTitle);
+
+		gameOverScores.setPosition(SCREEN_WIDTH / 2.f,
+			gameOverScoreTitle.getPosition().y + gameOverScoreTitle.getLocalBounds().height);
+		gameOverScores.setOrigin(gameOverScores.getLocalBounds().width / 2.f,
+		gameOverScores.getLocalBounds().height / 2.f);
+		window.draw(gameOverScores);
+		
+		DrawMenuItems(window, vTextGameOverMenuItems,
+			SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 100.f * vTextGameOverMenuItems.size(), 60.f);
+	}
+
 	void Menu::DrawMenuItems(sf::RenderWindow& window, std::vector<sf::Text>& menuItems,
-		float posX, float posY, float indentation)
+	                         float posX, float posY, float indentation)
 	{
 		float verticalIndentation = 0.f;
 		for (auto& menuItem : menuItems) // NOLINT(clang-diagnostic-sign-compare)

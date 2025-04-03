@@ -23,17 +23,15 @@ namespace ArkanoidGame
 	void Game::Init(sf::RenderWindow& window)
 	{
 		menu.Init();
-		GameStateManager::Instance().PushState(GameState::MainMenu);
+		GameStateManager::Instance().SwitchState(GameState::MainMenu);
 		InitGameState();
 		window.setIcon(32, 32, menu.GetIcon().getPixelsPtr());
 	}
 
 	void Game::InitGameState()
 	{
-		// Set default value
 		menu.SetNumScores(0);
-
-		// Start music if in Playing state
+		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
 		{
 			menu.InitPlayMusic();
@@ -43,11 +41,9 @@ namespace ArkanoidGame
 
 	void Game::InitStartNewGame()
 	{
-		// Например, сбросьте игру, переместите шарик, платформу и т.д.
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f));
-
-		// Генерируем кирпичи для уровня
+		
 		InitBricks();
 		
 		GameStateManager::Instance().PushState(GameState::Playing);
@@ -58,24 +54,24 @@ namespace ArkanoidGame
 	{
 		bricks.clear();
     
-		const int rows = 5;
-		const int columns = 10;
+		const int rows = 5; // 5
+		const int columns = 10; // 10
     
-		// Размер кирпича
+		// The size of the brick
 		const float brickWidth = 60.f;
 		const float brickHeight = 20.f;
-		// Отступ между кирпичами
+		// The indent between the bricks
 		const float spacing = 5.f; 
     
-		// Вычисляем общую ширину сетки, учитывая отступы между колонками
+		// We calculate the total width of the grid, given the indentation between the columns
 		float totalWidth = columns * brickWidth + (columns - 1) * spacing;
 		float startX = (SCREEN_WIDTH - totalWidth) / 2.f + brickWidth / 2.f;
 		float startY = 50.f;
     
-		// Настраиваем генератор случайных чисел
+		// We set up a random number generator
 		static std::random_device rd;
 		static std::mt19937 gen(rd());
-		// Диапазон для каналов цвета: [0..255]
+		// Range for color channels: [0..255]
 		std::uniform_int_distribution<int> distColor(0, 255);
     
 		for (int row = 0; row < rows; ++row)
@@ -85,14 +81,14 @@ namespace ArkanoidGame
 				float x = startX + col * (brickWidth + spacing);
 				float y = startY + row * (brickHeight + spacing);
             
-				// Генерируем случайный цвет
+				// We generate random color
 				sf::Color randomColor(
 					distColor(gen),  // R
 					distColor(gen),  // G
 					distColor(gen)   // B
 				);
             
-				// Создаём кирпич
+				// Create a brick
 				bricks.push_back(std::make_unique<Brick>(
 					sf::Vector2f(x, y),
 					sf::Vector2f(brickWidth, brickHeight),
@@ -135,6 +131,9 @@ namespace ArkanoidGame
 		case GameState::Options:
 			UpdateMenuState(event, window, menu.GetVTextOptionsMenuItems());
 			break;
+		case GameState::Winner:
+			UpdateMenuState(event, window, menu.GetVTextGameOverMenuItems());
+			break;
 		case GameState::None:  // NOLINT(bugprone-branch-clone)
 				break;
 		default:
@@ -148,17 +147,39 @@ namespace ArkanoidGame
 	{
 		static float lastTime = currentTime;
 		float deltaTime = currentTime - lastTime;
+		if (deltaTime > 0.1f)
+		{
+			deltaTime = 0.016f;
+		}
 		lastTime = currentTime;
 		
 		platform.Update(window, deltaTime);
 		ball.Update(window, deltaTime);
 		
+		// Local variable to check the destruction of all bricks
+		bool allBricksDestroyed = true;
+		for (const auto& brick : bricks)
+		{
+			if (!brick->IsDestroyed())
+			{
+				allBricksDestroyed = false;
+				break;
+			}
+		}
+
+		// If all the bricks are destroyed, we switch to the state of Winner
+		if (allBricksDestroyed)
+		{
+			GameStateManager::Instance().SwitchState(GameState::Winner);
+			return;
+		}
+		
 		for (auto& brick : bricks)
 		{
-			// Если кирпич не разрушен и происходит столкновение
+			// If the brick is not destroyed and the collision occurs
 			if (!brick->IsDestroyed() && ball.CheckCollisionWithBrick(*brick))
 			{
-				// Вычисляем центр кирпича
+				// We calculate the center of brick
 				sf::FloatRect brickBounds = brick->GetBounds();
 				sf::Vector2f brickCenter(brickBounds.left + brickBounds.width / 2.f,
 										  brickBounds.top + brickBounds.height / 2.f);
@@ -166,37 +187,37 @@ namespace ArkanoidGame
 				sf::Vector2f ballPos = ball.GetPosition();
 				float radius = ball.GetShape().getRadius();
     
-				// Вычисляем разницу между центрами
+				// We calculate the difference between centers
 				float dx = ballPos.x - brickCenter.x;
 				float dy = ballPos.y - brickCenter.y;
     
-				// "Полуразмеры" для расчёта пересечения: половина размеров кирпича плюс радиус шарика
+				// "Polosmers" for calculating the intersection: half of the size of the brick plus radius of the ball
 				float combinedHalfWidth = (brickBounds.width / 2.f) + radius;
 				float combinedHalfHeight = (brickBounds.height / 2.f) + radius;
     
-				// Вычисляем пересечения по каждой оси
+				// We calculate the intersections for each axis
 				float overlapX = combinedHalfWidth - std::abs(dx);
 				float overlapY = combinedHalfHeight - std::abs(dy);
     
-				// Разрушаем кирпич
+				// We destroy the brick
 				brick->Destroy();
     
-				// Если пересечение по X меньше, значит контакт произошёл по боковой стороне
+				// If the crossing is less, then the contact occurred on the side
 				if (overlapX < overlapY)
 				{
-					// Инвертируем горизонтальную составляющую
+					// Invert the horizontal component
 					ball.SetVelocity(sf::Vector2f(-ball.GetVelocity().x, ball.GetVelocity().y));
-					// Корректируем позицию шарика так, чтобы он не застревал
+					// We adjust the position of the ball so that it does not get stuck
 					if (dx > 0)
 						ball.SetPosition(sf::Vector2f(brickBounds.left + brickBounds.width + radius, ballPos.y));
 					else
 						ball.SetPosition(sf::Vector2f(brickBounds.left - radius, ballPos.y));
 				}
-				else // Иначе, столкновение по вертикали
+				else // Otherwise, a vertical collision
 				{
-					// Инвертируем вертикальную составляющую
+					// We invert the vertical component
 					ball.SetVelocity(sf::Vector2f(ball.GetVelocity().x, -ball.GetVelocity().y));
-					// Корректируем позицию шарика
+					// We adjust the position of the ball
 					if (dy > 0)
 						ball.SetPosition(sf::Vector2f(ballPos.x, brickBounds.top + brickBounds.height + radius));
 					else
@@ -236,7 +257,6 @@ namespace ArkanoidGame
 
 		if (ball.GetPosition().y - ball.GetShape().getRadius() > SCREEN_HEIGHT)
 		{
-			// Переключаем состояние игры на "Game Over"
 			GameStateManager::Instance().PushState(GameState::GameOver);
 		}
 
@@ -339,6 +359,9 @@ namespace ArkanoidGame
 				case GameState::Options:
 					HandleOptionsMenuSelection(menu.GetSelectedItemIndex());
 						break;
+				case GameState::Winner:
+					HandleGameOverMenuSelection(menu.GetSelectedItemIndex());
+					break;
 				default:
 					break;
 				}
@@ -350,7 +373,8 @@ namespace ArkanoidGame
 		{
 			if (!onKeyHold)
 			{
-				GameStateManager::Instance().SwitchState(GameStateManager::Instance().GetPreviousState());
+				GameStateManager::Instance().PopState();
+				menu.OnPlayMusic(true);
 			}
 			onKeyHold = true;
 		}
@@ -412,11 +436,12 @@ namespace ArkanoidGame
 		switch (selectedIndex)  // NOLINT(hicpp-multiway-paths-covered)
 		{
 		case 0:  // Continue Game
-			GameStateManager::Instance().SwitchState(GameState::Playing);
+			GameStateManager::Instance().PopState();
 			menu.OnPlayMusic(true);
 			break;
 		default:  // Back to main menu
 			menu.ResetAllMenuSelection();
+			GameStateManager::Instance().ClearStates();
 			GameStateManager::Instance().PushState(GameState::MainMenu);
 			break;
 		}

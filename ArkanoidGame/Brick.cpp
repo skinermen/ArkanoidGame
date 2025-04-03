@@ -1,6 +1,5 @@
 ﻿#include "Brick.h"
 #include <SFML/Graphics.hpp>
-#include "Constants.h"
 
 namespace ArkanoidGame
 {
@@ -9,15 +8,13 @@ namespace ArkanoidGame
     {
         brickShape.setSize(size);
         brickShape.setFillColor(color);
-        // Центрируем кирпич по его размеру
         brickShape.setOrigin(size.x / 2.f, size.y / 2.f);
         brickShape.setPosition(position);
     }
-
-    // Для обычного кирпича Update может быть пустым, но можно добавить анимацию разрушения
+    
     void Brick::Update(sf::RenderWindow& window, float deltaTime)
     {
-        // Пока кирпич статичен, здесь ничего не делаем.
+        
     }
 
     void Brick::Draw(sf::RenderWindow& window) const

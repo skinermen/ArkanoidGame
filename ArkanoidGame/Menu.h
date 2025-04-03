@@ -52,6 +52,7 @@ namespace ArkanoidGame
 		void InitDifficultyMenu() override ;
 		void InitLeaderboard() override ;
 		void InitOptionsMenu() override ;
+		void InitWinnerMenu() override ;
 	
 		// Draw
 		void DrawMainMenu(sf::RenderWindow& window) override;
@@ -62,6 +63,7 @@ namespace ArkanoidGame
 		void DrawLeaderboard(sf::RenderWindow& window) override;
 		void DrawDifficultyMenu(sf::RenderWindow& window) override;
 		void DrawOptionsMenu(sf::RenderWindow& window) override;
+		void DrawWinnerMenu(sf::RenderWindow& window) override;
 		static void DrawMenuItems(sf::RenderWindow& window, std::vector<sf::Text>& menuItems,
 		                          float posX, float posY, float indentation);
 
@@ -151,6 +153,9 @@ namespace ArkanoidGame
 		std::vector<sf::Text> vTextOptionsMenuItems;
 		std::vector<sf::RectangleShape> vRectanglesOptionsMenu;
 		sf::RectangleShape optionsMenuRectangleBackground;
+
+		// Winner
+		sf::Text winnerText;
 		
 		// Other
 		sf::Text limiter;

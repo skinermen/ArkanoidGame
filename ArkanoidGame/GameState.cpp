@@ -42,4 +42,10 @@ namespace ArkanoidGame
         while (!stateStack.empty())
             stateStack.pop();
     }
+
+    void GameStateManager::PopState()
+    {
+        if (!stateStack.empty())
+            stateStack.pop();
+    }
 }

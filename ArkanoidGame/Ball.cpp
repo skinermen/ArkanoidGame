@@ -86,10 +86,9 @@ namespace ArkanoidGame
     {
         sf::Vector2f ballPos = ballShape.getPosition();
         float radius = ballShape.getRadius();
-        // Получаем границы кирпича
         sf::FloatRect brickBounds = brick.GetBounds();
         
-        // Находим ближайшую точку на прямоугольнике кирпича к центру шарика
+        // Find the nearest point on the rectangle of brick to the center of the ball
         float closestX = std::max(brickBounds.left, std::min(ballPos.x, brickBounds.left + brickBounds.width));
         float closestY = std::max(brickBounds.top, std::min(ballPos.y, brickBounds.top + brickBounds.height));
         

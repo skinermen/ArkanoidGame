@@ -21,6 +21,7 @@ namespace ArkanoidGame
 		virtual  void InitGameOverMenu() = 0;
 		virtual  void InitDifficultyMenu() = 0;
 		virtual  void InitOptionsMenu() = 0;
+		virtual  void InitWinnerMenu() = 0;
 		virtual  void DrawMainMenu(sf::RenderWindow& window) = 0;
 		virtual  void DrawPauseMenu(sf::RenderWindow& window) = 0;
 		virtual  void DrawNameInputMenu(sf::RenderWindow& window) = 0;
@@ -29,6 +30,7 @@ namespace ArkanoidGame
 		virtual  void DrawDifficultyMenu(sf::RenderWindow& window) = 0;
 		virtual  void DrawLeaderboard(sf::RenderWindow& window) = 0;
 		virtual  void DrawOptionsMenu(sf::RenderWindow& window) = 0;
+		virtual  void DrawWinnerMenu(sf::RenderWindow& window) = 0;
 
 		void Init();
 		static void InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name = "none");
@@ -66,6 +68,7 @@ namespace ArkanoidGame
 		bool isDifficultyMenuTextVisible;
 		bool isScoreboardMenuVisible;
 		bool isOptionsMenuTextVisible;
+		bool isWinnerMenuTextVisible;
 		bool isSoundOn = true;
 		bool isMusicOn = true;
 

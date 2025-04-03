@@ -41,7 +41,7 @@ namespace ArkanoidGame
 
 		void HandleMainMenuSelection(unsigned int selectedIndex, sf::RenderWindow& window);
 		void HandlePauseMenuSelection(unsigned int selectedIndex);
-		void HandleConfirmationSelection(unsigned int selectedIndex);
+		static void HandleConfirmationSelection(unsigned int selectedIndex);
 		void HandleGameOverMenuSelection(unsigned int selectedIndex);
 		void HandleDifficultyMenuSelection(unsigned int selectedIndex);
 		void HandleOptionsMenuSelection(unsigned int selectedIndex);

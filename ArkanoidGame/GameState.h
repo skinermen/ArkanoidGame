@@ -14,7 +14,8 @@ namespace ArkanoidGame
         GameOver,
         Leaderboard,
         Difficulty,
-        Options
+        Options,
+        Winner
     };
 
     class GameStateManager
@@ -27,6 +28,7 @@ namespace ArkanoidGame
         GameState GetCurrentState() const;
         GameState GetPreviousState() const;
         void ClearStates();
+        void PopState();
 
     private:
         GameStateManager() = default;

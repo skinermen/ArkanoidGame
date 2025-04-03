@@ -88,6 +88,9 @@ namespace ArkanoidGame
 
 		// Options Menu Text
 		InitOptionsMenu();
+
+		// Winner Text
+		InitWinnerMenu();
 	}
 
 	void UI::Update(const Game& game)
@@ -107,6 +110,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::MainMenu)
@@ -120,6 +124,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::PauseMenu)
@@ -133,6 +138,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::NameInputMenu)
@@ -146,6 +152,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::ConfirmationMenu)
@@ -159,6 +166,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::GameOver)
@@ -172,6 +180,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Difficulty)
@@ -185,6 +194,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = true;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Leaderboard)
@@ -198,6 +208,7 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = true;
 			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Options)
@@ -211,6 +222,21 @@ namespace ArkanoidGame
 			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = true;
+			isWinnerMenuTextVisible = false;
+		}
+
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Winner)
+		{
+			isPlayingTextVisible = false;
+			isMainMenuTextVisible = false;
+			isPauseMenuTextVisible = false;
+			isNameInputMenuTextVisible = false;
+			isConfirmationMenuTextVisible = false;
+			isGameOverMenuTextVisible = false;
+			isDifficultyMenuTextVisible = false;
+			isScoreboardMenuVisible = false;
+			isOptionsMenuTextVisible = false;
+			isWinnerMenuTextVisible = true;
 		}
 
 	}
@@ -268,6 +294,11 @@ namespace ArkanoidGame
 		if (isOptionsMenuTextVisible)
 		{
 			DrawOptionsMenu(window);
+		}
+
+		if (isWinnerMenuTextVisible)
+		{
+			DrawWinnerMenu(window);
 		}
 	}
 
