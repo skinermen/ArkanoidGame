@@ -31,12 +31,8 @@ namespace ArkanoidGame
 	void Game::InitGameState()
 	{
 		menu.SetNumScores(0);
-		
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
-		{
-			menu.InitPlayMusic();
-			menu.OnPlayMusic(true);
-		}
+		menu.InitPlayMusic();
+		menu.UpdatePlayMusic();
 	}
 
 	void Game::InitStartNewGame()
@@ -68,12 +64,6 @@ namespace ArkanoidGame
 		float startX = (SCREEN_WIDTH - totalWidth) / 2.f + brickWidth / 2.f;
 		float startY = 50.f;
     
-		// We set up a random number generator
-		static std::random_device rd;
-		static std::mt19937 gen(rd());
-		// Range for color channels: [0..255]
-		std::uniform_int_distribution<int> distColor(0, 255);
-    
 		for (int row = 0; row < rows; ++row)
 		{
 			for (int col = 0; col < columns; ++col)
@@ -81,18 +71,11 @@ namespace ArkanoidGame
 				float x = startX + col * (brickWidth + spacing);
 				float y = startY + row * (brickHeight + spacing);
             
-				// We generate random color
-				sf::Color randomColor(
-					distColor(gen),  // R
-					distColor(gen),  // G
-					distColor(gen)   // B
-				);
-            
 				// Create a brick
 				bricks.push_back(std::make_unique<Brick>(
 					sf::Vector2f(x, y),
 					sf::Vector2f(brickWidth, brickHeight),
-					randomColor
+					sf::Color::Green
 				));
 			}
 		}
@@ -373,8 +356,9 @@ namespace ArkanoidGame
 		{
 			if (!onKeyHold)
 			{
+				menu.ResetAllMenuSelection();
 				GameStateManager::Instance().PopState();
-				menu.OnPlayMusic(true);
+				menu.UpdatePlayMusic();
 			}
 			onKeyHold = true;
 		}
@@ -423,6 +407,7 @@ namespace ArkanoidGame
 			GameStateManager::Instance().PushState(GameState::Leaderboard);
 			break;
 		case 3:  // Options
+			menu.ResetAllMenuSelection();
 			GameStateManager::Instance().PushState(GameState::Options);
 				break;
 		default: // Exit
@@ -437,7 +422,7 @@ namespace ArkanoidGame
 		{
 		case 0:  // Continue Game
 			GameStateManager::Instance().PopState();
-			menu.OnPlayMusic(true);
+			menu.UpdatePlayMusic();
 			break;
 		default:  // Back to main menu
 			menu.ResetAllMenuSelection();

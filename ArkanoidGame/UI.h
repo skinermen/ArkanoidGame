@@ -39,6 +39,7 @@ namespace ArkanoidGame
 		void Draw(sf::RenderWindow& window);
 		void PlaySound(const sf::SoundBuffer& buffer);
 		void InitPlayMusic();
+		void UpdatePlayMusic();
 		void OnPlayMusic(bool isPlay);
 
 		// Get & Set

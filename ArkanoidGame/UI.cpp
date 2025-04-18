@@ -319,6 +319,18 @@ namespace ArkanoidGame
 			musicMainTheme.setLoop(true);
 	}
 
+	void UI::UpdatePlayMusic()
+	{
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
+		{
+			OnPlayMusic(true);
+		}
+		else
+		{
+			OnPlayMusic(false);
+		}
+	}
+
 	void UI::OnPlayMusic(bool isPlay)
 	{
 		if (isMusicOn)

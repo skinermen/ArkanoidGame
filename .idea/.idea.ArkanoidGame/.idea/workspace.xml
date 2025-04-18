@@ -11,15 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Brick.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Brick.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Brick.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Brick.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/GameState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/GameState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/GameState.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/GameState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.h" afterDir="false" />
     </list>
@@ -32,9 +24,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://D:/XYZ/Source/ArkanoidGame/ArkanoidGame/Brick.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -151,7 +142,9 @@
       <workItem from="1742043467295" duration="5097000" />
       <workItem from="1743263074183" duration="2308000" />
       <workItem from="1743596140464" duration="5365000" />
-      <workItem from="1743679902881" duration="7426000" />
+      <workItem from="1743679902881" duration="7555000" />
+      <workItem from="1744719446112" duration="2652000" />
+      <workItem from="1744983817138" duration="913000" />
     </task>
     <task id="LOCAL-00001" summary="the .idea folder has been overwritten">
       <option name="closed" value="true" />
@@ -225,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743597017819</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added the Winner game state when all the bricks are knocked down.">
+      <option name="closed" value="true" />
+      <created>1743687779743</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743687779743</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,6 +256,7 @@
     <MESSAGE value="1. The abstract GameObject class has been created&#10;2. Ball and Platform have been converted into child classes of GameObject" />
     <MESSAGE value="GameState management is placed in a separate GameStateManager class" />
     <MESSAGE value="Added bricks and game over state" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added bricks and game over state" />
+    <MESSAGE value="Added the Winner game state when all the bricks are knocked down." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the Winner game state when all the bricks are knocked down." />
   </component>
 </project>
