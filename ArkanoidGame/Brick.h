@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
+#include "Ball.h"
 #include "GameObject.h"
 
 namespace ArkanoidGame
@@ -18,11 +19,12 @@ namespace ArkanoidGame
         sf::FloatRect GetBounds() const;
         
         void Destroy();
-        
         bool IsDestroyed() const;
 
     private:
         sf::RectangleShape brickShape;
         bool destroyed;
+
+        Ball* ball = nullptr;
     };
 }

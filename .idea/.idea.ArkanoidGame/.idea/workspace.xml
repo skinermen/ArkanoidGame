@@ -9,9 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="">
+    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="Redesigned the code in the &quot;UI::Update()&quot; function">
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/BrickManager.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/BrickManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Brick.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Brick.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Brick.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Brick.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Constants.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.h" afterDir="false" />
     </list>
@@ -227,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743687779743</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Redesigned the code in the &quot;UI::Update()&quot; function">
+      <option name="closed" value="true" />
+      <created>1744989819889</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744989819889</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +274,7 @@
     <MESSAGE value="GameState management is placed in a separate GameStateManager class" />
     <MESSAGE value="Added bricks and game over state" />
     <MESSAGE value="Added the Winner game state when all the bricks are knocked down." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the Winner game state when all the bricks are knocked down." />
+    <MESSAGE value="Redesigned the code in the &quot;UI::Update()&quot; function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Redesigned the code in the &quot;UI::Update()&quot; function" />
   </component>
 </project>

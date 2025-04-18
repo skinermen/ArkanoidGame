@@ -1,5 +1,5 @@
 ﻿#include "Brick.h"
-#include <SFML/Graphics.hpp>
+#include "Ball.h"
 
 namespace ArkanoidGame
 {
@@ -11,7 +11,7 @@ namespace ArkanoidGame
         brickShape.setOrigin(size.x / 2.f, size.y / 2.f);
         brickShape.setPosition(position);
     }
-    
+
     void Brick::Update(sf::RenderWindow& window, float deltaTime)
     {
         
@@ -20,9 +20,7 @@ namespace ArkanoidGame
     void Brick::Draw(sf::RenderWindow& window) const
     {
         if (!destroyed)
-        {
             window.draw(brickShape);
-        }
     }
 
     void Brick::SetPosition(const sf::Vector2f& pos)
@@ -39,7 +37,6 @@ namespace ArkanoidGame
     {
         return brickShape.getGlobalBounds();
     }
-    
 
     void Brick::Destroy()
     {

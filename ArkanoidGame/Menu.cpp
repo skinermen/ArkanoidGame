@@ -10,7 +10,7 @@ namespace ArkanoidGame
 
 	void Menu::InitPauseTexture()
 	{
-		pauseBlurTexture.create(SCREEN_WIDTH, SCREEN_HEIGHT);
+		pauseBlurTexture.create(SCREEN_WIDTH, SCREEN_HEIGHT);  // NOLINT(clang-diagnostic-float-conversion, clang-diagnostic-float-conversion)
 		pauseBlurTexture.clear(sf::Color(0, 0, 0, 220));
 		pauseBlurSprite.setTexture(pauseBlurTexture.getTexture());
 	}

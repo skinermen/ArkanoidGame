@@ -14,6 +14,7 @@ namespace ArkanoidGame
 		  difficultySelected(false),
 		  numEatenApples(0),
 		  timeSinceGameOver(0.f)
+
 	{
 		Init(window);
 	}
@@ -37,48 +38,12 @@ namespace ArkanoidGame
 
 	void Game::InitStartNewGame()
 	{
+		brickManager.Init();
+		brickManager.SetBall(&ball);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f));
-		
-		InitBricks();
-		
 		GameStateManager::Instance().PushState(GameState::Playing);
 		InitGameState();
-	}
-
-	void Game::InitBricks()
-	{
-		bricks.clear();
-    
-		const int rows = 5; // 5
-		const int columns = 10; // 10
-    
-		// The size of the brick
-		const float brickWidth = 60.f;
-		const float brickHeight = 20.f;
-		// The indent between the bricks
-		const float spacing = 5.f; 
-    
-		// We calculate the total width of the grid, given the indentation between the columns
-		float totalWidth = columns * brickWidth + (columns - 1) * spacing;
-		float startX = (SCREEN_WIDTH - totalWidth) / 2.f + brickWidth / 2.f;
-		float startY = 50.f;
-    
-		for (int row = 0; row < rows; ++row)
-		{
-			for (int col = 0; col < columns; ++col)
-			{
-				float x = startX + col * (brickWidth + spacing);
-				float y = startY + row * (brickHeight + spacing);
-            
-				// Create a brick
-				bricks.push_back(std::make_unique<Brick>(
-					sf::Vector2f(x, y),
-					sf::Vector2f(brickWidth, brickHeight),
-					sf::Color::Green
-				));
-			}
-		}
 	}
 
 	void Game::Update(float currentTime, sf::RenderWindow& window, const sf::Event& event)
@@ -138,75 +103,10 @@ namespace ArkanoidGame
 		
 		platform.Update(window, deltaTime);
 		ball.Update(window, deltaTime);
-		
-		// Local variable to check the destruction of all bricks
-		bool allBricksDestroyed = true;
-		for (const auto& brick : bricks)
+		brickManager.Update(window, deltaTime);
+		if (GameStateManager::Instance().GetCurrentState() != GameState::Playing)
 		{
-			if (!brick->IsDestroyed())
-			{
-				allBricksDestroyed = false;
-				break;
-			}
-		}
-
-		// If all the bricks are destroyed, we switch to the state of Winner
-		if (allBricksDestroyed)
-		{
-			GameStateManager::Instance().SwitchState(GameState::Winner);
-			return;
-		}
-		
-		for (auto& brick : bricks)
-		{
-			// If the brick is not destroyed and the collision occurs
-			if (!brick->IsDestroyed() && ball.CheckCollisionWithBrick(*brick))
-			{
-				// We calculate the center of brick
-				sf::FloatRect brickBounds = brick->GetBounds();
-				sf::Vector2f brickCenter(brickBounds.left + brickBounds.width / 2.f,
-										  brickBounds.top + brickBounds.height / 2.f);
-    
-				sf::Vector2f ballPos = ball.GetPosition();
-				float radius = ball.GetShape().getRadius();
-    
-				// We calculate the difference between centers
-				float dx = ballPos.x - brickCenter.x;
-				float dy = ballPos.y - brickCenter.y;
-    
-				// "Polosmers" for calculating the intersection: half of the size of the brick plus radius of the ball
-				float combinedHalfWidth = (brickBounds.width / 2.f) + radius;
-				float combinedHalfHeight = (brickBounds.height / 2.f) + radius;
-    
-				// We calculate the intersections for each axis
-				float overlapX = combinedHalfWidth - std::abs(dx);
-				float overlapY = combinedHalfHeight - std::abs(dy);
-    
-				// We destroy the brick
-				brick->Destroy();
-    
-				// If the crossing is less, then the contact occurred on the side
-				if (overlapX < overlapY)
-				{
-					// Invert the horizontal component
-					ball.SetVelocity(sf::Vector2f(-ball.GetVelocity().x, ball.GetVelocity().y));
-					// We adjust the position of the ball so that it does not get stuck
-					if (dx > 0)
-						ball.SetPosition(sf::Vector2f(brickBounds.left + brickBounds.width + radius, ballPos.y));
-					else
-						ball.SetPosition(sf::Vector2f(brickBounds.left - radius, ballPos.y));
-				}
-				else // Otherwise, a vertical collision
-				{
-					// We invert the vertical component
-					ball.SetVelocity(sf::Vector2f(ball.GetVelocity().x, -ball.GetVelocity().y));
-					// We adjust the position of the ball
-					if (dy > 0)
-						ball.SetPosition(sf::Vector2f(ballPos.x, brickBounds.top + brickBounds.height + radius));
-					else
-						ball.SetPosition(sf::Vector2f(ballPos.x, brickBounds.top - radius));
-				}
-			}
+			menu.UpdatePlayMusic();
 		}
 		
 		if (ball.CheckCollisionWithPlatform(platform))
@@ -241,6 +141,7 @@ namespace ArkanoidGame
 		if (ball.GetPosition().y - ball.GetShape().getRadius() > SCREEN_HEIGHT)
 		{
 			GameStateManager::Instance().PushState(GameState::GameOver);
+			menu.UpdatePlayMusic();
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -248,6 +149,7 @@ namespace ArkanoidGame
 			if (!onKeyHold)
 			{
 				GameStateManager::Instance().PushState(GameState::PauseMenu);
+				menu.UpdatePlayMusic();
 				onKeyHold = true;
 			}
 			onKeyHold = true;
@@ -491,11 +393,7 @@ namespace ArkanoidGame
 	{		
 		platform.Draw(window);
 		ball.Draw(window);
-		for (const auto& brick : bricks)
-		{
-			brick->Draw(window);
-		}
-		
+		brickManager.Draw(window);
 		menu.Draw(window);
 	}
 

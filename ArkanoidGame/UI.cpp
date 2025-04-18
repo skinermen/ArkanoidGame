@@ -8,18 +8,6 @@
 
 namespace ArkanoidGame
 {
-	UI::UI()
-	:	isPlayingTextVisible(false),
-		isMainMenuTextVisible(false),
-		isPauseMenuTextVisible(false),
-		isNameInputMenuTextVisible(false),
-		isConfirmationMenuTextVisible(false),
-		isGameOverMenuTextVisible(false),
-		isDifficultyMenuTextVisible(false),
-		isScoreboardMenuVisible(false),
-		isOptionsMenuTextVisible(false)
-	{}
-
 	void UI::InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name)
 	{
 		text.setFont(font);
@@ -64,32 +52,15 @@ namespace ArkanoidGame
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		
 		InitText(playingScoreText, font, 24, 0, sf::Color::White);
-
-		// Main Menu Text
+		
 		InitMainMenu();
-		
-		// Pause Menu Text
 		InitPauseMenu();
-
-		// Name Input Menu Text
 		InitNameInputMenu();
-		
-		// Confirmation Menu Text
 		InitConfirmationMenu();
-		
-		// Leaderboard
 		InitLeaderboard();
-		
-		// Game over Text
 		InitGameOverMenu();
-
-		// Difficulty Menu Text
 		InitDifficultyMenu();
-
-		// Options Menu Text
 		InitOptionsMenu();
-
-		// Winner Text
 		InitWinnerMenu();
 	}
 
@@ -110,56 +81,17 @@ namespace ArkanoidGame
 		isOptionsMenuTextVisible = false;
 		isWinnerMenuTextVisible = false;
 
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
-		{
-			isPlayingTextVisible = true;
-		}
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing) isPlayingTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::MainMenu) isMainMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::PauseMenu) isPauseMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::NameInputMenu) isNameInputMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::ConfirmationMenu) isConfirmationMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::GameOver) isGameOverMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Difficulty) isDifficultyMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Leaderboard) isScoreboardMenuVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Options) isOptionsMenuTextVisible = true;
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Winner) isWinnerMenuTextVisible = true;
 		
-		if (GameStateManager::Instance().GetCurrentState() == GameState::MainMenu)
-		{
-			isMainMenuTextVisible = true;
-		}
-
-		if (GameStateManager::Instance().GetCurrentState() == GameState::PauseMenu)
-		{
-			isPauseMenuTextVisible = true;
-		}
-
-		if (GameStateManager::Instance().GetCurrentState() == GameState::NameInputMenu)
-		{
-			isNameInputMenuTextVisible = true;
-		}
-
-		if (GameStateManager::Instance().GetCurrentState() == GameState::ConfirmationMenu)
-		{
-			isConfirmationMenuTextVisible = true;
-		}
-		
-		if (GameStateManager::Instance().GetCurrentState() == GameState::GameOver)
-		{
-			isGameOverMenuTextVisible = true;
-		}
-
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Difficulty)
-		{
-			isDifficultyMenuTextVisible = true;
-		}
-		
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Leaderboard)
-		{
-			isScoreboardMenuVisible = true;
-		}
-
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Options)
-		{
-			isOptionsMenuTextVisible = true;
-		}
-
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Winner)
-		{
-			isWinnerMenuTextVisible = true;
-		}
-
 	}
 
 	void UI::Draw(sf::RenderWindow& window)
@@ -174,53 +106,16 @@ namespace ArkanoidGame
 			window.draw(playingScoreText);
 		}
 
-		if (isMainMenuTextVisible)
-		{
-			DrawMainMenu(window);
-		}
-
-		if (isPauseMenuTextVisible)
-		{
-			OnPlayMusic(false);
-			DrawPauseMenu(window);
-		}
-
-		if (isNameInputMenuTextVisible)
-		{
-			DrawNameInputMenu(window);
-		}
-
-		if (isConfirmationMenuTextVisible)
-		{
-			OnPlayMusic(false);
-			DrawConfirmationMenu(window);
-		}
-
-		if (isGameOverMenuTextVisible)
-		{
-			OnPlayMusic(false);
-			DrawGameOverMenu(window);
-		}
-
-		if (isDifficultyMenuTextVisible)
-		{
-			DrawDifficultyMenu(window);
-		}
-
-		if (isScoreboardMenuVisible)
-		{
-			DrawLeaderboard(window);
-		}
+		if (isMainMenuTextVisible) DrawMainMenu(window);
+		if (isPauseMenuTextVisible) DrawPauseMenu(window);
+		if (isNameInputMenuTextVisible) DrawNameInputMenu(window);
+		if (isConfirmationMenuTextVisible) DrawConfirmationMenu(window);
+		if (isGameOverMenuTextVisible) DrawGameOverMenu(window);
+		if (isDifficultyMenuTextVisible) DrawDifficultyMenu(window);
+		if (isScoreboardMenuVisible) DrawLeaderboard(window);
+		if (isOptionsMenuTextVisible) DrawOptionsMenu(window);
+		if (isWinnerMenuTextVisible) DrawWinnerMenu(window);
 		
-		if (isOptionsMenuTextVisible)
-		{
-			DrawOptionsMenu(window);
-		}
-
-		if (isWinnerMenuTextVisible)
-		{
-			DrawWinnerMenu(window);
-		}
 	}
 
 	void UI::PlaySound(const sf::SoundBuffer& buffer)
@@ -242,28 +137,16 @@ namespace ArkanoidGame
 
 	void UI::UpdatePlayMusic()
 	{
-		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
-		{
-			OnPlayMusic(true);
-		}
-		else
-		{
-			OnPlayMusic(false);
-		}
+		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing) OnPlayMusic(true);
+		else OnPlayMusic(false);
 	}
 
 	void UI::OnPlayMusic(bool isPlay)
 	{
 		if (isMusicOn)
 		{
-			if (isPlay)
-			{
-				musicMainTheme.play();
-			}
-			else
-			{
-				musicMainTheme.pause();
-			}
+			if (isPlay) musicMainTheme.play();
+			else musicMainTheme.pause();
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace ArkanoidGame
 	class UI
 	{
 	public:
-		UI();
+		UI() = default;
 		virtual ~UI() = default;
 		
 		virtual  void InitPauseTexture() = 0;
