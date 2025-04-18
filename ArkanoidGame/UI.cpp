@@ -93,149 +93,70 @@ namespace ArkanoidGame
 		InitWinnerMenu();
 	}
 
-	void UI::Update(const Game& game)
+	void UI::Update()
 	{
 		playingScoreText.setString("Scores: " + std::to_string(numScores));
 		gameOverScores.setString(std::to_string(numScores));
 		isGameOverMenuTextVisible = GameStateManager::Instance().GetCurrentState() == GameState::GameOver;
 
+		isPlayingTextVisible = false;
+		isMainMenuTextVisible = false;
+		isPauseMenuTextVisible = false;
+		isNameInputMenuTextVisible = false;
+		isConfirmationMenuTextVisible = false;
+		isGameOverMenuTextVisible = false;
+		isDifficultyMenuTextVisible = false;
+		isScoreboardMenuVisible = false;
+		isOptionsMenuTextVisible = false;
+		isWinnerMenuTextVisible = false;
+
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Playing)
 		{
 			isPlayingTextVisible = true;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::MainMenu)
 		{
-			isPlayingTextVisible = false;
 			isMainMenuTextVisible = true;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::PauseMenu)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
 			isPauseMenuTextVisible = true;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::NameInputMenu)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
 			isNameInputMenuTextVisible = true;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::ConfirmationMenu)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
 			isConfirmationMenuTextVisible = true;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::GameOver)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
 			isGameOverMenuTextVisible = true;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Difficulty)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
 			isDifficultyMenuTextVisible = true;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 		
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Leaderboard)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
 			isScoreboardMenuVisible = true;
-			isOptionsMenuTextVisible = false;
-			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Options)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
 			isOptionsMenuTextVisible = true;
-			isWinnerMenuTextVisible = false;
 		}
 
 		if (GameStateManager::Instance().GetCurrentState() == GameState::Winner)
 		{
-			isPlayingTextVisible = false;
-			isMainMenuTextVisible = false;
-			isPauseMenuTextVisible = false;
-			isNameInputMenuTextVisible = false;
-			isConfirmationMenuTextVisible = false;
-			isGameOverMenuTextVisible = false;
-			isDifficultyMenuTextVisible = false;
-			isScoreboardMenuVisible = false;
-			isOptionsMenuTextVisible = false;
 			isWinnerMenuTextVisible = true;
 		}
 

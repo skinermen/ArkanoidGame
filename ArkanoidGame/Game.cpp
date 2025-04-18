@@ -123,7 +123,7 @@ namespace ArkanoidGame
 			break;
 		}
 
-		menu.Update(*this);
+		menu.Update();
 	}
 
 	void Game::UpdatePlayingState(const sf::Event& event, sf::RenderWindow& window, float currentTime)

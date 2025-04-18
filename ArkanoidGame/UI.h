@@ -35,7 +35,7 @@ namespace ArkanoidGame
 		void Init();
 		static void InitText(sf::Text& text, const sf::Font& font, int size, int style, sf::Color color, const std::string& name = "none");
 		static void InitRectangle(sf::RectangleShape& rectangle, float sizeX, float sizeY, sf::Color fillColor, sf::Color outlineColor, float outlineThickness);
-		void Update(const Game& game);
+		void Update();
 		void Draw(sf::RenderWindow& window);
 		void PlaySound(const sf::SoundBuffer& buffer);
 		void InitPlayMusic();
