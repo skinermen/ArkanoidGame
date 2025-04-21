@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
-#include "Ball.h"
 #include "GameObject.h"
 
 namespace ArkanoidGame
@@ -9,7 +8,7 @@ namespace ArkanoidGame
     {
     public:
         Brick(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color);
-        virtual ~Brick() = default;
+        ~Brick() override = default;
         
         void Update(sf::RenderWindow& window, float deltaTime) override;
         void Draw(sf::RenderWindow& window) const override;
@@ -24,7 +23,5 @@ namespace ArkanoidGame
     private:
         sf::RectangleShape brickShape;
         bool destroyed;
-
-        Ball* ball = nullptr;
     };
 }

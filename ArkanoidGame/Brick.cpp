@@ -1,5 +1,4 @@
 ﻿#include "Brick.h"
-#include "Ball.h"
 
 namespace ArkanoidGame
 {

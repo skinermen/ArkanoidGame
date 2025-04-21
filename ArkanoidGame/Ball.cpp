@@ -98,4 +98,81 @@ namespace ArkanoidGame
         
         return distanceSquared < (radius * radius);
     }
+
+    void Ball::CollisionHandlingWithObjects(const Platform& platform, const std::vector<std::unique_ptr<Brick>>& bricks)
+    {
+        // Check Collision With Platform
+        if (CheckCollisionWithPlatform(platform))
+        {
+            // We get the boundaries of the platform and its center
+            sf::FloatRect platformBounds = platform.GetShape().getGlobalBounds();
+            float platformCenterX = platformBounds.left + platformBounds.width / 2.f;
+    
+            // We calculate the displacement of the blow from the center of the platform (in the range [-1, 1])
+            sf::Vector2f ballPos = GetShape().getPosition();
+            float offset = (ballPos.x - platformCenterX) / (platformBounds.width / 2.f);
+    
+            // The new direction of direction: the horizontal component depends on Offset, the vertical is fixed (rebound up)
+            sf::Vector2f newDir(offset, -1.f);
+            float len = std::sqrt(newDir.x * newDir.x + newDir.y * newDir.y);
+            newDir.x /= len;
+            newDir.y /= len;
+    
+            // We retain the current ball speed
+            float currentSpeed = std::sqrt(
+                GetVelocity().x * GetVelocity().x +
+                GetVelocity().y * GetVelocity().y
+            );
+    
+            // We update the speed of the ball with a new direction
+            SetVelocity(newDir * currentSpeed);
+    
+            // Additionally, you can move the ball just above the platform to avoid stuck
+            SetPosition(sf::Vector2f(ballPos.x, platformBounds.top - GetShape().getRadius()));
+        }
+
+        // Check Collision With Bricks
+        for (auto& brick : bricks)
+        {
+            if (!brick->IsDestroyed() && CheckCollisionWithBrick(*brick))
+            {
+                sf::FloatRect brickBounds = brick->GetBounds();
+                sf::Vector2f brickCenter(brickBounds.left + brickBounds.width / 2.f,
+                                         brickBounds.top + brickBounds.height / 2.f);
+        
+                sf::Vector2f ballPos = GetPosition();
+                float radius = GetShape().getRadius();
+        
+                float dx = ballPos.x - brickCenter.x;
+                float dy = ballPos.y - brickCenter.y;
+        
+                float combinedHalfWidth = (brickBounds.width / 2.f) + radius;
+                float combinedHalfHeight = (brickBounds.height / 2.f) + radius;
+        
+                float overlapX = combinedHalfWidth - std::abs(dx);
+                float overlapY = combinedHalfHeight - std::abs(dy);
+        
+                brick->Destroy();
+        
+                if (overlapX < overlapY)
+                {
+                    SetVelocity(sf::Vector2f(-GetVelocity().x, GetVelocity().y));
+        
+                    if (dx > 0)
+                        SetPosition(sf::Vector2f(brickBounds.left + brickBounds.width + radius, ballPos.y));
+                    else
+                        SetPosition(sf::Vector2f(brickBounds.left - radius, ballPos.y));
+                }
+                else
+                {
+                    SetVelocity(sf::Vector2f(GetVelocity().x, -GetVelocity().y));
+        
+                    if (dy > 0)
+                        SetPosition(sf::Vector2f(ballPos.x, brickBounds.top + brickBounds.height + radius));
+                    else
+                        SetPosition(sf::Vector2f(ballPos.x, brickBounds.top - radius));
+                }
+            }
+        }
+    }
 }

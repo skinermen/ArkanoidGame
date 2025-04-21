@@ -6,7 +6,7 @@
 
 namespace ArkanoidGame
 {
-    class BrickManager
+    class BrickManager  // NOLINT(cppcoreguidelines-special-member-functions)
     {
     public:
         BrickManager();
@@ -16,10 +16,10 @@ namespace ArkanoidGame
         void Update(sf::RenderWindow& window, float deltaTime) const;
         void Draw(sf::RenderWindow& window) const;
         bool AllBricksDestroyed() const;
-        void SetBall(Ball* b) { ball = b; }
+
+        const std::vector<std::unique_ptr<Brick>>& GetBricks() const {return bricks;}
 
     private:
         std::vector<std::unique_ptr<Brick>> bricks;
-        Ball* ball;
     };
 }

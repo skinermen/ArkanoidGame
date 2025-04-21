@@ -39,7 +39,6 @@ namespace ArkanoidGame
 	void Game::InitStartNewGame()
 	{
 		brickManager.Init();
-		brickManager.SetBall(&ball);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f));
 		GameStateManager::Instance().PushState(GameState::Playing);
@@ -109,34 +108,7 @@ namespace ArkanoidGame
 			menu.UpdatePlayMusic();
 		}
 		
-		if (ball.CheckCollisionWithPlatform(platform))
-		{
-			// We get the boundaries of the platform and its center
-			sf::FloatRect platformBounds = platform.GetShape().getGlobalBounds();
-			float platformCenterX = platformBounds.left + platformBounds.width / 2.f;
-    
-			// We calculate the displacement of the blow from the center of the platform (in the range [-1, 1])
-			sf::Vector2f ballPos = ball.GetShape().getPosition();
-			float offset = (ballPos.x - platformCenterX) / (platformBounds.width / 2.f);
-    
-			// The new direction of direction: the horizontal component depends on Offset, the vertical is fixed (rebound up)
-			sf::Vector2f newDir(offset, -1.f);
-			float len = std::sqrt(newDir.x * newDir.x + newDir.y * newDir.y);
-			newDir.x /= len;
-			newDir.y /= len;
-    
-			// We retain the current ball speed
-			float currentSpeed = std::sqrt(
-				ball.GetVelocity().x * ball.GetVelocity().x +
-				ball.GetVelocity().y * ball.GetVelocity().y
-			);
-    
-			// We update the speed of the ball with a new direction
-			ball.SetVelocity(newDir * currentSpeed);
-    
-			// Additionally, you can move the ball just above the platform to avoid stuck
-			ball.SetPosition(sf::Vector2f(ballPos.x, platformBounds.top - ball.GetShape().getRadius()));
-		}
+		ball.CollisionHandlingWithObjects(platform, brickManager.GetBricks());
 
 		if (ball.GetPosition().y - ball.GetShape().getRadius() > SCREEN_HEIGHT)
 		{
