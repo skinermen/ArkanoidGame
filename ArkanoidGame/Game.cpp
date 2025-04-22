@@ -102,7 +102,7 @@ namespace ArkanoidGame
 		
 		platform.Update(window, deltaTime);
 		ball.Update(window, deltaTime);
-		brickManager.Update(window, deltaTime);
+		brickManager.Update();
 		if (GameStateManager::Instance().GetCurrentState() != GameState::Playing)
 		{
 			menu.UpdatePlayMusic();

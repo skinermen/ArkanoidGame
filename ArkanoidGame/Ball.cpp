@@ -1,5 +1,5 @@
 ﻿#include "Ball.h"
-#include "Brick.h"
+#include "Bricks/Brick.h"
 #include "Platform.h"
 
 #include <algorithm>
@@ -136,6 +136,8 @@ namespace ArkanoidGame
         {
             if (!brick->IsDestroyed() && CheckCollisionWithBrick(*brick))
             {
+                bool shouldBounce = brick->OnHit();
+                
                 sf::FloatRect brickBounds = brick->GetBounds();
                 sf::Vector2f brickCenter(brickBounds.left + brickBounds.width / 2.f,
                                          brickBounds.top + brickBounds.height / 2.f);
@@ -151,26 +153,27 @@ namespace ArkanoidGame
         
                 float overlapX = combinedHalfWidth - std::abs(dx);
                 float overlapY = combinedHalfHeight - std::abs(dy);
-        
-                brick->Destroy();
-        
-                if (overlapX < overlapY)
+                
+                if (shouldBounce)  // If the ball must bounce
                 {
-                    SetVelocity(sf::Vector2f(-GetVelocity().x, GetVelocity().y));
+                    if (overlapX < overlapY)
+                    {
+                        SetVelocity(sf::Vector2f(-GetVelocity().x, GetVelocity().y));
         
-                    if (dx > 0)
-                        SetPosition(sf::Vector2f(brickBounds.left + brickBounds.width + radius, ballPos.y));
+                        if (dx > 0)
+                            SetPosition(sf::Vector2f(brickBounds.left + brickBounds.width + radius, ballPos.y));
+                        else
+                            SetPosition(sf::Vector2f(brickBounds.left - radius, ballPos.y));
+                    }
                     else
-                        SetPosition(sf::Vector2f(brickBounds.left - radius, ballPos.y));
-                }
-                else
-                {
-                    SetVelocity(sf::Vector2f(GetVelocity().x, -GetVelocity().y));
+                    {
+                        SetVelocity(sf::Vector2f(GetVelocity().x, -GetVelocity().y));
         
-                    if (dy > 0)
-                        SetPosition(sf::Vector2f(ballPos.x, brickBounds.top + brickBounds.height + radius));
-                    else
-                        SetPosition(sf::Vector2f(ballPos.x, brickBounds.top - radius));
+                        if (dy > 0)
+                            SetPosition(sf::Vector2f(ballPos.x, brickBounds.top + brickBounds.height + radius));
+                        else
+                            SetPosition(sf::Vector2f(ballPos.x, brickBounds.top - radius));
+                    }
                 }
             }
         }

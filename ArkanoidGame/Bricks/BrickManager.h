@@ -13,7 +13,7 @@ namespace ArkanoidGame
         ~BrickManager();
 
         void Init();
-        void Update(sf::RenderWindow& window, float deltaTime) const;
+        void Update() const;
         void Draw(sf::RenderWindow& window) const;
         bool AllBricksDestroyed() const;
 

@@ -1,6 +1,10 @@
 ﻿#include "BrickManager.h"
-#include "Constants.h"
-#include "GameState.h"
+#include "../Constants.h"
+#include "../GameState.h"
+#include "SimpleBrick.h"
+#include "StrongBrick.h"
+#include "IndestructibleBrick.h"
+#include "GlassBrick.h"
 
 namespace ArkanoidGame
 {
@@ -11,7 +15,7 @@ namespace ArkanoidGame
     void BrickManager::Init()
     {
         bricks.clear();
-        
+
         float totalWidth = BRICK_COLUMNS * BRICK_WIDTH + (BRICK_COLUMNS - 1) * BRICK_SPACING;
         float startX = (SCREEN_WIDTH - totalWidth) / 2.f + BRICK_WIDTH / 2.f;
         float startY = 50.f;
@@ -22,26 +26,38 @@ namespace ArkanoidGame
             {
                 float x = startX + col * (BRICK_WIDTH + BRICK_SPACING);
                 float y = startY + row * (BRICK_HEIGHT + BRICK_SPACING);
+                sf::Vector2f position(x, y);
+                sf::Vector2f size(BRICK_WIDTH, BRICK_HEIGHT);
+                
+                
+                // Тип блока зависит от строки
+                std::unique_ptr<Brick> brick;
 
-                auto brick = std::make_unique<Brick>(sf::Vector2f(x, y), sf::Vector2f(BRICK_WIDTH, BRICK_HEIGHT), sf::Color::Green);
+                if (row == 0)
+                {
+                    brick = std::make_unique<IndestructibleBrick>(position, size);
+                }
+                else if (row == 1)
+                {
+                    brick = std::make_unique<GlassBrick>(position, size);
+                }
+                else if (row % 2 == 0)
+                {
+                    brick = std::make_unique<StrongBrick>(position, size);
+                }
+                else
+                {
+                    brick = std::make_unique<SimpleBrick>(position, size);
+                }
+
                 bricks.push_back(std::move(brick));
             }
         }
     }
 
-    void BrickManager::Update(sf::RenderWindow& window, float deltaTime) const
+    void BrickManager::Update() const
     {
-        bool allBricksDestroyed = true;
-        for (const auto& brick : bricks)
-        {
-            if (!brick->IsDestroyed())
-            {
-                allBricksDestroyed = false;
-                break;
-            }
-        }
-
-        if (allBricksDestroyed)
+        if (AllBricksDestroyed())
         {
             GameStateManager::Instance().SwitchState(GameState::Winner);
         }
@@ -59,8 +75,10 @@ namespace ArkanoidGame
     {
         for (const auto& brick : bricks)  // NOLINT(readability-use-anyofallof)
         {
-            if (!brick->IsDestroyed())
+            if (!brick->IsDestroyed() && dynamic_cast<IndestructibleBrick*>(brick.get()) == nullptr)
+            {
                 return false;
+            }
         }
         return true;
     }

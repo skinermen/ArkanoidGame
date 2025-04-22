@@ -4,7 +4,7 @@
 #include "Menu.h"
 #include "Platform.h"
 #include "Ball.h"
-#include "BrickManager.h"
+#include "Bricks/BrickManager.h"
 
 namespace ArkanoidGame
 {

@@ -21,11 +21,11 @@ namespace ArkanoidGame
 	constexpr float SIZE_BALL = 8.f; // radius ball
 
 	// Brick
-	constexpr int BRICK_ROW = 5;
+	constexpr int BRICK_ROW = 4;
 	constexpr int BRICK_COLUMNS = 10;
 	constexpr float BRICK_WIDTH = 60.f;
-	constexpr float BRICK_HEIGHT = 20.f;
-	constexpr float BRICK_SPACING = 5.f; 
+	constexpr float BRICK_HEIGHT = 30.f;
+	constexpr float BRICK_SPACING = 8.f; 
 
 	// Variable difficulty
 	constexpr int SCORES_PER_APPLE_EASY = 2;
