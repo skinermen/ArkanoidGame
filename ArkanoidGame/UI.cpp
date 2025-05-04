@@ -29,17 +29,17 @@ namespace ArkanoidGame
 
 	void UI::InitResources()
 	{
-		assert(font.loadFromFile(RESOURCES_PATH + "Fonts/Roboto-Regular.ttf"));
-		assert(snakeTextureHead.loadFromFile(RESOURCES_PATH + "snake_head.png"));
-		assert(snakeTextureBody.loadFromFile(RESOURCES_PATH + "snake_body.png"));
-		assert(appleTexture.loadFromFile(RESOURCES_PATH + "apple.png"));
-		assert(wallTexture.loadFromFile(RESOURCES_PATH + "wall.png"));
-		assert(icon.loadFromFile(RESOURCES_PATH + "icon.png"));
-		assert(deathBuffer.loadFromFile(RESOURCES_PATH + "Death.wav"));
-		assert(eatAppleBuffer.loadFromFile(RESOURCES_PATH + "Collision.wav"));
-		assert(pressEnterBuffer.loadFromFile(RESOURCES_PATH + "Press_Enter.wav"));
-		assert(selectMenuBuffer.loadFromFile(RESOURCES_PATH + "Select_Menu.wav"));
-		assert(musicMainTheme.openFromFile(RESOURCES_PATH + "MainTheme.wav"));
+		assert(font.loadFromFile(SETTINGS.RESOURCES_PATH + "Fonts/Roboto-Regular.ttf"));
+		assert(snakeTextureHead.loadFromFile(SETTINGS.RESOURCES_PATH + "snake_head.png"));
+		assert(snakeTextureBody.loadFromFile(SETTINGS.RESOURCES_PATH + "snake_body.png"));
+		assert(appleTexture.loadFromFile(SETTINGS.RESOURCES_PATH + "apple.png"));
+		assert(wallTexture.loadFromFile(SETTINGS.RESOURCES_PATH + "wall.png"));
+		assert(icon.loadFromFile(SETTINGS.RESOURCES_PATH + "icon.png"));
+		assert(deathBuffer.loadFromFile(SETTINGS.RESOURCES_PATH + "Death.wav"));
+		assert(eatAppleBuffer.loadFromFile(SETTINGS.RESOURCES_PATH + "Collision.wav"));
+		assert(pressEnterBuffer.loadFromFile(SETTINGS.RESOURCES_PATH + "Press_Enter.wav"));
+		assert(selectMenuBuffer.loadFromFile(SETTINGS.RESOURCES_PATH + "Select_Menu.wav"));
+		assert(musicMainTheme.openFromFile(SETTINGS.RESOURCES_PATH + "MainTheme.wav"));
 	}
 
 	void UI::Init()
@@ -48,7 +48,7 @@ namespace ArkanoidGame
 		InitPauseTexture();
 		
 		// Playing Resources
-		InitRectangle(playingRectangle, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
+		InitRectangle(playingRectangle, SETTINGS.SCREEN_WIDTH - 20.f, SETTINGS.SCREEN_HEIGHT - 20.f,
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		
 		InitText(playingScoreText, font, 24, 0, sf::Color::White);
@@ -98,10 +98,10 @@ namespace ArkanoidGame
 	{
 		if (isPlayingTextVisible)
 		{
-			playingRectangle.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+			playingRectangle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 			window.draw(playingRectangle);
 			
-			playingScoreText.setPosition(10.f + BORDER_SIZE, 10.f + BORDER_SIZE);
+			playingScoreText.setPosition(10.f + SETTINGS.BORDER_SIZE, 10.f + SETTINGS.BORDER_SIZE);
 			playingScoreText.setOrigin(0.f, 0.f);
 			window.draw(playingScoreText);
 		}

@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
-#include "Constants.h"
+#include "Settings.h"
 #include "GameObject.h"
 
 namespace ArkanoidGame
@@ -24,7 +24,7 @@ namespace ArkanoidGame
         
     private:
         sf::CircleShape ballShape;
-        sf::Vector2f velocity = INITIAL_DIRECTION_OF_THE_BALL; // Direction and speed (in pixels per second)
-        float speed = SPEED_BALL;          // The basic speed of the ball
+        sf::Vector2f velocity = SETTINGS.INITIAL_DIRECTION_OF_THE_BALL; // Direction and speed (in pixels per second)
+        float speed = SETTINGS.SPEED_BALL;          // The basic speed of the ball
     };
 }

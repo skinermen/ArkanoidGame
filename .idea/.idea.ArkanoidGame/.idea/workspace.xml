@@ -10,24 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/GlassBrick.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/GlassBrick.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/IndestructibleBrick.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/IndestructibleBrick.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/SimpleBrick.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/SimpleBrick.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/StrongBrick.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/StrongBrick.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Plan.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Application.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Application.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Brick.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/Brick.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Brick.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/Brick.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/BrickManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/BrickManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Constants.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Settings.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +158,11 @@
       <workItem from="1744719446112" duration="2652000" />
       <workItem from="1744983817138" duration="913000" />
       <workItem from="1745250737051" duration="3181000" />
-      <workItem from="1745310562384" duration="6468000" />
+      <workItem from="1745310562384" duration="6607000" />
+      <workItem from="1745492942224" duration="203000" />
+      <workItem from="1745591555959" duration="378000" />
+      <workItem from="1745664773395" duration="420000" />
+      <workItem from="1746374759857" duration="1401000" />
     </task>
     <task id="LOCAL-00001" summary="the .idea folder has been overwritten">
       <option name="closed" value="true" />
@@ -268,7 +268,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745253803851</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="New types of blocks have been added. Now there are: Simple Blocks, Strong Blocks, Indestructible Blocks, Glass Blocks.&#10;The game code has also been significantly improved.">
+      <option name="closed" value="true" />
+      <created>1745318207933</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1745318207933</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,6 +310,7 @@
     <MESSAGE value="Redesigned the code in the &quot;UI::Update()&quot; function" />
     <MESSAGE value="Add BrickManager" />
     <MESSAGE value="The ball-object collision functionality has been moved to the public Collision Handling With Objects method in the Ball class." />
-    <option name="LAST_COMMIT_MESSAGE" value="The ball-object collision functionality has been moved to the public Collision Handling With Objects method in the Ball class." />
+    <MESSAGE value="New types of blocks have been added. Now there are: Simple Blocks, Strong Blocks, Indestructible Blocks, Glass Blocks.&#10;The game code has also been significantly improved." />
+    <option name="LAST_COMMIT_MESSAGE" value="New types of blocks have been added. Now there are: Simple Blocks, Strong Blocks, Indestructible Blocks, Glass Blocks.&#10;The game code has also been significantly improved." />
   </component>
 </project>

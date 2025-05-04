@@ -9,7 +9,7 @@ namespace ArkanoidGame
     }
     
     Application::Application() :
-        window(sf::VideoMode(ArkanoidGame::SCREEN_WIDTH, ArkanoidGame::SCREEN_HEIGHT), GAME_NAME), game(window)
+        window(sf::VideoMode(SETTINGS.SCREEN_WIDTH, SETTINGS.SCREEN_HEIGHT), SETTINGS.GAME_NAME), game(window)
     {
         // Init random number generator
         int seed = static_cast<int>(time(nullptr));

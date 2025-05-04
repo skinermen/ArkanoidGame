@@ -1,5 +1,5 @@
 ﻿#include "BrickManager.h"
-#include "../Constants.h"
+#include "../Settings.h"
 #include "../GameState.h"
 #include "SimpleBrick.h"
 #include "StrongBrick.h"
@@ -16,18 +16,18 @@ namespace ArkanoidGame
     {
         bricks.clear();
 
-        float totalWidth = BRICK_COLUMNS * BRICK_WIDTH + (BRICK_COLUMNS - 1) * BRICK_SPACING;
-        float startX = (SCREEN_WIDTH - totalWidth) / 2.f + BRICK_WIDTH / 2.f;
+        float totalWidth = SETTINGS.BRICK_COLUMNS * SETTINGS.BRICK_WIDTH + (SETTINGS.BRICK_COLUMNS - 1) * SETTINGS.BRICK_SPACING;
+        float startX = (SETTINGS.SCREEN_WIDTH - totalWidth) / 2.f + SETTINGS.BRICK_WIDTH / 2.f;
         float startY = 50.f;
 
-        for (int row = 0; row < BRICK_ROW; ++row)
+        for (int row = 0; row < SETTINGS.BRICK_ROW; ++row)
         {
-            for (int col = 0; col < BRICK_COLUMNS; ++col)
+            for (int col = 0; col < SETTINGS.BRICK_COLUMNS; ++col)
             {
-                float x = startX + col * (BRICK_WIDTH + BRICK_SPACING);
-                float y = startY + row * (BRICK_HEIGHT + BRICK_SPACING);
+                float x = startX + col * (SETTINGS.BRICK_WIDTH + SETTINGS.BRICK_SPACING);
+                float y = startY + row * (SETTINGS.BRICK_HEIGHT + SETTINGS.BRICK_SPACING);
                 sf::Vector2f position(x, y);
-                sf::Vector2f size(BRICK_WIDTH, BRICK_HEIGHT);
+                sf::Vector2f size(SETTINGS.BRICK_WIDTH, SETTINGS.BRICK_HEIGHT);
                 
                 
                 // Тип блока зависит от строки

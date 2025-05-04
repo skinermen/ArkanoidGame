@@ -8,10 +8,10 @@ namespace ArkanoidGame
 {
     Ball::Ball()
     {
-        ballShape.setRadius(SIZE_BALL);
+        ballShape.setRadius(SETTINGS.SIZE_BALL);
         ballShape.setFillColor(sf::Color::White);
         ballShape.setOrigin(ballShape.getRadius(), ballShape.getRadius());
-        ballShape.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+        ballShape.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
     }
 
     void Ball::Update(sf::RenderWindow& window, float deltaTime)
@@ -27,9 +27,9 @@ namespace ArkanoidGame
             pos.x = radius;
             velocity.x = -velocity.x;
         }
-        else if (pos.x + radius > SCREEN_WIDTH)
+        else if (pos.x + radius > SETTINGS.SCREEN_WIDTH)
         {
-            pos.x = SCREEN_WIDTH - radius;
+            pos.x = SETTINGS.SCREEN_WIDTH - radius;
             velocity.x = -velocity.x;
         }
 
@@ -51,8 +51,8 @@ namespace ArkanoidGame
     void Ball::Reset()
     {
         // Throw the ball into the center of the screen and set the initial direction
-        ballShape.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
-        velocity = INITIAL_DIRECTION_OF_THE_BALL;
+        ballShape.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
+        velocity = SETTINGS.INITIAL_DIRECTION_OF_THE_BALL;
     }
 
     void Ball::SetPosition(const sf::Vector2f& pos)

@@ -10,7 +10,7 @@ namespace ArkanoidGame
 
 	void Menu::InitPauseTexture()
 	{
-		pauseBlurTexture.create(SCREEN_WIDTH, SCREEN_HEIGHT);  // NOLINT(clang-diagnostic-float-conversion, clang-diagnostic-float-conversion)
+		pauseBlurTexture.create(SETTINGS.SCREEN_WIDTH, SETTINGS.SCREEN_HEIGHT);  // NOLINT(clang-diagnostic-float-conversion, clang-diagnostic-float-conversion)
 		pauseBlurTexture.clear(sf::Color(0, 0, 0, 220));
 		pauseBlurSprite.setTexture(pauseBlurTexture.getTexture());
 	}
@@ -19,7 +19,7 @@ namespace ArkanoidGame
 	{
 		vTextMainMenuItems.clear();
 		
-		InitRectangle(mainMenuRectangleBackground, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
+		InitRectangle(mainMenuRectangleBackground, SETTINGS.SCREEN_WIDTH - 20.f, SETTINGS.SCREEN_HEIGHT - 20.f,
 			sf::Color::Black, sf::Color::White, 10.f);
 		
 		InitText(mainMenuTitle, font, 72, 1, sf::Color::White,
@@ -38,7 +38,7 @@ namespace ArkanoidGame
 	{
 		vTextPauseMenuItems.clear();
 		
-		InitRectangle(pauseMenuRectangleBackground, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
+		InitRectangle(pauseMenuRectangleBackground, SETTINGS.SCREEN_WIDTH - 20.f, SETTINGS.SCREEN_HEIGHT - 20.f,
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		InitText(pauseMenuTitle, font, 64, 1, sf::Color::White, "Pause menu");
 		
@@ -53,7 +53,7 @@ namespace ArkanoidGame
 
 	void Menu::InitNameInputMenu()
 	{
-		InitRectangle(nameInputMenuRectangleBackground, SCREEN_WIDTH - 20.f, SCREEN_HEIGHT - 20.f,
+		InitRectangle(nameInputMenuRectangleBackground, SETTINGS.SCREEN_WIDTH - 20.f, SETTINGS.SCREEN_HEIGHT - 20.f,
 			sf::Color::Black, sf::Color::White, 10.f);
 		InitText(nameInputMenuText, font, 40, 1, sf::Color::White,
 			"Enter your name: ");
@@ -63,7 +63,7 @@ namespace ArkanoidGame
 	{
 		vTextConfirmationMenuItems.clear();
 		
-		InitRectangle(confirmationMenuRectangleBackground, SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 3.7f,
+		InitRectangle(confirmationMenuRectangleBackground, SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 3.7f,
 			sf::Color::Transparent, sf::Color::White, 10.f);
 		InitText(confirmationMenuText, font, 50, 1, sf::Color::White,
 			"Enter the name");
@@ -81,8 +81,8 @@ namespace ArkanoidGame
 	{
 		vTextGameOverMenuItems.clear();
 		
-		InitRectangle(gameOverRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
-			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
+		InitRectangle(gameOverRectangleBackground, SETTINGS.SCREEN_WIDTH - SETTINGS.BORDER_SIZE * 2,
+			SETTINGS.SCREEN_HEIGHT - SETTINGS.BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		InitText(gameOverScoreTitle, font, 48, 1, sf::Color::White,
 			"Number of points");
 		InitText(gameOverScores, font, 48, 1, sf::Color::White);
@@ -102,7 +102,7 @@ namespace ArkanoidGame
 	void Menu::InitGameOverLeaderboardItems()
 	{
 		vTextGameOverLeaderboardItems.clear();
-		for (int i = 0; i < SIZE_MINI_LEADERBOARD; i++)  // NOLINT(clang-diagnostic-sign-compare)
+		for (int i = 0; i < SETTINGS.SIZE_MINI_LEADERBOARD; i++)  // NOLINT(clang-diagnostic-sign-compare)
 		{
 			sf::Text recordText;
 			InitText(recordText, font, 30, 1, sf::Color::White, std::to_string(i + 1)
@@ -115,8 +115,8 @@ namespace ArkanoidGame
 	{
 		vTextDifficultyMenuItems.clear();
 		
-		InitRectangle(difficultyMenuRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
-			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
+		InitRectangle(difficultyMenuRectangleBackground, SETTINGS.SCREEN_WIDTH - SETTINGS.BORDER_SIZE * 2,
+			SETTINGS.SCREEN_HEIGHT - SETTINGS.BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		InitText(difficultyMenuTitle, font, 48, 1, sf::Color::White,
 			"Choosing the difficulty");
 
@@ -133,8 +133,8 @@ namespace ArkanoidGame
 	{
 		vTextLeaderboardItems.clear();
 		
-		InitRectangle(leaderboardRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
-			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
+		InitRectangle(leaderboardRectangleBackground, SETTINGS.SCREEN_WIDTH - SETTINGS.BORDER_SIZE * 2,
+			SETTINGS.SCREEN_HEIGHT - SETTINGS.BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		
 		InitText(leaderboardTextTitle, font, 48, 1, sf::Color::White,
 			"Scoreboard:");
@@ -142,7 +142,7 @@ namespace ArkanoidGame
 			"Press B to return to the main menu");
 		
 		VLeaderboardItems.clear();
-		LoadRecordsFromFile(VLeaderboardItems, LEADERBOARD_FILENAME);
+		LoadRecordsFromFile(VLeaderboardItems, SETTINGS.LEADERBOARD_FILENAME);
 		vTextLeaderboardItems.clear();
 		for (int i = 0; i < VLeaderboardItems.size(); ++i)  // NOLINT(clang-diagnostic-sign-compare)
 		{
@@ -158,8 +158,8 @@ namespace ArkanoidGame
 	{
 		vTextOptionsMenuItems.clear();
 		
-		InitRectangle(optionsMenuRectangleBackground, SCREEN_WIDTH - BORDER_SIZE * 2,
-			SCREEN_HEIGHT - BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
+		InitRectangle(optionsMenuRectangleBackground, SETTINGS.SCREEN_WIDTH - SETTINGS.BORDER_SIZE * 2,
+			SETTINGS.SCREEN_HEIGHT - SETTINGS.BORDER_SIZE * 2, sf::Color::Black, sf::Color::White, 10.f);
 		
 		InitText(optionsMenuTitle, font, 60, 1, sf::Color::White,
 			"Options");
@@ -187,102 +187,102 @@ namespace ArkanoidGame
 
 	void Menu::DrawMainMenu(sf::RenderWindow& window)
 	{		
-		mainMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		mainMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(mainMenuRectangleBackground);
 		
-		mainMenuTitle.setPosition(SCREEN_WIDTH / 2.f, mainMenuTitle.getLocalBounds().height);
+		mainMenuTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, mainMenuTitle.getLocalBounds().height);
 		window.draw(mainMenuTitle);
 		
 		DrawMenuItems(window, vTextMainMenuItems,
-			SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 4.f, 60.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 4.f, 60.f);
 	}
 	
 	void Menu::DrawPauseMenu(sf::RenderWindow& window)
 	{
 		window.draw(pauseBlurSprite);
 		
-		pauseMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		pauseMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(pauseMenuRectangleBackground);
 			
-		pauseMenuTitle.setPosition(SCREEN_WIDTH / 2.f, pauseMenuTitle.getLocalBounds().height);
+		pauseMenuTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, pauseMenuTitle.getLocalBounds().height);
 		pauseMenuTitle.setOrigin(pauseMenuTitle.getLocalBounds().width / 2.f,
 								 pauseMenuTitle.getLocalBounds().height);
 		window.draw(pauseMenuTitle);
 
 		DrawMenuItems(window, vTextPauseMenuItems,
-			SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 4.f, 60.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 4.f, 60.f);
 	}
 
 	void Menu::DrawNameInputMenu(sf::RenderWindow& window)
 	{
-		nameInputMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		nameInputMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(nameInputMenuRectangleBackground);
 
 		nameInputMenuText.setOrigin(nameInputMenuText.getLocalBounds().width / 2.f,
 									nameInputMenuText.getLocalBounds().height / 2.f);
-		nameInputMenuText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.5f);
+		nameInputMenuText.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.5f);
 		window.draw(nameInputMenuText);
 	}
 
 	void Menu::DrawConfirmationMenu(sf::RenderWindow& window)
 	{
-		mainMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		mainMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(mainMenuRectangleBackground);
 		
 		window.draw(pauseBlurSprite);
 
-		confirmationMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		confirmationMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(confirmationMenuRectangleBackground);
 		
-		confirmationMenuText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.5f);
+		confirmationMenuText.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.5f);
 		window.draw(confirmationMenuText);
 
 		DrawMenuItems(window, vTextConfirmationMenuItems,
-			SCREEN_WIDTH / 2.f, confirmationMenuText.getLocalBounds().width, 40.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, confirmationMenuText.getLocalBounds().width, 40.f);
 	}
 	
 	void Menu::DrawGameOverMenu(sf::RenderWindow& window)
 	{
 		InitGameOverLeaderboardItems();
 		
-		gameOverRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		gameOverRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(gameOverRectangleBackground);
 
-		gameOverScoreTitle.setPosition(SCREEN_WIDTH / 2.f,
+		gameOverScoreTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f,
 			gameOverScoreTitle.getLocalBounds().height);
 		window.draw(gameOverScoreTitle);
 
-		gameOverScores.setPosition(SCREEN_WIDTH / 2.f,
+		gameOverScores.setPosition(SETTINGS.SCREEN_WIDTH / 2.f,
 			gameOverScoreTitle.getPosition().y + gameOverScoreTitle.getLocalBounds().height);
 		gameOverScores.setOrigin(gameOverScores.getLocalBounds().width / 2.f,
 		gameOverScores.getLocalBounds().height / 2.f);
 		window.draw(gameOverScores);
 		
-		gameOverRecordsTitle.setPosition(SCREEN_WIDTH / 2.f,
+		gameOverRecordsTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f,
 			gameOverScores.getPosition().y + gameOverScores.getLocalBounds().height + 100.f);
 		window.draw(gameOverRecordsTitle);
 		
-		DrawMenuItems(window, vTextGameOverLeaderboardItems, SCREEN_WIDTH / 2.f,
+		DrawMenuItems(window, vTextGameOverLeaderboardItems, SETTINGS.SCREEN_WIDTH / 2.f,
 			gameOverRecordsTitle.getPosition().y + gameOverRecordsTitle.getLocalBounds().height,
 			35.f);
 		
 		DrawMenuItems(window, vTextGameOverMenuItems,
-			SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 100.f * vTextGameOverMenuItems.size(), 60.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 100.f * vTextGameOverMenuItems.size(), 60.f);
 	}
 	
 	void Menu::DrawDifficultyMenu(sf::RenderWindow& window)
 	{
-		difficultyMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		difficultyMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(difficultyMenuRectangleBackground);
 
-		difficultyMenuTitle.setPosition(SCREEN_WIDTH / 2.f,
+		difficultyMenuTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f,
 			difficultyMenuTitle.getLocalBounds().height);
 		difficultyMenuTitle.setOrigin(difficultyMenuTitle.getLocalBounds().width / 2.f,
 			difficultyMenuTitle.getLocalBounds().height / 2.f);
 		window.draw(difficultyMenuTitle);
 
 		DrawMenuItems(window, vTextDifficultyMenuItems,
-			SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 4.f, 60.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 4.f, 60.f);
 	}
 	
 	void Menu::DrawLeaderboard(sf::RenderWindow& window)
@@ -290,30 +290,30 @@ namespace ArkanoidGame
 		InitLeaderboard();
 		
 		// Draw
-		leaderboardRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		leaderboardRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(leaderboardRectangleBackground);
 		
-		leaderboardTextTitle.setPosition(SCREEN_WIDTH / 2.f, 40.f);
+		leaderboardTextTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, 40.f);
 		window.draw(leaderboardTextTitle);
 			
-		leaderboardTextInstructions.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f);
+		leaderboardTextInstructions.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f);
 		window.draw(leaderboardTextInstructions);
 
 		DrawMenuItems(window, vTextLeaderboardItems,
-			SCREEN_WIDTH / 2.f, 90.f, 40.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, 90.f, 40.f);
 	}
 	
 
 	void Menu::DrawOptionsMenu(sf::RenderWindow& window)
 	{
-		optionsMenuRectangleBackground.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
+		optionsMenuRectangleBackground.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
 		window.draw(optionsMenuRectangleBackground);
 		
-		optionsMenuTitle.setPosition(SCREEN_WIDTH / 2.f, 40.f);
+		optionsMenuTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, 40.f);
 		window.draw(optionsMenuTitle);
 
-		DrawMenuItems(window, vTextOptionsMenuItems, SCREEN_WIDTH / 2.f - 50.f,
-			SCREEN_HEIGHT / 4.f, 60.f);
+		DrawMenuItems(window, vTextOptionsMenuItems, SETTINGS.SCREEN_WIDTH / 2.f - 50.f,
+			SETTINGS.SCREEN_HEIGHT / 4.f, 60.f);
 		
 		for (int i = 0; i < vRectanglesOptionsMenu.size(); i++)  // NOLINT(clang-diagnostic-sign-compare)
 		{
@@ -321,7 +321,7 @@ namespace ArkanoidGame
 			(vRectanglesOptionsMenu[i].getLocalBounds().width,
 			 vRectanglesOptionsMenu[i].getLocalBounds().height / 2.f);
 			
-			vRectanglesOptionsMenu[i].setPosition( SCREEN_WIDTH / 1.5f,
+			vRectanglesOptionsMenu[i].setPosition( SETTINGS.SCREEN_WIDTH / 1.5f,
 				vTextOptionsMenuItems[i].getPosition().y
 				+ vTextOptionsMenuItems[i].getLocalBounds().height / 2.f);
 
@@ -337,18 +337,18 @@ namespace ArkanoidGame
 		winnerText.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f - 100.f);
 		window.draw(winnerText);
 
-		gameOverScoreTitle.setPosition(SCREEN_WIDTH / 2.f,
+		gameOverScoreTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f,
 			gameOverScoreTitle.getLocalBounds().height);
 		window.draw(gameOverScoreTitle);
 
-		gameOverScores.setPosition(SCREEN_WIDTH / 2.f,
+		gameOverScores.setPosition(SETTINGS.SCREEN_WIDTH / 2.f,
 			gameOverScoreTitle.getPosition().y + gameOverScoreTitle.getLocalBounds().height);
 		gameOverScores.setOrigin(gameOverScores.getLocalBounds().width / 2.f,
 		gameOverScores.getLocalBounds().height / 2.f);
 		window.draw(gameOverScores);
 		
 		DrawMenuItems(window, vTextGameOverMenuItems,
-			SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 100.f * vTextGameOverMenuItems.size(), 60.f);
+			SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 100.f * vTextGameOverMenuItems.size(), 60.f);
 	}
 
 	void Menu::DrawMenuItems(sf::RenderWindow& window, std::vector<sf::Text>& menuItems,
@@ -382,7 +382,7 @@ namespace ArkanoidGame
 			VLeaderboardItems.pop_back();
 		}
 
-		SaveRecordsToFile(VLeaderboardItems, LEADERBOARD_FILENAME);
+		SaveRecordsToFile(VLeaderboardItems, SETTINGS.LEADERBOARD_FILENAME);
 	}
 	
 	void Menu::MoveUp(std::vector<sf::Text>& menuItems)

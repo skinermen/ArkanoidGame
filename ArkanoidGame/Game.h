@@ -56,7 +56,7 @@ namespace ArkanoidGame
 		int numEatenApples;
 		int scoresPerApple;
 		float timeSinceGameOver;
-		float currentSnakeSpeed = INITIAL_SPEED_EASY;
+		float currentSnakeSpeed = SETTINGS.INITIAL_SPEED_EASY;
 		std::vector<GameState> gameStateStack;
 
 		// Game objects

@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
-#include "Constants.h"
+#include "Settings.h"
 #include "GameObject.h"
 
 namespace ArkanoidGame
@@ -19,9 +19,9 @@ namespace ArkanoidGame
         
     private:
         sf::RectangleShape platformShape;
-        float speed = SPEED_PLATFORM;
+        float speed = SETTINGS.SPEED_PLATFORM;
         bool useMouseControl = false;
         sf::Vector2f lastMousePosition;
-        float mouseMoveThreshold = MOUSE_MOVE_THRESHOLD;
+        float mouseMoveThreshold = SETTINGS.MOUSE_MOVE_THRESHOLD;
     };
 }

@@ -40,7 +40,7 @@ namespace ArkanoidGame
 	{
 		brickManager.Init();
 		ball.Reset();
-		platform.SetPosition(sf::Vector2f(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f));
+		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
 		GameStateManager::Instance().PushState(GameState::Playing);
 		InitGameState();
 	}
@@ -110,7 +110,7 @@ namespace ArkanoidGame
 		
 		ball.CollisionHandlingWithObjects(platform, brickManager.GetBricks());
 
-		if (ball.GetPosition().y - ball.GetShape().getRadius() > SCREEN_HEIGHT)
+		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
 		{
 			GameStateManager::Instance().PushState(GameState::GameOver);
 			menu.UpdatePlayMusic();

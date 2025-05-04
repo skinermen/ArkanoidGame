@@ -5,11 +5,11 @@ namespace ArkanoidGame
     Platform::Platform()
     {
         // The size of the platform
-        platformShape.setSize(sf::Vector2f(SIZE_PLATFORM_X, SIZE_PLATFORM_Y));
+        platformShape.setSize(sf::Vector2f(SETTINGS.SIZE_PLATFORM_X, SETTINGS.SIZE_PLATFORM_Y));
         platformShape.setFillColor(sf::Color::White);
         platformShape.setOrigin(platformShape.getSize() / 2.f);
         // The initial position
-        platformShape.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 50.f);
+        platformShape.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f);
 
         // Initialize lastMousePosition
         lastMousePosition = platformShape.getPosition();
@@ -61,8 +61,8 @@ namespace ArkanoidGame
         float halfWidth = platformShape.getSize().x / 2.f;
         if (pos.x - halfWidth < 0)
             pos.x = halfWidth;
-        if (pos.x + halfWidth > SCREEN_WIDTH)
-            pos.x = SCREEN_WIDTH - halfWidth;
+        if (pos.x + halfWidth > SETTINGS.SCREEN_WIDTH)
+            pos.x = SETTINGS.SCREEN_WIDTH - halfWidth;
         platformShape.setPosition(pos);
     }
 
