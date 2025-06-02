@@ -1,58 +1,79 @@
-﻿#include "BrickManager.h"
+﻿#include <cassert>
+
+#include "BrickManager.h"
 #include "../Settings.h"
 #include "../GameState.h"
 #include "SimpleBrick.h"
 #include "StrongBrick.h"
-#include "IndestructibleBrick.h"
+#include "UnbreackableBrick.h"
 #include "GlassBrick.h"
 
 namespace ArkanoidGame
 {
-    BrickManager::BrickManager() = default;
+    BrickManager::BrickManager()
+    {
+        // Инициализируем все фабрики
+        factories[BlockType::Simple]        = std::make_unique<SimpleBrickFactory>();
+        factories[BlockType::Strong]        = std::make_unique<StrongBrickFactory>();
+        factories[BlockType::Glass]         = std::make_unique<GlassBrickFactory>();
+        factories[BlockType::Unbreackable] = std::make_unique<UnbreackableBrickFactory>();
+
+        // Если нужно, сбросим счётчики:
+        for (auto& [type, factory] : factories)
+            factory->ClearCounter();
+    }
 
     BrickManager::~BrickManager() = default;
 
-    void BrickManager::Init()
+    sf::Vector2f BrickManager::CellToPixel(const sf::Vector2i& cellCoords) const
     {
-        bricks.clear();
-
-        float totalWidth = SETTINGS.BRICK_COLUMNS * SETTINGS.BRICK_WIDTH + (SETTINGS.BRICK_COLUMNS - 1) * SETTINGS.BRICK_SPACING;
+        float totalWidth = SETTINGS.BRICK_COLUMNS * SETTINGS.BRICK_WIDTH
+                         + (SETTINGS.BRICK_COLUMNS - 1) * SETTINGS.BRICK_SPACING;
         float startX = (SETTINGS.SCREEN_WIDTH - totalWidth) / 2.f + SETTINGS.BRICK_WIDTH / 2.f;
         float startY = 50.f;
 
-        for (int row = 0; row < SETTINGS.BRICK_ROW; ++row)
+        int cellX = cellCoords.x;
+        int cellY = cellCoords.y;
+
+        float px = startX + cellX * (SETTINGS.BRICK_WIDTH + SETTINGS.BRICK_SPACING);
+        float py = startY + cellY * (SETTINGS.BRICK_HEIGHT + SETTINGS.BRICK_SPACING);
+        return { px, py };
+    }
+
+    void BrickManager::Init(int levelIndex)
+    {
+        bricks.clear();
+
+        // Проверяем, что хотя бы один уровень загрузился:
+        int totalLevels = levelLoader.GetLevelCount();
+        assert(totalLevels > 0 && "No levels were loaded! Check LEVELS_CONFIG_PATH.");
+
+        // Если levelIndex выходит за диапазон, например передали 5, а есть только 1 уровень:
+        assert(levelIndex >= 0 && levelIndex < totalLevels);
+
+        Level& lvl = levelLoader.GetLevel(levelIndex);
+        for (auto& [cellCoords, type] : lvl.mBlocks)
         {
-            for (int col = 0; col < SETTINGS.BRICK_COLUMNS; ++col)
-            {
-                float x = startX + col * (SETTINGS.BRICK_WIDTH + SETTINGS.BRICK_SPACING);
-                float y = startY + row * (SETTINGS.BRICK_HEIGHT + SETTINGS.BRICK_SPACING);
-                sf::Vector2f position(x, y);
-                sf::Vector2f size(SETTINGS.BRICK_WIDTH, SETTINGS.BRICK_HEIGHT);
-                
-                
-                // Тип блока зависит от строки
-                std::unique_ptr<Brick> brick;
-
-                if (row == 0)
-                {
-                    brick = std::make_unique<IndestructibleBrick>(position, size);
-                }
-                else if (row == 1)
-                {
-                    brick = std::make_unique<GlassBrick>(position, size);
-                }
-                else if (row % 2 == 0)
-                {
-                    brick = std::make_unique<StrongBrick>(position, size);
-                }
-                else
-                {
-                    brick = std::make_unique<SimpleBrick>(position, size);
-                }
-
-                bricks.push_back(std::move(brick));
-            }
+            CreateBrickAt(cellCoords, type);
         }
+    }
+
+    void BrickManager::CreateBrickAt(const sf::Vector2i& cellCoords, BlockType type)
+    {
+        // Конвертируем «ячейку → пиксели»
+        sf::Vector2f position = CellToPixel(cellCoords);
+        // Размер кирпича
+        sf::Vector2f size(SETTINGS.BRICK_WIDTH, SETTINGS.BRICK_HEIGHT);
+
+        auto it = factories.find(type);
+        if (it == factories.end())
+        {
+            assert(false && "Unknown BlockType in BrickManager::CreateBrickAt");
+            return;
+        }
+        // Вызываем фабрику
+        std::shared_ptr<Brick> newBrick = it->second->CreateBrick(position, size);
+        bricks.push_back(std::move(newBrick));
     }
 
     void BrickManager::Update() const
@@ -73,9 +94,9 @@ namespace ArkanoidGame
 
     bool BrickManager::AllBricksDestroyed() const
     {
-        for (const auto& brick : bricks)  // NOLINT(readability-use-anyofallof)
+        for (const auto& brick : bricks)
         {
-            if (!brick->IsDestroyed() && dynamic_cast<IndestructibleBrick*>(brick.get()) == nullptr)
+            if (!brick->IsDestroyed() && dynamic_cast<UnbreackableBrick*>(brick.get()) == nullptr)
             {
                 return false;
             }

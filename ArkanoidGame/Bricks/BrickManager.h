@@ -1,25 +1,42 @@
 ﻿#pragma once
 
-#include "Brick.h"
 #include <vector>
 #include <memory>
 
+#include "Brick.h"
+#include "LevelLoader.h"
+#include "BrickFactory.h"
+
 namespace ArkanoidGame
 {
-    class BrickManager  // NOLINT(cppcoreguidelines-special-member-functions)
+    class BrickManager
     {
     public:
         BrickManager();
         ~BrickManager();
 
-        void Init();
+        // Теперь Init принимает индекс уровня
+        void Init(int levelIndex);
         void Update() const;
         void Draw(sf::RenderWindow& window) const;
         bool AllBricksDestroyed() const;
 
-        const std::vector<std::unique_ptr<Brick>>& GetBricks() const {return bricks;}
+        const std::vector<std::shared_ptr<Brick>>& GetBricks() const { return bricks; }
 
     private:
-        std::vector<std::unique_ptr<Brick>> bricks;
+        // Перевод «координаты ячейки (int, int) → координаты пикселей (float, float)»
+        sf::Vector2f CellToPixel(const sf::Vector2i& cellCoords) const;
+
+        // Основной вектор кирпичей
+        std::vector<std::shared_ptr<Brick>> bricks;
+
+        // Словарь «BlockType → своя фабрика»
+        std::map<BlockType, std::unique_ptr<BrickFactory>> factories;
+
+        // Загрузчик уровней, который в конструкторе уже прочитает файл уровней
+        LevelLoader levelLoader;
+
+        // Вспомогательный метод: создаёт и кладёт Кирпич нужного типа
+        void CreateBrickAt(const sf::Vector2i& cellCoords, BlockType type);
     };
 }

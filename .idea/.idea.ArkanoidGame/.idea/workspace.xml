@@ -10,20 +10,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickFactory.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickFactory.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/LevelLoader.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/LevelLoader.h" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ArkanoidGame/Plan.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Application.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Application.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Ball.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Ball.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Constants.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Settings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/BrickManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Bricks/IndestructibleBrick.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/UnbreackableBrick.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Bricks/IndestructibleBrick.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/UnbreackableBrick.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Settings.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +37,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xutility" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/XYZ/Source/ArkanoidGame/ArkanoidGame/Application.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.h" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -162,7 +164,10 @@
       <workItem from="1745492942224" duration="203000" />
       <workItem from="1745591555959" duration="378000" />
       <workItem from="1745664773395" duration="420000" />
-      <workItem from="1746374759857" duration="1401000" />
+      <workItem from="1746374759857" duration="1712000" />
+      <workItem from="1746448301644" duration="2555000" />
+      <workItem from="1747820601191" duration="2749000" />
+      <workItem from="1748869343526" duration="4065000" />
     </task>
     <task id="LOCAL-00001" summary="the .idea folder has been overwritten">
       <option name="closed" value="true" />
@@ -276,7 +281,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745318207933</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="The Constants file has been renamed to Settings. A Singleton has been created for game settings.">
+      <option name="closed" value="true" />
+      <created>1746376930900</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1746376930900</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,6 +324,7 @@
     <MESSAGE value="Add BrickManager" />
     <MESSAGE value="The ball-object collision functionality has been moved to the public Collision Handling With Objects method in the Ball class." />
     <MESSAGE value="New types of blocks have been added. Now there are: Simple Blocks, Strong Blocks, Indestructible Blocks, Glass Blocks.&#10;The game code has also been significantly improved." />
-    <option name="LAST_COMMIT_MESSAGE" value="New types of blocks have been added. Now there are: Simple Blocks, Strong Blocks, Indestructible Blocks, Glass Blocks.&#10;The game code has also been significantly improved." />
+    <MESSAGE value="The Constants file has been renamed to Settings. A Singleton has been created for game settings." />
+    <option name="LAST_COMMIT_MESSAGE" value="The Constants file has been renamed to Settings. A Singleton has been created for game settings." />
   </component>
 </project>

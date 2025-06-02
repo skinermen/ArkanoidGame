@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Bricks\BrickFactory.cpp" />
     <ClCompile Include="Bricks\Brick.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -314,7 +315,8 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="Bricks\GlassBrick.cpp" />
-    <ClCompile Include="Bricks\IndestructibleBrick.cpp" />
+    <ClCompile Include="Bricks\LevelLoader.cpp" />
+    <ClCompile Include="Bricks\UnbreackableBrick.cpp" />
     <ClCompile Include="Bricks\SimpleBrick.cpp" />
     <ClCompile Include="Bricks\StrongBrick.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -328,10 +330,12 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Bricks\BrickFactory.h" />
     <ClInclude Include="Bricks\Brick.h" />
     <ClInclude Include="Bricks\BrickManager.h" />
     <ClInclude Include="Bricks\GlassBrick.h" />
-    <ClInclude Include="Bricks\IndestructibleBrick.h" />
+    <ClInclude Include="Bricks\LevelLoader.h" />
+    <ClInclude Include="Bricks\UnbreackableBrick.h" />
     <ClInclude Include="Bricks\SimpleBrick.h" />
     <ClInclude Include="Bricks\StrongBrick.h" />
     <ClInclude Include="Settings.h" />

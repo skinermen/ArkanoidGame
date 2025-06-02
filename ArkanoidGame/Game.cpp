@@ -38,7 +38,7 @@ namespace ArkanoidGame
 
 	void Game::InitStartNewGame()
 	{
-		brickManager.Init();
+		brickManager.Init(0);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
 		GameStateManager::Instance().PushState(GameState::Playing);

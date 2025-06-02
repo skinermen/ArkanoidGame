@@ -17,6 +17,7 @@ namespace ArkanoidGame
 		
 		const std::string GAME_NAME = "ArkanoidGame";
 		const std::string RESOURCES_PATH = "Resources/";
+		const std::string LEVELS_CONFIG_PATH = "levels.txt";
 		const std::string LEADERBOARD_FILENAME = "leaderboard.txt";
 		const std::string DEFAULT_NAME = "XYZ";
 		

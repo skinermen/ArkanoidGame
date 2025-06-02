@@ -99,7 +99,7 @@ namespace ArkanoidGame
         return distanceSquared < (radius * radius);
     }
 
-    void Ball::CollisionHandlingWithObjects(const Platform& platform, const std::vector<std::unique_ptr<Brick>>& bricks)
+    void Ball::CollisionHandlingWithObjects(const Platform& platform, const std::vector<std::shared_ptr<Brick>>& bricks)
     {
         // Check Collision With Platform
         if (CheckCollisionWithPlatform(platform))
