@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "../GameObject.h"
+#include "../Score/IScoreStrategy.h"
+#include "../Score/ScoreStrategies.h"
 
 namespace ArkanoidGame
 {
@@ -23,5 +25,19 @@ namespace ArkanoidGame
     protected:
         sf::RectangleShape brickShape;
         bool destroyed = false;
+        std::shared_ptr<IScoreStrategy> scoreStrategy;
+
+    public:
+        void SetScoreStrategy(std::shared_ptr<IScoreStrategy> strategy)
+        {
+            scoreStrategy = std::move(strategy);
+        }
+
+        int GetScore() const
+        {
+            return scoreStrategy ? scoreStrategy->GetScore() : 0;
+        }
     };
+
+    
 }

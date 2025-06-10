@@ -1,66 +1,38 @@
 #pragma once
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "Menu.h"
+#include "UI.h"
 #include "Platform.h"
 #include "Ball.h"
 #include "Bricks/BrickManager.h"
 
 namespace ArkanoidGame
 {
+	// ReSharper disable once CppInconsistentNaming
 	class Game
 	{
 	public:
-		Game(sf::RenderWindow& window);
+		Game();
 		~Game();
 
-		void Init(sf::RenderWindow& window);
-		void Update(float currentTime, sf::RenderWindow& window, const sf::Event& event);
+		void Init();
+		void Update(float currentTime, sf::RenderWindow& window);
 		void Draw(sf::RenderWindow& window);
-		static void Shutdown();
-
-		// Get & Set
-		Menu& GetMenu() { return menu; }
-		int GetIsGameStarting() const { return isGameStarting; }
-		void SetIsGameStarting(bool newValue) { isGameStarting = newValue; }
-		float GetGameStartTime() const { return gameStartTime; }
-		void SetGameStartTime(float newValue) { gameStartTime = newValue; }
-		void SetTimeSinceGameOver(float newValue) { timeSinceGameOver = newValue; }
-		int GetNumEatenApples() const { return numEatenApples; }
-		void SetNumEatenApples(int newValue) { numEatenApples = newValue; }
-		int GetScoresPerApple() const { return scoresPerApple; }
+		static void Shutdown(sf::RenderWindow& window);
+		void HandleEvent(const sf::Event& event);
+		static void ResetGameStartedFlag();
 
 	private:
-		void InitGameState();
 		void InitStartNewGame();
-		void UpdatePlayingState(const sf::Event& event, sf::RenderWindow& window, float currentTime);
-		void UpdateNameInputMenuState(const sf::Event& event);
-		void UpdateMenuState(const sf::Event& event, sf::RenderWindow& window, std::vector<sf::Text>& menuItems);
-		void UpdateLeaderboardState(const sf::Event& event);
-
-		void HandleMainMenuSelection(unsigned int selectedIndex, sf::RenderWindow& window);
-		void HandlePauseMenuSelection(unsigned int selectedIndex);
-		static void HandleConfirmationSelection(unsigned int selectedIndex);
-		void HandleGameOverMenuSelection(unsigned int selectedIndex);
-		void HandleDifficultyMenuSelection(unsigned int selectedIndex);
-		void HandleOptionsMenuSelection(unsigned int selectedIndex);
+		void UpdatePlayingState(sf::RenderWindow& window, float deltaTime);
+		void HandleCollisions();
 		
-		// Game state variables
-		bool isScreenLeaderboard;
-		bool isGameStarting;
-		float gameStartTime;
-
-		bool onKeyHold;
-		bool difficultySelected;
-
-		int numEatenApples;
-		int scoresPerApple;
-		float timeSinceGameOver;
-		float currentSnakeSpeed = SETTINGS.INITIAL_SPEED_EASY;
+		float lastUpdateTime = 0.f;
+		static bool hasGameStarted;
 		std::vector<GameState> gameStateStack;
 
 		// Game objects
-		Menu menu;
+		UI ui;
 		Platform platform;
 		Ball ball;
 		BrickManager brickManager;

@@ -2,7 +2,7 @@
 #include <stack>
 
 namespace ArkanoidGame
-{
+{    
     enum class GameState
     {
         None,
@@ -13,9 +13,9 @@ namespace ArkanoidGame
         ConfirmationMenu,
         GameOver,
         Leaderboard,
-        Difficulty,
         Options,
-        Winner
+        Winner,
+        Exit
     };
 
     class GameStateManager
@@ -37,5 +37,7 @@ namespace ArkanoidGame
         GameStateManager& operator=(const GameStateManager&) = delete;
 
         std::stack<GameState> stateStack;
+        
     };
 }
+#define STATES GameStateManager::Instance()

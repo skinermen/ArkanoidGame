@@ -3,7 +3,10 @@
 namespace ArkanoidGame
 {
     SimpleBrick::SimpleBrick(const sf::Vector2f& position, const sf::Vector2f& size)
-        : Brick(position, size, sf::Color::Green, sf::Color::Green, 2.f) {}
+    : Brick(position, size, sf::Color::Green, sf::Color::Green, 2.f)
+    {
+        SetScoreStrategy(std::make_shared<SimpleBrickScore>());
+    }
 
     bool SimpleBrick::OnHit()
     {

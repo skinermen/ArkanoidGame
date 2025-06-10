@@ -324,6 +324,12 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Menu\GameOverMenu.cpp" />
+    <ClCompile Include="Menu\IMenu.cpp" />
+    <ClCompile Include="Menu\LeaderboardMenu.cpp" />
+    <ClCompile Include="Menu\MainMenu.cpp" />
+    <ClCompile Include="Menu\MenuBase.cpp" />
+    <ClCompile Include="Menu\PauseMenu.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -338,6 +344,14 @@
     <ClInclude Include="Bricks\UnbreackableBrick.h" />
     <ClInclude Include="Bricks\SimpleBrick.h" />
     <ClInclude Include="Bricks\StrongBrick.h" />
+    <ClInclude Include="Menu\GameOverMenu.h" />
+    <ClInclude Include="Menu\IMenu.h" />
+    <ClInclude Include="Menu\LeaderboardMenu.h" />
+    <ClInclude Include="Menu\MainMenu.h" />
+    <ClInclude Include="Menu\MenuBase.h" />
+    <ClInclude Include="Menu\PauseMenu.h" />
+    <ClInclude Include="Score\IScoreStrategy.h" />
+    <ClInclude Include="Score\ScoreStrategies.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -346,9 +360,6 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="UI.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Plan.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

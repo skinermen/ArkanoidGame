@@ -3,7 +3,10 @@
 namespace ArkanoidGame
 {
     GlassBrick::GlassBrick(const sf::Vector2f& position, const sf::Vector2f& size)
-        : Brick(position, size, sf::Color::Transparent, sf::Color::White, 2.f) {}
+        : Brick(position, size, sf::Color::Transparent, sf::Color::White, 2.f)
+    {
+        SetScoreStrategy(std::make_shared<GlassBrickScore>());
+    }
 
     bool GlassBrick::OnHit()
     {

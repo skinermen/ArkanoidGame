@@ -22,6 +22,9 @@ namespace ArkanoidGame
         bool AllBricksDestroyed() const;
 
         const std::vector<std::shared_ptr<Brick>>& GetBricks() const { return bricks; }
+        int GetScore() const { return score; }
+        void AddScore(int value) { score += value; }
+        void ResetScore() { score = 0; }
 
     private:
         // Перевод «координаты ячейки (int, int) → координаты пикселей (float, float)»
@@ -38,5 +41,7 @@ namespace ArkanoidGame
 
         // Вспомогательный метод: создаёт и кладёт Кирпич нужного типа
         void CreateBrickAt(const sf::Vector2i& cellCoords, BlockType type);
+
+        int score = 0;
     };
 }

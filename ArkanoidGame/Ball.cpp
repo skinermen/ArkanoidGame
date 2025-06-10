@@ -99,8 +99,10 @@ namespace ArkanoidGame
         return distanceSquared < (radius * radius);
     }
 
-    void Ball::CollisionHandlingWithObjects(const Platform& platform, const std::vector<std::shared_ptr<Brick>>& bricks)
+    int Ball::CollisionHandlingWithObjects(const Platform& platform, const std::vector<std::shared_ptr<Brick>>& bricks)
     {
+        int pointsEarned = 0;
+        
         // Check Collision With Platform
         if (CheckCollisionWithPlatform(platform))
         {
@@ -137,6 +139,9 @@ namespace ArkanoidGame
             if (!brick->IsDestroyed() && CheckCollisionWithBrick(*brick))
             {
                 bool shouldBounce = brick->OnHit();
+
+                if (brick->IsDestroyed())
+                    pointsEarned += brick->GetScore();
                 
                 sf::FloatRect brickBounds = brick->GetBounds();
                 sf::Vector2f brickCenter(brickBounds.left + brickBounds.width / 2.f,
@@ -177,5 +182,6 @@ namespace ArkanoidGame
                 }
             }
         }
+        return pointsEarned;
     }
 }

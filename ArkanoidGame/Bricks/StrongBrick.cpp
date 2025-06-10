@@ -3,7 +3,10 @@
 namespace ArkanoidGame
 {
     StrongBrick::StrongBrick(const sf::Vector2f& position, const sf::Vector2f& size)
-        : Brick(position, size, sf::Color::Blue, sf::Color::Blue, 2.f) {}
+        : Brick(position, size, sf::Color::Blue, sf::Color::Blue, 2.f)
+    {
+        SetScoreStrategy(std::make_shared<StrongBrickScore>());
+    }
 
     bool StrongBrick::OnHit()
     {
