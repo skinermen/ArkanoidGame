@@ -7,13 +7,14 @@
 
 namespace ArkanoidGame
 {
-    // Запись таблицы рекордов
-    struct SLeaderboard {
+    struct SLeaderboard
+    {
         std::string playerName;
         int score;
     };
 
-    class LeaderboardMenu : public MenuBase {
+    class LeaderboardMenu : public MenuBase
+    {
     public:
         void Init(const sf::Font& font) override;
         void Draw(sf::RenderWindow& window) override;
@@ -23,6 +24,8 @@ namespace ArkanoidGame
         void LoadRecordsFromFile(const std::string& filename);
         void SaveRecordsToFile(const std::string& filename) const;
         void AddRecord(const std::string& filename, const std::string& playerName, int score);
+
+        const std::vector<SLeaderboard>& GetRecords() const { return records; }
 
     private:
         sf::Text instructionsText;

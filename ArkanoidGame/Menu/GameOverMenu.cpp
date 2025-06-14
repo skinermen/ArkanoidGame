@@ -10,53 +10,70 @@ namespace ArkanoidGame
         static const std::vector<std::string> labels = { "NEW GAME", "MAIN MENU" };
         InitCommon(font, "Game Over", labels, 72.f, 50.f);
       
-        // Текст для счета
+        // Scores text
         scoreTitle.setFont(font);
         scoreTitle.setString("Number of points");
         scoreTitle.setCharacterSize(48);
-        scoreTitle.setFillColor(sf::Color::White);
         scoreTitle.setOrigin(scoreTitle.getLocalBounds().width/2.f, scoreTitle.getLocalBounds().height);
         
         scoreValue.setFont(font);
         scoreValue.setCharacterSize(48);
-        scoreValue.setFillColor(sf::Color::White);
         scoreValue.setOrigin(0.f, 0.f);
+
+        combinedTextScores.setFont(font);
+        combinedTextScores.setCharacterSize(48);
+        combinedTextScores.setFillColor(sf::Color::Yellow);
+        combinedTextScores.setOrigin(0.f, 0.f);
         
-        // Заголовок таблицы рекордов
+        // Title of the record table
         recordsTitle.setFont(font);
         recordsTitle.setString("Records:");
         recordsTitle.setCharacterSize(40);
-        recordsTitle.setFillColor(sf::Color::White);
+        recordsTitle.setFillColor(sf::Color::Magenta);
         recordsTitle.setOrigin(recordsTitle.getLocalBounds().width/2.f, recordsTitle.getLocalBounds().height);
+
+        // Record table
+        LeaderboardMenu tempMenu;
+        tempMenu.LoadRecordsFromFile(SETTINGS.LEADERBOARD_FILENAME);
+        records = tempMenu.GetRecords();
+        leaderboardItems.clear();
+        for (size_t i = 0; i < SETTINGS.SIZE_MINI_LEADERBOARD; ++i)
+        {
+            sf::Text t;
+            t.setFont(font);
+            t.setCharacterSize(32);
+            t.setFillColor(sf::Color::White);
+            t.setString(std::to_string(i + 1) + ". " + records[i].playerName + " - " + std::to_string(records[i].score));
+            leaderboardItems.push_back(t);
+        }
     }
       
     void GameOverMenu::SetScore(int score)
     {
         scoreValue.setString(std::to_string(score));
-        scoreValue.setOrigin(scoreValue.getLocalBounds().width/2.f, scoreValue.getLocalBounds().height/2.f);
+        scoreValue.setOrigin(scoreValue.getLocalBounds().width / 2.f, scoreValue.getLocalBounds().height / 2.f);
     }
       
     void GameOverMenu::Draw(sf::RenderWindow& window)
     {
-        // Рисуем фон
-        background.setPosition(SETTINGS.SCREEN_WIDTH/2.f, SETTINGS.SCREEN_HEIGHT/2.f);
+        // Background
+        background.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
         window.draw(background);
-      
-        // Рисуем заголовок меню и счет
-        scoreTitle.setPosition(SETTINGS.SCREEN_WIDTH/2.f, scoreTitle.getLocalBounds().height);
-        window.draw(scoreTitle);
-      
-        scoreValue.setPosition(SETTINGS.SCREEN_WIDTH/2.f, scoreTitle.getPosition().y + scoreTitle.getLocalBounds().height);
-        window.draw(scoreValue);
-      
-        // Рисуем рекорды
-        recordsTitle.setPosition(SETTINGS.SCREEN_WIDTH/2.f, scoreValue.getPosition().y + scoreValue.getLocalBounds().height + 100.f);
+
+        // Combined headline of the number of points scored
+        combinedTextScores.setString("Number of points: " + scoreValue.getString());
+        sf::FloatRect bounds = combinedTextScores.getLocalBounds();
+        combinedTextScores.setPosition ( SETTINGS.SCREEN_WIDTH / 2.f - (bounds.width / 2.f + bounds.left), 0.f );
+        window.draw(combinedTextScores);
+
+        // Fitting of Records
+        recordsTitle.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, combinedTextScores.getPosition().y + bounds.height + 100.f);
         window.draw(recordsTitle);
-      
-        // TODO: отрисовка leaderboardItems через DrawItems()
-      
-        // Рисуем пункты меню
-        DrawItems(window, items, SETTINGS.SCREEN_WIDTH/2.f, SETTINGS.SCREEN_HEIGHT - 100.f * items.size(), 60.f);
+
+        // Leaderboard (The first SIZE_MINI_LEADERBOARD leaders)
+        DrawItems(window, leaderboardItems, SETTINGS.SCREEN_WIDTH / 2.f, recordsTitle.getPosition().y + 20.f, 40.f);
+        // Menu items
+        DrawItems(window, items, SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 100.f * items.size(), 60.f);
     }
 
     void GameOverMenu::OnConfirm()

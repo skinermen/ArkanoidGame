@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "MenuBase.h"
+#include "LeaderboardMenu.h"
 
 namespace ArkanoidGame
 {
@@ -16,6 +17,8 @@ namespace ArkanoidGame
         sf::Text scoreTitle;
         sf::Text scoreValue;
         sf::Text recordsTitle;
+        sf::Text combinedTextScores;
         std::vector<sf::Text> leaderboardItems;
+        std::vector<SLeaderboard> records;
     };
 }

@@ -5,12 +5,7 @@
 
 namespace ArkanoidGame
 {
-	Game::Game()
-	{
-		Init();
-		static bool hasGameStarted = false;
-		static void ResetGameStartedFlag();
-	} 
+	Game::Game() { Init(); } 
 	Game::~Game() = default;
 
 	bool Game::hasGameStarted = false;

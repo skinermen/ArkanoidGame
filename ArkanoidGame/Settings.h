@@ -25,7 +25,7 @@ namespace ArkanoidGame
 		// Size
 		const int LEADERBOARD_HEIGHT = 58;
 		const int SIZE_LEADERBOARD = 10;
-		const int SIZE_MINI_LEADERBOARD = 5;
+		const int SIZE_MINI_LEADERBOARD = 3;
 		const int BORDER_SIZE = 10;
 		const float SCREEN_WIDTH = 800.f;
 		const float SCREEN_HEIGHT = 600.f;
