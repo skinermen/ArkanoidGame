@@ -98,5 +98,29 @@ namespace ArkanoidGame
 
     void LeaderboardMenu::AddRecord(const std::string& filename, const std::string& playerName, int score)
     {
+        records.push_back({playerName, score});
+        std::sort(records.begin(), records.end(), [](const SLeaderboard& a, const SLeaderboard& b)
+        {
+            return b.score < a.score; // по убыванию
+        });
+        if (records.size() > SETTINGS.SIZE_LEADERBOARD)
+            records.resize(SETTINGS.SIZE_LEADERBOARD);
+        SaveRecordsToFile(filename);
+    }
+
+    void LeaderboardMenu::UpdateRecords(const sf::Font& font)
+    {
+        records.clear();
+        LoadRecordsFromFile(SETTINGS.LEADERBOARD_FILENAME);
+        items.clear();
+        for (size_t i = 0; i < records.size(); ++i)
+        {
+            sf::Text t;
+            t.setFont(font);
+            t.setCharacterSize(38);
+            t.setFillColor(sf::Color::White);
+            t.setString(std::to_string(i + 1) + ". " + records[i].playerName + " - " + std::to_string(records[i].score));
+            items.push_back(t);
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace ArkanoidGame
         void LoadRecordsFromFile(const std::string& filename);
         void SaveRecordsToFile(const std::string& filename) const;
         void AddRecord(const std::string& filename, const std::string& playerName, int score);
+        void UpdateRecords(const sf::Font& font);
 
         const std::vector<SLeaderboard>& GetRecords() const { return records; }
 

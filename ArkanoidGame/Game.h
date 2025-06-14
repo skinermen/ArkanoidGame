@@ -17,10 +17,10 @@ namespace ArkanoidGame
 
 		void Init();
 		void Update(float currentTime, sf::RenderWindow& window);
-		void Draw(sf::RenderWindow& window);
-		static void Shutdown(sf::RenderWindow& window);
 		void HandleEvent(const sf::Event& event);
+		void Draw(sf::RenderWindow& window);
 		static void ResetGameStartedFlag();
+		static void Shutdown(sf::RenderWindow& window);
 
 	private:
 		void InitStartNewGame();

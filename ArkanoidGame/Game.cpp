@@ -52,6 +52,27 @@ namespace ArkanoidGame
 		if (currentState == GameState::Playing)
 			{ UpdatePlayingState(window, deltaTime); }
 	}
+
+	void Game::UpdatePlayingState(sf::RenderWindow& window, float deltaTime)
+	{
+		platform.Update(window, deltaTime);
+		ball.Update(window, deltaTime);
+		brickManager.Update();
+
+		HandleCollisions();
+
+		ui.UpdateScore(brickManager.GetScore());
+		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
+		{
+			STATES.PushState(GameState::GameOver);
+			ui.SetScoreForState(GameState::GameOver, brickManager.GetScore());
+		}
+
+		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
+		{
+			ui.HandleGameOver(brickManager.GetScore());
+		}
+	}
 	
 	void Game::HandleEvent(const sf::Event& event)
 	{
@@ -63,6 +84,7 @@ namespace ArkanoidGame
 		case GameState::Options:
 		case GameState::Winner:
 		case GameState::ConfirmationMenu:
+		case GameState::NameInputMenu:
 		ui.HandleEvent(event);
 			break;
 
@@ -84,22 +106,6 @@ namespace ArkanoidGame
 			
 		default:
 			break;
-		}
-	}
-
-	void Game::UpdatePlayingState(sf::RenderWindow& window, float deltaTime)
-	{
-		platform.Update(window, deltaTime);
-		ball.Update(window, deltaTime);
-		brickManager.Update();
-
-		HandleCollisions();
-
-		ui.UpdateScore(brickManager.GetScore());
-		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
-		{
-			STATES.PushState(GameState::GameOver);
-			ui.SetScoreForState(GameState::GameOver, brickManager.GetScore());
 		}
 	}
 

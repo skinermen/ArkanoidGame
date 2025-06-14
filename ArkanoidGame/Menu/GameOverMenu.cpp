@@ -89,4 +89,19 @@ namespace ArkanoidGame
         default:    STATES.PushState(GameState::MainMenu);    break;
         }
     }
+
+    void GameOverMenu::UpdateRecords(const std::vector<SLeaderboard>& newRecords, const sf::Font& font)
+    {
+        records = newRecords;
+        leaderboardItems.clear();
+        for (size_t i = 0; i < SETTINGS.SIZE_MINI_LEADERBOARD && i < records.size(); ++i)
+        {
+            sf::Text t;
+            t.setFont(font);
+            t.setCharacterSize(32);
+            t.setFillColor(sf::Color::White);
+            t.setString(std::to_string(i + 1) + ". " + records[i].playerName + " - " + std::to_string(records[i].score));
+            leaderboardItems.push_back(t);
+        }
+    }
 }

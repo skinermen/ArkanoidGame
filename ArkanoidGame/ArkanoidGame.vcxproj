@@ -324,13 +324,16 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Menu\ConfirmationMenu.cpp" />
     <ClCompile Include="Menu\GameOverMenu.cpp" />
     <ClCompile Include="Menu\IMenu.cpp" />
     <ClCompile Include="Menu\LeaderboardMenu.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
     <ClCompile Include="Menu\MenuBase.cpp" />
+    <ClCompile Include="Menu\NameInputMenu.cpp" />
     <ClCompile Include="Menu\PauseMenu.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Scores\RecordManager.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -344,14 +347,20 @@
     <ClInclude Include="Bricks\UnbreackableBrick.h" />
     <ClInclude Include="Bricks\SimpleBrick.h" />
     <ClInclude Include="Bricks\StrongBrick.h" />
+    <ClInclude Include="Menu\ConfirmationMenu.h" />
     <ClInclude Include="Menu\GameOverMenu.h" />
     <ClInclude Include="Menu\IMenu.h" />
     <ClInclude Include="Menu\LeaderboardMenu.h" />
     <ClInclude Include="Menu\MainMenu.h" />
     <ClInclude Include="Menu\MenuBase.h" />
+    <ClInclude Include="Menu\NameInputMenu.h" />
     <ClInclude Include="Menu\PauseMenu.h" />
-    <ClInclude Include="Score\IScoreStrategy.h" />
-    <ClInclude Include="Score\ScoreStrategies.h" />
+    <ClInclude Include="Scores\IRecordSaveStrategy.h" />
+    <ClInclude Include="Scores\IScoreStrategy.h" />
+    <ClInclude Include="Scores\RecordManager.h" />
+    <ClInclude Include="Scores\RecordSaveWithDefaultName.h" />
+    <ClInclude Include="Scores\RecordSaveWithInputName.h" />
+    <ClInclude Include="Scores\ScoreStrategies.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

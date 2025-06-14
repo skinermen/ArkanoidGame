@@ -9,13 +9,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="">
+    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="Completed by GameOverMenu">
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/ConfirmationMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/ConfirmationMenu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/NameInputMenu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/NameInputMenu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/IRecordSaveStrategy.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/RecordManager.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/RecordManager.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/RecordSaveWithDefaultName.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/RecordSaveWithInputName.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Bricks/Brick.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Bricks/Brick.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/GameOverMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/GameOverMenu.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/GameOverMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/GameOverMenu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Settings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Score/IScoreStrategy.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/IScoreStrategy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Score/ScoreStrategies.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Scores/ScoreStrategies.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/leaderboard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/leaderboard.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +47,8 @@
     <setting file="file://C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/vector" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.39.33519/include/xutility" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/Menu/ConfirmationMenu_old.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/Menu/ConfirmationMenu_old.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/GameOverMenu_old.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/IMenu_old.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/LeaderboardMenu_old.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -38,10 +57,13 @@
     <setting file="file://$USER_HOME$/Desktop/Menu/MainMenu_old.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/MenuBase_old.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/MenuBase_old.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/Menu/NameInputMenu_old.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/Menu/NameInputMenu_old.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/PauseMenu_old.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/Menu/PauseMenu_old.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/UI_old.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Desktop/UI_old.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/XYZ/Source/ArkanoidGame/ArkanoidGame/Game.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../HedgehogGame/HedgehogGame/UI.h" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -174,7 +196,7 @@
       <workItem from="1748869343526" duration="4065000" />
       <workItem from="1749481476108" duration="12468000" />
       <workItem from="1749549058083" duration="21701000" />
-      <workItem from="1749898172039" duration="2819000" />
+      <workItem from="1749898172039" duration="8699000" />
     </task>
     <task id="LOCAL-00001" summary="the .idea folder has been overwritten">
       <option name="closed" value="true" />
@@ -304,7 +326,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749580676027</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Completed by GameOverMenu">
+      <option name="closed" value="true" />
+      <created>1749901177102</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1749901177102</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,6 +371,7 @@
     <MESSAGE value="New types of blocks have been added. Now there are: Simple Blocks, Strong Blocks, Indestructible Blocks, Glass Blocks.&#10;The game code has also been significantly improved." />
     <MESSAGE value="The Constants file has been renamed to Settings. A Singleton has been created for game settings." />
     <MESSAGE value="The code has been redesigned to reflect design patterns" />
-    <option name="LAST_COMMIT_MESSAGE" value="The code has been redesigned to reflect design patterns" />
+    <MESSAGE value="Completed by GameOverMenu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed by GameOverMenu" />
   </component>
 </project>

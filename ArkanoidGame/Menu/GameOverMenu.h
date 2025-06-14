@@ -11,6 +11,8 @@ namespace ArkanoidGame
         void Draw(sf::RenderWindow& window) override;
         void OnConfirm() override;
 
+        void UpdateRecords(const std::vector<SLeaderboard>& newRecords, const sf::Font& font);
+
         void SetScore(int score);
   
     private:

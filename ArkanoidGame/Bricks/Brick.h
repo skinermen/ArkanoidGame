@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "../GameObject.h"
-#include "../Score/IScoreStrategy.h"
-#include "../Score/ScoreStrategies.h"
+#include "../Scores/IScoreStrategy.h"
+#include "../Scores/ScoreStrategies.h"
 
 namespace ArkanoidGame
 {
