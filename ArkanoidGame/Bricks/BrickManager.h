@@ -25,6 +25,8 @@ namespace ArkanoidGame
         int GetScore() const { return score; }
         void AddScore(int value) { score += value; }
         void ResetScore() { score = 0; }
+        void SetScore(int value) { score = value; }
+        void SetBricks(std::vector<std::shared_ptr<Brick>> newBricks) { bricks = std::move(newBricks); }
 
     private:
         // Translation "Coordinates of the cell (int, int) → Pixel coordinates (Float, Float)"

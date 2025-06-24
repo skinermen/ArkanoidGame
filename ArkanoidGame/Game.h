@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "Ball.h"
 #include "Bricks/BrickManager.h"
+#include "GameMemento.h"
 
 namespace ArkanoidGame
 {
@@ -27,6 +28,8 @@ namespace ArkanoidGame
 		void StartNextLevel();
 		void UpdatePlayingState(sf::RenderWindow& window, float deltaTime);
 		void HandleCollisions();
+		void SaveState();
+		void RestoreState();
 
 		int currentLevelIndex = 0;
 		float lastUpdateTime = 0.f;
@@ -38,5 +41,7 @@ namespace ArkanoidGame
 		Platform platform;
 		Ball ball;
 		BrickManager brickManager;
+		GameMemento savedState;
+		int lives = SETTINGS.INITIAL_LIVES;
 	};
 }

@@ -13,4 +13,9 @@ namespace ArkanoidGame
         destroyed = true;
         return true;
     }
+
+    std::shared_ptr<Brick> SimpleBrick::Clone() const
+    {
+        return std::make_shared<SimpleBrick>(*this);
+    }
 }

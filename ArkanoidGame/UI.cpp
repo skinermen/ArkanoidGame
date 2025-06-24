@@ -21,6 +21,10 @@ namespace ArkanoidGame
 		scoreText.setCharacterSize(28);
 		scoreText.setFillColor(sf::Color::White);
 		scoreText.setPosition(20.f, 10.f);
+		livesText.setFont(font);
+		livesText.setCharacterSize(28);
+		livesText.setFillColor(sf::Color::White);
+		livesText.setPosition(20.f, 40.f);
 	}
 
 	void UI::Init()
@@ -57,6 +61,11 @@ namespace ArkanoidGame
 		scoreText.setString("Score: " + std::to_string(score));
 	}
 
+	void UI::UpdateLives(int lives)
+	{
+		livesText.setString("Lives: " + std::to_string(lives));
+	}
+
 	void UI::Draw(sf::RenderWindow& window)
 	{
 		GameState state = STATES.GetCurrentState();
@@ -65,7 +74,11 @@ namespace ArkanoidGame
 		{
 			it->second->Draw(window);
 		}
-		if (state == GameState::Playing) window.draw(scoreText);
+		if (state == GameState::Playing)
+		{
+			window.draw(scoreText);
+			window.draw(livesText);
+		}
 	}
 
 	void UI::HandleEvent(const sf::Event& event)

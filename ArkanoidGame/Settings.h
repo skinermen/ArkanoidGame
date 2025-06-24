@@ -60,6 +60,7 @@ namespace ArkanoidGame
 		const float SPEED_PLATFORM = 400.f; // pixels per second
 		const float SPEED_BALL = 300.f; // pixels per second
 		const sf::Vector2f INITIAL_DIRECTION_OF_THE_BALL = sf::Vector2f(SPEED_BALL, -SPEED_BALL);
+		const int INITIAL_LIVES = 3;
 	};
 }
 #define SETTINGS GameWorld::Instance()

@@ -20,6 +20,7 @@ namespace ArkanoidGame
 
 		void Init();
 		void UpdateScore(int score);
+		void UpdateLives(int lives);
 		void Draw(sf::RenderWindow& window);
 		void HandleEvent(const sf::Event& event);
 		void ResetSelectionForState(GameState state);
@@ -40,6 +41,7 @@ namespace ArkanoidGame
 		int pendingScore = 0;
 		RecordManager recordManager;
 		sf::Text scoreText;
+		sf::Text livesText;
 		sf::Font font;
 		std::map<GameState, std::unique_ptr<IMenu>> menus;
 	};

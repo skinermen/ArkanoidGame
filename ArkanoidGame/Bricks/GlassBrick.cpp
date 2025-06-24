@@ -13,4 +13,9 @@ namespace ArkanoidGame
         destroyed = true;
         return false;
     }
+
+    std::shared_ptr<Brick> GlassBrick::Clone() const
+    {
+        return std::make_shared<GlassBrick>(*this);
+    }
 }

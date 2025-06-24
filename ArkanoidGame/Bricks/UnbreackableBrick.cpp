@@ -12,4 +12,9 @@ namespace ArkanoidGame
     {
         return true;
     }
+
+    std::shared_ptr<Brick> UnbreackableBrick::Clone() const
+    {
+        return std::make_shared<UnbreackableBrick>(*this);
+    }
 }

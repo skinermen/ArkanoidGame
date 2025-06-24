@@ -25,6 +25,9 @@ namespace ArkanoidGame
 		brickManager.Init(0);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
+		lives = SETTINGS.INITIAL_LIVES;
+		ui.UpdateLives(lives);
+		SaveState();
 	}
 
 	void Game::StartNextLevel()
@@ -37,6 +40,9 @@ namespace ArkanoidGame
 		brickManager.Init(currentLevelIndex);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
+		lives = SETTINGS.INITIAL_LIVES;
+		ui.UpdateLives(lives);
+		SaveState();
 	}
 
 	void Game::Update(float currentTime, sf::RenderWindow& window)
@@ -68,6 +74,12 @@ namespace ArkanoidGame
 
 	void Game::UpdatePlayingState(sf::RenderWindow& window, float deltaTime)
 	{
+		if (ball.GetVelocity().y <= 0 &&
+				ball.GetPosition().y - ball.GetShape().getRadius() <= SETTINGS.SCREEN_HEIGHT)
+		{
+			SaveState();
+		}
+
 		platform.Update(window, deltaTime);
 		ball.Update(window, deltaTime);
 		brickManager.Update();
@@ -75,21 +87,25 @@ namespace ArkanoidGame
 		HandleCollisions();
 
 		ui.UpdateScore(brickManager.GetScore());
+		ui.UpdateLives(lives);
+
 		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
 		{
-			STATES.PushState(GameState::GameOver);
-			ui.SetScoreForState(GameState::GameOver, brickManager.GetScore());
+			--lives;
+			if (lives > 0)
+			{
+				RestoreState();
+				ui.UpdateLives(lives);
+				return;
+			}
+			ui.HandleGameOver(brickManager.GetScore());
+			return;
 		}
 
 		if (brickManager.AllBricksDestroyed())
 		{
 			STATES.PushState(GameState::Winner);
 			ui.SetScoreForState(GameState::Winner, brickManager.GetScore());
-		}
-		
-		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
-		{
-			ui.HandleGameOver(brickManager.GetScore());
 		}
 	}
 	
@@ -132,6 +148,28 @@ namespace ArkanoidGame
 	{
 		int points = ball.CollisionHandlingWithObjects(platform, brickManager.GetBricks());
 		brickManager.AddScore(points);
+	}
+
+	void Game::SaveState()
+	{
+		savedState.bricks.clear();
+		for (const auto& brick : brickManager.GetBricks())
+			savedState.bricks.push_back(brick->Clone());
+		savedState.ballPosition = ball.GetPosition();
+		savedState.ballVelocity = ball.GetVelocity();
+		savedState.platformPosition = platform.GetPosition();
+		savedState.score = brickManager.GetScore();
+		savedState.currentLevel = currentLevelIndex;
+	}
+
+	void Game::RestoreState()
+	{
+		brickManager.SetBricks(savedState.bricks);
+		brickManager.SetScore(savedState.score);
+		ball.SetPosition(savedState.ballPosition);
+		ball.SetVelocity(savedState.ballVelocity);
+		platform.SetPosition(savedState.platformPosition);
+		currentLevelIndex = savedState.currentLevel;
 	}
 
 	void Game::Draw(sf::RenderWindow& window)

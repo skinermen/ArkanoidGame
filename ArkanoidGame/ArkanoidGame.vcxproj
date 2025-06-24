@@ -346,6 +346,7 @@
     <ClInclude Include="Bricks\UnbreackableBrick.h" />
     <ClInclude Include="Bricks\SimpleBrick.h" />
     <ClInclude Include="Bricks\StrongBrick.h" />
+    <ClInclude Include="GameMemento.h" />
     <ClInclude Include="Menu\ConfirmationMenu.h" />
     <ClInclude Include="Menu\GameOverMenu.h" />
     <ClInclude Include="Menu\IMenu.h" />

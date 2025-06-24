@@ -32,4 +32,9 @@ namespace ArkanoidGame
             return true;
         }
     }
+
+    std::shared_ptr<Brick> StrongBrick::Clone() const
+    {
+        return std::make_shared<StrongBrick>(*this);
+    }
 }
