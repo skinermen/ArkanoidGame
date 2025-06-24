@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <SFML/Graphics.hpp>
 
 namespace ArkanoidGame
 {
@@ -63,5 +64,5 @@ namespace ArkanoidGame
 		const int INITIAL_LIVES = 3;
 	};
 }
-#define SETTINGS GameWorld::Instance()
+#define SETTINGS ArkanoidGame::GameWorld::Instance()
 

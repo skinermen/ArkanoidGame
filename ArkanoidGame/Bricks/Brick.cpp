@@ -32,4 +32,6 @@ namespace ArkanoidGame
     sf::Vector2f Brick::GetPosition() const { return brickShape.getPosition(); }
 
     void Brick::SetPosition(const sf::Vector2f& pos) { brickShape.setPosition(pos); }
+
+    void Brick::Destroy() { destroyed = true; }
 }

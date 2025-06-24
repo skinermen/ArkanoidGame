@@ -163,6 +163,10 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BallStrategies.cpp" />
+    <ClCompile Include="Bonuses\Bonus.cpp" />
+    <ClCompile Include="Bonuses\BonusManager.cpp" />
+    <ClCompile Include="Bonuses\FireBallBonus.cpp" />
     <ClCompile Include="Bricks\BrickFactory.cpp" />
     <ClCompile Include="Bricks\Brick.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -338,6 +342,11 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallStrategies.h" />
+    <ClInclude Include="BallStrategy.h" />
+    <ClInclude Include="Bonuses\Bonus.h" />
+    <ClInclude Include="Bonuses\BonusManager.h" />
+    <ClInclude Include="Bonuses\FireBallBonus.h" />
     <ClInclude Include="Bricks\BrickFactory.h" />
     <ClInclude Include="Bricks\Brick.h" />
     <ClInclude Include="Bricks\BrickManager.h" />

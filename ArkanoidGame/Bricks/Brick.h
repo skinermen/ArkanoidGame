@@ -22,6 +22,7 @@ namespace ArkanoidGame
         virtual bool IsDestroyed() const;
         virtual sf::FloatRect GetBounds() const;
         virtual std::shared_ptr<Brick> Clone() const = 0;
+        void Destroy();
 
     protected:
         sf::RectangleShape brickShape;

@@ -1,4 +1,5 @@
 XYZ 1080
+Afrodita 1040
 XYZ 635
 XYZ 335
 Bog 230
@@ -6,5 +7,4 @@ Marina 200
 XYZ 165
 XYZ 110
 XYZ 90
-XYZ 50
 XYZ 50

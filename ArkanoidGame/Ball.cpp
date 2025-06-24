@@ -1,8 +1,11 @@
 ﻿#include "Ball.h"
 #include "Bricks/Brick.h"
 #include "Platform.h"
+#include "BallStrategies.h"
 
+#include <memory>
 #include <algorithm>
+#include <cmath>
 
 namespace ArkanoidGame
 {
@@ -12,11 +15,14 @@ namespace ArkanoidGame
         ballShape.setFillColor(sf::Color::White);
         ballShape.setOrigin(ballShape.getRadius(), ballShape.getRadius());
         ballShape.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
+        strategy = std::make_unique<NormalBallStrategy>();
     }
 
     void Ball::Update(sf::RenderWindow& window, float deltaTime)
     {
         ballShape.move(velocity * deltaTime);
+        if (strategy)
+            strategy->Update(*this, deltaTime);
 
         sf::Vector2f pos = ballShape.getPosition();
         float radius = ballShape.getRadius();
@@ -41,6 +47,10 @@ namespace ArkanoidGame
         }
 
         ballShape.setPosition(pos);
+        if (strategy && strategy->IsFinished())
+        {
+            SetStrategy(std::make_unique<NormalBallStrategy>());
+        }
     }
 
     void Ball::Draw(sf::RenderWindow& window) const
@@ -53,6 +63,7 @@ namespace ArkanoidGame
         // Throw the ball into the center of the screen and set the initial direction
         ballShape.setPosition(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT / 2.f);
         velocity = SETTINGS.INITIAL_DIRECTION_OF_THE_BALL;
+        SetStrategy(std::make_unique<NormalBallStrategy>());
     }
 
     void Ball::SetPosition(const sf::Vector2f& pos)
@@ -138,7 +149,7 @@ namespace ArkanoidGame
         {
             if (!brick->IsDestroyed() && CheckCollisionWithBrick(*brick))
             {
-                bool shouldBounce = brick->OnHit();
+                bool shouldBounce = strategy ? strategy->OnBrickHit(*this, *brick) : brick->OnHit();
 
                 if (brick->IsDestroyed())
                     pointsEarned += brick->GetScore();
@@ -183,5 +194,15 @@ namespace ArkanoidGame
             }
         }
         return pointsEarned;
+    }
+
+    void Ball::SetStrategy(std::unique_ptr<BallStrategy> newStrategy)
+    {
+        if (strategy)
+            strategy->OnExit(*this);
+        strategy = std::move(newStrategy);
+        if (!strategy)
+            strategy = std::make_unique<NormalBallStrategy>();
+        strategy->OnEnter(*this);
     }
 }

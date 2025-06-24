@@ -1,7 +1,10 @@
+#include <random>
+
 #include "Game.h"
 #include "Application.h"
 #include "GameState.h"
-#include <random>
+#include "Bonuses/BonusManager.h"
+#include "Bonuses/FireBallBonus.h"
 
 namespace ArkanoidGame
 {
@@ -27,6 +30,8 @@ namespace ArkanoidGame
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
 		lives = SETTINGS.INITIAL_LIVES;
 		ui.UpdateLives(lives);
+		bonusManager.Clear();
+		destroyedBricks.clear();
 		SaveState();
 	}
 
@@ -42,6 +47,8 @@ namespace ArkanoidGame
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
 		lives = SETTINGS.INITIAL_LIVES;
 		ui.UpdateLives(lives);
+		bonusManager.Clear();
+		destroyedBricks.clear();
 		SaveState();
 	}
 
@@ -83,8 +90,8 @@ namespace ArkanoidGame
 		platform.Update(window, deltaTime);
 		ball.Update(window, deltaTime);
 		brickManager.Update();
-
 		HandleCollisions();
+		bonusManager.Update(window, deltaTime, platform, ball);
 
 		ui.UpdateScore(brickManager.GetScore());
 		ui.UpdateLives(lives);
@@ -148,6 +155,20 @@ namespace ArkanoidGame
 	{
 		int points = ball.CollisionHandlingWithObjects(platform, brickManager.GetBricks());
 		brickManager.AddScore(points);
+
+		static std::default_random_engine eng(std::random_device{}());
+		static std::uniform_real_distribution<float> dist(0.f, 1.f);
+
+		for (const auto& brick : brickManager.GetBricks())
+		{
+			if (brick->IsDestroyed() && destroyedBricks.insert(brick.get()).second)
+			{
+				if (dist(eng) <= 0.1f)
+				{
+					bonusManager.SpawnBonus(std::make_unique<FireBallBonus>(brick->GetPosition()));
+				}
+			}
+		}
 	}
 
 	void Game::SaveState()
@@ -170,6 +191,10 @@ namespace ArkanoidGame
 		ball.SetVelocity(savedState.ballVelocity);
 		platform.SetPosition(savedState.platformPosition);
 		currentLevelIndex = savedState.currentLevel;
+		destroyedBricks.clear();
+		for (const auto& brick : brickManager.GetBricks())
+			if (brick->IsDestroyed())
+				destroyedBricks.insert(brick.get());
 	}
 
 	void Game::Draw(sf::RenderWindow& window)
@@ -177,6 +202,7 @@ namespace ArkanoidGame
 		platform.Draw(window);
 		ball.Draw(window);
 		brickManager.Draw(window);
+		bonusManager.Draw(window);
 		ui.Draw(window);
 	}
 
