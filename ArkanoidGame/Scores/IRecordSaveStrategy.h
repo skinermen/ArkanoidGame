@@ -1,7 +1,5 @@
 ﻿#pragma once
-#include <string>
 #include "../Scores/RecordManager.h"
-#include "../GameState.h"
 
 namespace ArkanoidGame
 {

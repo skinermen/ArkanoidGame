@@ -3,7 +3,6 @@
 #include <string>
 
 #include "MenuBase.h"
-#include "../Settings.h"
 
 namespace ArkanoidGame
 {

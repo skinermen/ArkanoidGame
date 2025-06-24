@@ -27,7 +27,7 @@ namespace ArkanoidGame
 	{
 		InitResources();
 
-		// Создаём и инициализируем все меню
+		// Create and initialize the entire menu
 		menus.emplace(GameState::MainMenu,			std::make_unique<MainMenu>());
 		menus.emplace(GameState::PauseMenu,			std::make_unique<PauseMenu>());
 		menus.emplace(GameState::Leaderboard,		std::make_unique<LeaderboardMenu>());
@@ -154,6 +154,10 @@ namespace ArkanoidGame
 			{
 				menu->SetScore(score);
 			}
+			else if (auto* winnerMenu = dynamic_cast<WinnerMenu*>(it->second.get()))
+			{
+				winnerMenu->SetScore(score);
+			}
 		}
 	}
 
@@ -171,7 +175,7 @@ namespace ArkanoidGame
 		}
 	}
 
-	void UI::HandleWinnerMenuSelection(int selection)
+	void UI::HandleWinnerMenuSelection(int selection) const
 	{
 		if (selection == 0)
 		{

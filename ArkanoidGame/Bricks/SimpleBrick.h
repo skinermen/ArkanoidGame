@@ -1,5 +1,4 @@
-﻿// SimpleBrick.h
-#pragma once
+﻿#pragma once
 #include "Brick.h"
 
 namespace ArkanoidGame

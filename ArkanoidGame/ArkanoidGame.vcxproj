@@ -323,10 +323,8 @@
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Menu\ConfirmationMenu.cpp" />
     <ClCompile Include="Menu\GameOverMenu.cpp" />
-    <ClCompile Include="Menu\IMenu.cpp" />
     <ClCompile Include="Menu\LeaderboardMenu.cpp" />
     <ClCompile Include="Menu\MainMenu.cpp" />
     <ClCompile Include="Menu\MenuBase.cpp" />
@@ -368,7 +366,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="Menu.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>

@@ -8,6 +8,6 @@ namespace ArkanoidGame
     public:
         GlassBrick(const sf::Vector2f& position, const sf::Vector2f& size);
         bool OnHit() override;
-        bool IsGlass() const { return true; } // может пригодиться
+        bool IsGlass() const { return true; }
     };
 }

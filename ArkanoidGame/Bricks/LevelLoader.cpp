@@ -14,6 +14,8 @@ namespace ArkanoidGame
         return levels.at(i);
     }
 
+    LevelLoader::~LevelLoader(){}
+
     BlockType LevelLoader::CharToBlockType(char symbol)
     {
         BlockType blockType;
@@ -69,7 +71,7 @@ namespace ArkanoidGame
         file.close();
     }
 
-    int LevelLoader::GetLevelCount()
+    int LevelLoader::GetLevelCount() const
     {
         return levels.size();
     }

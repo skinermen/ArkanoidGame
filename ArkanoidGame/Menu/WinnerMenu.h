@@ -17,6 +17,7 @@ namespace ArkanoidGame
     private:
         sf::Text scoreTitle;
         sf::Text scoreValue;
+        sf::Text combinedTextScores;
         std::function<void(int)> onConfirmCallback;
     };
 }

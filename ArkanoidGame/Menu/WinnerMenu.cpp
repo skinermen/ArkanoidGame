@@ -1,17 +1,16 @@
 ﻿#include "WinnerMenu.h"
-#include "../GameState.h"
 
 namespace ArkanoidGame
 {
     void WinnerMenu::Init(const sf::Font& font)
     {
-        // Общая инициализация: заголовок и пункты меню
+        // General initialization: heading and menu items
         static const std::vector<std::string> labels = { "NEXT LEVEL", "MAIN MENU" };
-        InitCommon(font, "You Win!", labels, 72.f, 50.f);
-
-        // Подготовка текста для отображения счета
+        InitCommon(font, "The level is passed", labels, 72.f, 50.f);
+        
+        // Preparation of text to display an account
         scoreTitle.setFont(font);
-        scoreTitle.setString("Your score:");
+        scoreTitle.setString("Number of points: ");
         scoreTitle.setCharacterSize(48);
         scoreTitle.setFillColor(sf::Color::White);
         scoreTitle.setOrigin
@@ -23,6 +22,11 @@ namespace ArkanoidGame
         scoreValue.setFont(font);
         scoreValue.setCharacterSize(48);
         scoreValue.setFillColor(sf::Color::White);
+
+        combinedTextScores.setFont(font);
+        combinedTextScores.setCharacterSize(48);
+        combinedTextScores.setFillColor(sf::Color::Yellow);
+        combinedTextScores.setOrigin(0.f, 0.f);
     }
 
     void WinnerMenu::SetScore(int score)
@@ -37,7 +41,7 @@ namespace ArkanoidGame
 
     void WinnerMenu::Draw(sf::RenderWindow& window)
     {
-        // Рисуем фон
+        // We draw the background
         background.setPosition
         (
             SETTINGS.SCREEN_WIDTH / 2.f,
@@ -45,31 +49,21 @@ namespace ArkanoidGame
         );
         window.draw(background);
 
-        // Рисуем заголовок
+        // We draw a title
         title.setPosition
         (
             SETTINGS.SCREEN_WIDTH / 2.f,
             title.getLocalBounds().height
         );
         window.draw(title);
-
-        // Рисуем текст "Your score:" и значение
-        float yOffset = title.getPosition().y + title.getLocalBounds().height + 20.f;
-        scoreTitle.setPosition
-        (
-            SETTINGS.SCREEN_WIDTH / 2.f,
-            yOffset
-        );
-        window.draw(scoreTitle);
-
-        scoreValue.setPosition
-        (
-            SETTINGS.SCREEN_WIDTH / 2.f,
-            yOffset + scoreTitle.getLocalBounds().height + 10.f
-        );
-        window.draw(scoreValue);
-
-        // Рисуем пункты меню внизу экрана
+        
+        // Combined headline of the number of points scored
+        combinedTextScores.setString(scoreTitle.getString() + scoreValue.getString());
+        sf::FloatRect bounds = combinedTextScores.getLocalBounds();
+        combinedTextScores.setPosition ( SETTINGS.SCREEN_WIDTH / 2.f - (bounds.width / 2.f + bounds.left), 100.f );
+        window.draw(combinedTextScores);
+        
+        // We draw menu items at the bottom of the screen
         DrawItems(window, items, SETTINGS.SCREEN_WIDTH / 2.f,
             SETTINGS.SCREEN_HEIGHT - 100.f * items.size(), 60.f
         );

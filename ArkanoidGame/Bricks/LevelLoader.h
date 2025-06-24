@@ -1,7 +1,5 @@
 ﻿#pragma once
 #include <vector>
-#include <string>
-#include <memory>
 #include <map>
 
 #include "SFML/System/Vector2.hpp"
@@ -18,7 +16,7 @@ namespace ArkanoidGame
     
     struct Level
     {
-        // Теперь именно Vector2i — (колонка, строка) в сетке
+        // Now it is Vector2i - (column, line) in the grid
         std::vector<std::pair<sf::Vector2i, BlockType>> mBlocks;
     };
     
@@ -27,8 +25,8 @@ namespace ArkanoidGame
     public:
         LevelLoader() { LoadLevelsFromFile(); }
         Level& GetLevel(int i);
-        ~LevelLoader() = default;
-        int GetLevelCount();
+        ~LevelLoader();
+        int GetLevelCount() const;
     private:
         void LoadLevelsFromFile();
 

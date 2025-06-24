@@ -1,5 +1,4 @@
 ﻿#include "PauseMenu.h"
-
 #include "../GameState.h"
 
 namespace ArkanoidGame

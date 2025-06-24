@@ -2,7 +2,6 @@
 
 namespace ArkanoidGame
 {
-    // Strategy for calculating glasses for one block
     class IScoreStrategy
     {
     public:

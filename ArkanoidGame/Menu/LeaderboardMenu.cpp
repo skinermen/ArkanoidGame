@@ -18,11 +18,11 @@ namespace ArkanoidGame
             instructionsText.getLocalBounds().height
         );
 
-        // Загружаем рекорды
+        // We load the records
         records.clear();
         LoadRecordsFromFile(SETTINGS.LEADERBOARD_FILENAME);
 
-        // Формируем тексты пунктов
+        // We form the texts of the points
         items.clear();
         for (size_t i = 0; i < records.size(); ++i)
         {
@@ -101,7 +101,7 @@ namespace ArkanoidGame
         records.push_back({playerName, score});
         std::sort(records.begin(), records.end(), [](const SLeaderboard& a, const SLeaderboard& b)
         {
-            return b.score < a.score; // по убыванию
+            return b.score < a.score; // In descending
         });
         if (records.size() > SETTINGS.SIZE_LEADERBOARD)
             records.resize(SETTINGS.SIZE_LEADERBOARD);

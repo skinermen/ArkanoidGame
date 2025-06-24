@@ -32,7 +32,7 @@ namespace ArkanoidGame
 		++currentLevelIndex;
 		if (currentLevelIndex >= brickManager.GetTotalLevels())
 		{
-			currentLevelIndex = 0; // Или можно завершить игру
+			currentLevelIndex = 0; // Or you can complete the game
 		}
 		brickManager.Init(currentLevelIndex);
 		ball.Reset();
@@ -81,6 +81,12 @@ namespace ArkanoidGame
 			ui.SetScoreForState(GameState::GameOver, brickManager.GetScore());
 		}
 
+		if (brickManager.AllBricksDestroyed())
+		{
+			STATES.PushState(GameState::Winner);
+			ui.SetScoreForState(GameState::Winner, brickManager.GetScore());
+		}
+		
 		if (ball.GetPosition().y - ball.GetShape().getRadius() > SETTINGS.SCREEN_HEIGHT)
 		{
 			ui.HandleGameOver(brickManager.GetScore());

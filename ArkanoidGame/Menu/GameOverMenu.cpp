@@ -12,7 +12,7 @@ namespace ArkanoidGame
       
         // Scores text
         scoreTitle.setFont(font);
-        scoreTitle.setString("Number of points");
+        scoreTitle.setString("Number of points: ");
         scoreTitle.setCharacterSize(48);
         scoreTitle.setOrigin(scoreTitle.getLocalBounds().width/2.f, scoreTitle.getLocalBounds().height);
         
@@ -61,7 +61,7 @@ namespace ArkanoidGame
         window.draw(background);
 
         // Combined headline of the number of points scored
-        combinedTextScores.setString("Number of points: " + scoreValue.getString());
+        combinedTextScores.setString(scoreTitle.getString() + scoreValue.getString());
         sf::FloatRect bounds = combinedTextScores.getLocalBounds();
         combinedTextScores.setPosition ( SETTINGS.SCREEN_WIDTH / 2.f - (bounds.width / 2.f + bounds.left), 0.f );
         window.draw(combinedTextScores);
@@ -72,6 +72,7 @@ namespace ArkanoidGame
 
         // Leaderboard (The first SIZE_MINI_LEADERBOARD leaders)
         DrawItems(window, leaderboardItems, SETTINGS.SCREEN_WIDTH / 2.f, recordsTitle.getPosition().y + 20.f, 40.f);
+        
         // Menu items
         DrawItems(window, items, SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 100.f * items.size(), 60.f);
     }

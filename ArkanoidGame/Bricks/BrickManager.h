@@ -14,8 +14,7 @@ namespace ArkanoidGame
     public:
         BrickManager();
         ~BrickManager();
-
-        // Теперь Init принимает индекс уровня
+        
         void Init(int levelIndex);
         void Update() const;
         void Draw(sf::RenderWindow& window) const;
@@ -28,19 +27,19 @@ namespace ArkanoidGame
         void ResetScore() { score = 0; }
 
     private:
-        // Перевод «координаты ячейки (int, int) → координаты пикселей (float, float)»
+        // Translation "Coordinates of the cell (int, int) → Pixel coordinates (Float, Float)"
         sf::Vector2f CellToPixel(const sf::Vector2i& cellCoords) const;
 
-        // Основной вектор кирпичей
+        // The main vector of bricks
         std::vector<std::shared_ptr<Brick>> bricks;
 
-        // Словарь «BlockType → своя фабрика»
+        // Dictionary "Blocktype → Your Factory"
         std::map<BlockType, std::unique_ptr<BrickFactory>> factories;
 
-        // Загрузчик уровней, который в конструкторе уже прочитает файл уровней
+        // Level bootloader, which in the constructor will already read the level file
         LevelLoader levelLoader;
 
-        // Вспомогательный метод: создаёт и кладёт Кирпич нужного типа
+        // Auxiliary method: creates and warehouses Brick the necessary type
         void CreateBrickAt(const sf::Vector2i& cellCoords, BlockType type);
 
         int score = 0;

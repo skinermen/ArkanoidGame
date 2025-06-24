@@ -4,7 +4,7 @@ XYZ 335
 Bog 230
 Marina 200
 XYZ 165
+XYZ 110
 XYZ 50
+XYZ 40
 XYZ 20
-Skinermen 10
-Jora 10

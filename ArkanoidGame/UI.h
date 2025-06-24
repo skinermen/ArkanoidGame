@@ -26,7 +26,7 @@ namespace ArkanoidGame
 		void SetScoreForState(GameState state, int score);
 
 		void HandleGameOver(int score);
-		void HandleWinnerMenuSelection(int selection);
+		void HandleWinnerMenuSelection(int selection) const;
 
 		void SetNextLevelCallback(std::function<void()> cb) { nextLevelCallback = std::move(cb); }
 		IMenu* GetMenu(GameState state);
