@@ -24,6 +24,9 @@ namespace ArkanoidGame
         virtual std::shared_ptr<Brick> Clone() const = 0;
         void Destroy();
 
+        void SetColor(const sf::Color& color);
+        sf::Color GetColor() const;
+
     protected:
         sf::RectangleShape brickShape;
         bool destroyed = false;

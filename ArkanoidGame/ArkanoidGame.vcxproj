@@ -167,6 +167,7 @@
     <ClCompile Include="Bonuses\Bonus.cpp" />
     <ClCompile Include="Bonuses\BonusManager.cpp" />
     <ClCompile Include="Bonuses\FireBallBonus.cpp" />
+    <ClCompile Include="Bonuses\FragileBlocksBonus.cpp" />
     <ClCompile Include="Bricks\BrickFactory.cpp" />
     <ClCompile Include="Bricks\Brick.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -347,6 +348,7 @@
     <ClInclude Include="Bonuses\Bonus.h" />
     <ClInclude Include="Bonuses\BonusManager.h" />
     <ClInclude Include="Bonuses\FireBallBonus.h" />
+    <ClInclude Include="Bonuses\FragileBlocksBonus.h" />
     <ClInclude Include="Bricks\BrickFactory.h" />
     <ClInclude Include="Bricks\Brick.h" />
     <ClInclude Include="Bricks\BrickManager.h" />

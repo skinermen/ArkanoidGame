@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "Bonuses/BonusManager.h"
 #include "Bonuses/FireBallBonus.h"
+#include "Bonuses/FragileBlocksBonus.h"
 
 namespace ArkanoidGame
 {
@@ -165,7 +166,10 @@ namespace ArkanoidGame
 			{
 				if (dist(eng) <= 0.1f)
 				{
-					bonusManager.SpawnBonus(std::make_unique<FireBallBonus>(brick->GetPosition()));
+					if (dist(eng) < 0.5f)
+						bonusManager.SpawnBonus(std::make_unique<FireBallBonus>(brick->GetPosition()));
+					else
+						bonusManager.SpawnBonus(std::make_unique<FragileBlocksBonus>(brick->GetPosition(), brickManager));
 				}
 			}
 		}

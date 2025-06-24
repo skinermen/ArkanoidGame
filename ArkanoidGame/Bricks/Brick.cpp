@@ -34,4 +34,15 @@ namespace ArkanoidGame
     void Brick::SetPosition(const sf::Vector2f& pos) { brickShape.setPosition(pos); }
 
     void Brick::Destroy() { destroyed = true; }
+
+    void Brick::SetColor(const sf::Color& color)
+    {
+        brickShape.setFillColor(color);
+        brickShape.setOutlineColor(color);
+    }
+
+    sf::Color Brick::GetColor() const
+    {
+        return brickShape.getFillColor();
+    }
 }
