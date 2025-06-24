@@ -6,6 +6,8 @@
 #include "Bonuses/BonusManager.h"
 #include "Bonuses/FireBallBonus.h"
 #include "Bonuses/FragileBlocksBonus.h"
+#include "Bonuses/PlatformSizeBonus.h"
+#include "PlatformCommand.h"
 
 namespace ArkanoidGame
 {
@@ -29,6 +31,7 @@ namespace ArkanoidGame
 		brickManager.Init(0);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
+		platform.ResetSize();
 		lives = SETTINGS.INITIAL_LIVES;
 		ui.UpdateLives(lives);
 		bonusManager.Clear();
@@ -46,6 +49,7 @@ namespace ArkanoidGame
 		brickManager.Init(currentLevelIndex);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
+		platform.ResetSize();
 		lives = SETTINGS.INITIAL_LIVES;
 		ui.UpdateLives(lives);
 		bonusManager.Clear();
@@ -166,10 +170,17 @@ namespace ArkanoidGame
 			{
 				if (dist(eng) <= 0.1f)
 				{
-					if (dist(eng) < 0.5f)
+					float r = dist(eng);
+					if (r < 0.33f)
 						bonusManager.SpawnBonus(std::make_unique<FireBallBonus>(brick->GetPosition()));
-					else
+					else if (r < 0.66f)
 						bonusManager.SpawnBonus(std::make_unique<FragileBlocksBonus>(brick->GetPosition(), brickManager));
+					else if (r < 0.83f)
+						bonusManager.SpawnBonus(std::make_unique<PlatformSizeBonus>(brick->GetPosition(),
+								std::make_unique<IncreaseSizeCommand>(1.5f, SETTINGS.PLATFORM_BONUS_DURATION)));
+					else
+						bonusManager.SpawnBonus(std::make_unique<PlatformSizeBonus>(brick->GetPosition(),
+								std::make_unique<DecreaseSizeCommand>(0.75f, SETTINGS.PLATFORM_BONUS_DURATION)));
 				}
 			}
 		}

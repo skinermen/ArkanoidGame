@@ -5,8 +5,8 @@ namespace ArkanoidGame
 {
     Bonus::Bonus(const sf::Vector2f& position)
     {
-        shape.setRadius(10.f);
-        shape.setOrigin(shape.getRadius(), shape.getRadius());
+        shape.setSize(sf::Vector2f(20.f, 20.f));
+        shape.setOrigin(shape.getSize() / 2.f);
         shape.setFillColor(sf::Color::White);
         shape.setPosition(position);
     }
@@ -23,6 +23,6 @@ namespace ArkanoidGame
 
     bool Bonus::IsOffScreen() const
     {
-        return shape.getPosition().y - shape.getRadius() > SETTINGS.SCREEN_HEIGHT;
+        return shape.getPosition().y - shape.getSize().y / 2.f > SETTINGS.SCREEN_HEIGHT;
     }
 }

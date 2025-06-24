@@ -168,6 +168,7 @@
     <ClCompile Include="Bonuses\BonusManager.cpp" />
     <ClCompile Include="Bonuses\FireBallBonus.cpp" />
     <ClCompile Include="Bonuses\FragileBlocksBonus.cpp" />
+    <ClCompile Include="Bonuses\PlatformSizeBonus.cpp" />
     <ClCompile Include="Bricks\BrickFactory.cpp" />
     <ClCompile Include="Bricks\Brick.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -337,6 +338,7 @@
     <ClCompile Include="Menu\PauseMenu.cpp" />
     <ClCompile Include="Menu\WinnerMenu.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="PlatformCommand.cpp" />
     <ClCompile Include="Scores\RecordManager.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -349,6 +351,7 @@
     <ClInclude Include="Bonuses\BonusManager.h" />
     <ClInclude Include="Bonuses\FireBallBonus.h" />
     <ClInclude Include="Bonuses\FragileBlocksBonus.h" />
+    <ClInclude Include="Bonuses\PlatformSizeBonus.h" />
     <ClInclude Include="Bricks\BrickFactory.h" />
     <ClInclude Include="Bricks\Brick.h" />
     <ClInclude Include="Bricks\BrickManager.h" />
@@ -367,6 +370,7 @@
     <ClInclude Include="Menu\NameInputMenu.h" />
     <ClInclude Include="Menu\PauseMenu.h" />
     <ClInclude Include="Menu\WinnerMenu.h" />
+    <ClInclude Include="PlatformCommand.h" />
     <ClInclude Include="Scores\IRecordSaveStrategy.h" />
     <ClInclude Include="Scores\IScoreStrategy.h" />
     <ClInclude Include="Scores\RecordManager.h" />

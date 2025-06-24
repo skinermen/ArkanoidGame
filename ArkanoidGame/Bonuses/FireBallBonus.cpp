@@ -12,7 +12,7 @@ namespace ArkanoidGame
         shape.setFillColor(sf::Color::Red);
     }
 
-    void FireBallBonus::Apply(Ball& ball)
+    void FireBallBonus::Apply(Ball& ball, Platform& /*platform*/)
     {
         ball.SetStrategy(std::make_unique<FireBallStrategy>(7.f));
         collected = true;

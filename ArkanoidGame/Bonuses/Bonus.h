@@ -5,6 +5,7 @@
 namespace ArkanoidGame
 {
     class Ball;
+    class Platform;
 
     class Bonus : public GameObject
     {
@@ -16,10 +17,10 @@ namespace ArkanoidGame
         sf::Vector2f GetPosition() const override { return shape.getPosition(); }
         bool IsCollected() const { return collected; }
         bool IsOffScreen() const;
-        virtual void Apply(Ball& ball) = 0;
+        virtual void Apply(Ball& ball, Platform& platform) = 0;
         sf::FloatRect GetBounds() const { return shape.getGlobalBounds(); }
     protected:
-        sf::CircleShape shape;
+        sf::RectangleShape shape;
         float fallSpeed = 100.f;
         bool collected = false;
     };

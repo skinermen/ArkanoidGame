@@ -14,6 +14,10 @@ namespace ArkanoidGame
         void Draw(sf::RenderWindow& window) const override;
         void SetPosition(const sf::Vector2f& pos) override;
         sf::Vector2f GetPosition() const override;
+        void SetSize(const sf::Vector2f& size);
+        sf::Vector2f GetSize() const { return platformShape.getSize(); }
+        void ApplySizeBonus(float factor, float duration);
+        void ResetSize();
         
         const sf::RectangleShape& GetShape() const { return platformShape; }
         
@@ -23,5 +27,8 @@ namespace ArkanoidGame
         bool useMouseControl = false;
         sf::Vector2f lastMousePosition;
         float mouseMoveThreshold = SETTINGS.MOUSE_MOVE_THRESHOLD;
+        sf::Vector2f defaultSize;
+        float bonusTimer = 0.f;
+        bool sizeModified = false;
     };
 }

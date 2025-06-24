@@ -12,7 +12,7 @@ namespace ArkanoidGame
             bonus->Update(window, dt);
             if (bonus->GetBounds().intersects(platform.GetShape().getGlobalBounds()))
             {
-                bonus->Apply(ball);
+                bonus->Apply(ball, platform);
             }
             if (bonus->IsCollected() || bonus->IsOffScreen())
             {

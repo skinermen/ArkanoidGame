@@ -12,7 +12,7 @@ namespace ArkanoidGame
         shape.setFillColor(sf::Color::Cyan);
     }
 
-    void FragileBlocksBonus::Apply(Ball& ball)
+    void FragileBlocksBonus::Apply(Ball& ball, Platform& /*platform*/)
     {
         ball.SetStrategy(std::make_unique<FragileBallStrategy>(brickManager, 7.f));
         collected = true;

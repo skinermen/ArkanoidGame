@@ -34,6 +34,7 @@ namespace ArkanoidGame
 		const float SIZE_PLATFORM_X = 100.f;
 		const float SIZE_PLATFORM_Y = 20.f;
 		const float SIZE_BALL = 8.f; // radius ball
+		const float PLATFORM_BONUS_DURATION = 5.f;
 
 		// Brick
 		const int BRICK_ROW = 4;
