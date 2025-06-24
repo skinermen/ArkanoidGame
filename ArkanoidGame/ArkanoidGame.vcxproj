@@ -332,6 +332,7 @@
     <ClCompile Include="Menu\MenuBase.cpp" />
     <ClCompile Include="Menu\NameInputMenu.cpp" />
     <ClCompile Include="Menu\PauseMenu.cpp" />
+    <ClCompile Include="Menu\WinnerMenu.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Scores\RecordManager.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -355,6 +356,7 @@
     <ClInclude Include="Menu\MenuBase.h" />
     <ClInclude Include="Menu\NameInputMenu.h" />
     <ClInclude Include="Menu\PauseMenu.h" />
+    <ClInclude Include="Menu\WinnerMenu.h" />
     <ClInclude Include="Scores\IRecordSaveStrategy.h" />
     <ClInclude Include="Scores\IScoreStrategy.h" />
     <ClInclude Include="Scores\RecordManager.h" />

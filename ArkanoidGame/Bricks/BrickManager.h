@@ -20,7 +20,8 @@ namespace ArkanoidGame
         void Update() const;
         void Draw(sf::RenderWindow& window) const;
         bool AllBricksDestroyed() const;
-
+        int GetTotalLevels();
+        
         const std::vector<std::shared_ptr<Brick>>& GetBricks() const { return bricks; }
         int GetScore() const { return score; }
         void AddScore(int value) { score += value; }

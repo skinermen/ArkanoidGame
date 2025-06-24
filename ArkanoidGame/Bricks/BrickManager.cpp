@@ -103,4 +103,9 @@ namespace ArkanoidGame
         }
         return true;
     }
+
+    int BrickManager::GetTotalLevels()
+    {
+        return levelLoader.GetLevelCount();
+    }
 }

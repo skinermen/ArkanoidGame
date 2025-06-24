@@ -24,9 +24,11 @@ namespace ArkanoidGame
 
 	private:
 		void InitStartNewGame();
+		void StartNextLevel();
 		void UpdatePlayingState(sf::RenderWindow& window, float deltaTime);
 		void HandleCollisions();
-		
+
+		int currentLevelIndex = 0;
 		float lastUpdateTime = 0.f;
 		static bool hasGameStarted;
 		std::vector<GameState> gameStateStack;

@@ -7,6 +7,7 @@
 #include "Menu/GameOverMenu.h"
 #include "Menu/ConfirmationMenu.h"
 #include "Menu/NameInputMenu.h"
+#include "Menu/WinnerMenu.h"
 #include "Scores/RecordSaveWithDefaultName.h"
 #include "Scores/RecordSaveWithInputName.h"
 
@@ -33,13 +34,21 @@ namespace ArkanoidGame
 		menus.emplace(GameState::GameOver,			std::make_unique<GameOverMenu>());
 		menus.emplace(GameState::ConfirmationMenu,	std::make_unique<ConfirmationMenu>());
 		menus.emplace(GameState::NameInputMenu,		std::make_unique<NameInputMenu>());
+		menus.emplace(GameState::Winner,			std::make_unique<WinnerMenu>());
 		// menus.emplace(GameState::Options,			std::make_unique<OptionsMenu>());
-		// menus.emplace(GameState::Winner,			std::make_unique<WinnerMenu>());
 		
 
 		for (auto& [state, menu] : menus)
 		{
 			menu->Init(font);
+		}
+
+		if (auto* winnerMenu = dynamic_cast<WinnerMenu*>(menus.at(GameState::Winner).get()))
+		{
+			winnerMenu->SetOnConfirmCallback([this](int selection)
+			{
+				HandleWinnerMenuSelection(selection);
+			});
 		}
 	}
 
@@ -159,6 +168,19 @@ namespace ArkanoidGame
 		{
 			STATES.PushState(GameState::GameOver);
 			SetScoreForState(GameState::GameOver, score);
+		}
+	}
+
+	void UI::HandleWinnerMenuSelection(int selection)
+	{
+		if (selection == 0)
+		{
+			STATES.SwitchState(GameState::Playing);
+			if (nextLevelCallback) nextLevelCallback();
+		}
+		else if (selection == 1)
+		{
+			STATES.SwitchState(GameState::MainMenu);
 		}
 	}
 

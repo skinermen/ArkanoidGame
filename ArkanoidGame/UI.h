@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <memory>
@@ -25,13 +26,16 @@ namespace ArkanoidGame
 		void SetScoreForState(GameState state, int score);
 
 		void HandleGameOver(int score);
+		void HandleWinnerMenuSelection(int selection);
 
+		void SetNextLevelCallback(std::function<void()> cb) { nextLevelCallback = std::move(cb); }
 		IMenu* GetMenu(GameState state);
 		void ExecuteRecordSaveStrategy();
 	
 	private:
 		void InitResources();
 
+		std::function<void()> nextLevelCallback;
 		std::unique_ptr<IRecordSaveStrategy> recordSaveStrategy;
 		int pendingScore = 0;
 		RecordManager recordManager;

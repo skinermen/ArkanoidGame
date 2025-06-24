@@ -14,6 +14,7 @@ namespace ArkanoidGame
 	void Game::Init()
 	{
 		ui.Init();
+		ui.SetNextLevelCallback([this]() { StartNextLevel(); });
 		hasGameStarted = false;
 		STATES.SwitchState(GameState::MainMenu);
 	}
@@ -22,6 +23,18 @@ namespace ArkanoidGame
 	{
 		brickManager.ResetScore();
 		brickManager.Init(0);
+		ball.Reset();
+		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
+	}
+
+	void Game::StartNextLevel()
+	{
+		++currentLevelIndex;
+		if (currentLevelIndex >= brickManager.GetTotalLevels())
+		{
+			currentLevelIndex = 0; // Или можно завершить игру
+		}
+		brickManager.Init(currentLevelIndex);
 		ball.Reset();
 		platform.SetPosition(sf::Vector2f(SETTINGS.SCREEN_WIDTH / 2.f, SETTINGS.SCREEN_HEIGHT - 50.f));
 	}
