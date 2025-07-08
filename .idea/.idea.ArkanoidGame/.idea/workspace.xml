@@ -9,22 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="Add Winner Menu">
+    <list default="true" id="da0af1be-70f4-4288-9144-80d4e29e88a1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArkanoidGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/ArkanoidGame.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/GameOverMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/GameOverMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/IMenu.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/LeaderboardMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/MainMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/MainMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/MenuBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/MenuBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/WinnerMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/WinnerMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Menu/WinnerMenu.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/Menu/WinnerMenu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/UI.h" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/UI.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArkanoidGame/leaderboard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ArkanoidGame/leaderboard.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Win32/Debug/ApplesGame.Build.CppClean.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Win32/Debug/ApplesGame.tlog/ApplesGame.lastbuildstate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArkanoidGame/Win32/Debug/ApplesGame.tlog/CL.command.1.tlog" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +183,11 @@
       <workItem from="1749549058083" duration="21701000" />
       <workItem from="1749898172039" duration="9003000" />
       <workItem from="1750160718872" duration="2351000" />
-      <workItem from="1750761897620" duration="2777000" />
+      <workItem from="1750761897620" duration="17190000" />
+      <workItem from="1750842566547" duration="3561000" />
+      <workItem from="1752003628556" duration="96000" />
+      <workItem from="1752003784955" duration="48000" />
+      <workItem from="1752003999646" duration="53000" />
     </task>
     <task id="LOCAL-00001" summary="the .idea folder has been overwritten">
       <option name="closed" value="true" />
@@ -345,7 +341,47 @@
       <option name="project" value="LOCAL" />
       <updated>1750763070072</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fixed a bug where points were not displayed when winning">
+      <option name="closed" value="true" />
+      <created>1750765389776</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1750765389776</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Added the realization of lives. The default is 3 lives.">
+      <option name="closed" value="true" />
+      <created>1750767304019</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1750767304019</updated>
+    </task>
+    <task id="LOCAL-00022" summary="The Fireball bonus has been implemented.&#10;- The ball gets a different color and also gets faster.&#10;- The ball starts punching through any type of blocks.">
+      <option name="closed" value="true" />
+      <created>1750775917309</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1750775917309</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Implemented the Fragile Blocks bonus.&#10;It works as follows: absolutely all blocks in the game (except the indestructible ones) are destroyed on the first hit for the duration of the bonus.">
+      <option name="closed" value="true" />
+      <created>1750777921581</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1750777921581</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Added a bonus that affects the size of the platform. &#10;All bonuses are now square (they were round).">
+      <option name="closed" value="true" />
+      <created>1750780563429</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1750780563429</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,6 +421,11 @@
     <MESSAGE value="Completed by GameOverMenu" />
     <MESSAGE value="Added the ability to enter the record holder's name" />
     <MESSAGE value="Add Winner Menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Winner Menu" />
+    <MESSAGE value="Fixed a bug where points were not displayed when winning" />
+    <MESSAGE value="Added the realization of lives. The default is 3 lives." />
+    <MESSAGE value="The Fireball bonus has been implemented.&#10;- The ball gets a different color and also gets faster.&#10;- The ball starts punching through any type of blocks." />
+    <MESSAGE value="Implemented the Fragile Blocks bonus.&#10;It works as follows: absolutely all blocks in the game (except the indestructible ones) are destroyed on the first hit for the duration of the bonus." />
+    <MESSAGE value="Added a bonus that affects the size of the platform. &#10;All bonuses are now square (they were round)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a bonus that affects the size of the platform. &#10;All bonuses are now square (they were round)." />
   </component>
 </project>
